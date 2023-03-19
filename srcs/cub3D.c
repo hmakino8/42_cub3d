@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 10:45:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 17:59:43 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:11:02 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ int	main(int argc, char *argv[])
 
 	if (argc != 2)
 		end_program(&data, WRONG_NB_OF_ARGS, WRONG_NB_OF_ARGS_MSG);
-	if (pgrm_init(&data, argv[1]) == false)
-		return (2);
+	pgrm_init(&data, argv[1]);
 	data.window_height = data.map.height * CUBE_SIZE;
 	data.window_width = data.map.width * CUBE_SIZE;
 	data.player.delta_x = cos(deg_to_rad(data.player.angle));

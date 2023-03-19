@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:47:11 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 17:59:45 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:20:57 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,14 @@
 
 float	deg_to_rad(int a)
 {
-	return (a * M_PI / 180.0);
+	return ((a * M_PI) / 180.0);
 }
 
 int	fix_ang(int a)
 {
-	if (a > 359)
-	{
+	if (a >= 360)
 		a -= 360;
-	}
-	if (a < 0)
-	{
+	else if (a < 0)
 		a += 360;
-	}
 	return (a);
 }

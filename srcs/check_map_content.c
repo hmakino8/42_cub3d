@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 14:46:33 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 17:58:32 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:16:33 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ void	check_objects_on_map(t_data *data, char c, size_t x, size_t y)
 		data->player.x = (x * CUBE_SIZE) + (CUBE_SIZE / 2);
 		data->player.y = (y * CUBE_SIZE) + (CUBE_SIZE / 2);
 		data->map.has_player = true;
-		if (c == PLAYER_N)
-			data->player.angle = 90;
-		else if (c == PLAYER_S)
-			data->player.angle = -90;
-		else if (c == PLAYER_E)
+		if (c == PLAYER_E)
 			data->player.angle = 0;
+		else if (c == PLAYER_N)
+			data->player.angle = 90;
 		else if (c == PLAYER_W)
 			data->player.angle = 180;
+		else if (c == PLAYER_S)
+			data->player.angle = 270;
 		data->map.array[y][x] = EMPTY;
 	}
 	else

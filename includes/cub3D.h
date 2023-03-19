@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 18:01:06 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:10:31 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,13 +138,13 @@ typedef struct s_data
 void	print_error_messages(char *error_msg);
 
 /*			check_map.c			*/
-bool	check_map(t_data *data, char *filename);
+void	check_map(t_data *data, char *filename);
 
 /*			check_map_content.c	*/
 void	check_content(t_data *data);
 
 /*			init.c				*/
-bool	pgrm_init(t_data *data, char *filename);
+void	pgrm_init(t_data *data, char *filename);
 void	init_window(t_data *data);
 void	images_init(t_data *data);
 

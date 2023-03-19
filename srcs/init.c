@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:41:05 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 17:41:22 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:11:24 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,9 @@ void	init_window(t_data *data)
 		end_program(data, INIT_WINDOW_FAILED, FAILED_AT_INIT_WINDOW_MSG);
 }
 
-bool	pgrm_init(t_data *data, char *filename)
+void	pgrm_init(t_data *data, char *filename)
 {
-	if (check_map(data, filename) == false)
-		return (false);
+	check_map(data, filename);
 	init_window(data);
 	images_init(data);
-	return (true);
 }

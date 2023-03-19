@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 14:45:46 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 17:42:26 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/19 18:10:09 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,10 @@ void	get_file_content(t_data *data, char *filename)
 		end_program(data, MALLOC_FAILED, FAILED_ON_MALLOC_MSG);
 }
 
-bool	check_map(t_data *data, char *filename)
+void	check_map(t_data *data, char *filename)
 {
 	data->map.array = NULL;
 	check_filename(data, filename);
 	get_file_content(data, filename);
 	check_content(data);
-	return (true);
 }
