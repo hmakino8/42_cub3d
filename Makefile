@@ -6,7 +6,7 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/03/19 18:00:24 by pfrances         ###   ########.fr        #
+#    Updated: 2023/03/21 16:58:31 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,16 @@ CFLAGS = -Wall -Wextra -Werror
 SRCS_DIR = srcs
 OBJS_DIR = objs
 
-SRCS = $(addprefix $(SRCS_DIR)/,	cub3D.c				\
-									init.c				\
-									check_map.c			\
-									check_map_content.c	\
-									loop.c				\
-									render_image.c		\
-									end_program.c		\
-									maths_utils.c		\
+SRCS = $(addprefix $(SRCS_DIR)/,	cub3D.c					\
+									init.c					\
+									init_map.c				\
+									get_file_content.c		\
+									check_map.c				\
+									check_map_wall.c		\
+									loop.c					\
+									render_image.c			\
+									end_program.c			\
+									maths_utils.c			\
 									read_all.c)
 OBJS = $(subst $(SRCS_DIR), $(OBJS_DIR), $(SRCS:.c=.o))
 

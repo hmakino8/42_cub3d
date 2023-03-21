@@ -6,106 +6,80 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 14:45:46 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 18:10:09 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/21 16:09:29 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	check_filename(t_data *data, char *str)
+void	set_player_data(t_data *data, char c, size_t x, size_t y)
 {
-	size_t	filename_len;
-	size_t	extension_len;
-	char	*filename;
-
-	filename = ft_strrchr(str, '/');
-	if (filename == NULL)
-		filename = str;
-	else
-		filename++;
-	filename_len = ft_strlen(filename);
-	extension_len = ft_strlen(MAP_FILE_EXTENSION);
-	if (filename_len <= extension_len)
-		end_program(data, WRONG_MAP_NAME, WRONG_MAP_NAME_MSG);
-	if (ft_strncmp(MAP_FILE_EXTENSION,
-			&filename[filename_len - extension_len], extension_len) != 0)
-		end_program(data, WRONG_MAP_NAME, WRONG_MAP_NAME_MSG);
+	data->player.x = (x * CUBE_SIZE) + (CUBE_SIZE / 2);
+	data->player.y = (y * CUBE_SIZE) + (CUBE_SIZE / 2);
+	data->map.has_player = true;
+	if (c == PLAYER_E)
+		data->player.angle = 0;
+	else if (c == PLAYER_N)
+		data->player.angle = 90;
+	else if (c == PLAYER_W)
+		data->player.angle = 180;
+	else if (c == PLAYER_S)
+		data->player.angle = 270;
 }
 
-char	*skip_head_tail_empty_lines(char *content)
+void	check_objects_on_map(t_data *data, t_map *map)
 {
-	char	*result;
-	size_t	head;
-	size_t	tail;
-	size_t	to_keep_count;
+	size_t	x;
+	size_t	y;
+	char	c;
 
-	to_keep_count = ft_strlen(content);
-	head = 0;
-	while (content[head] == '\n')
+	y = 0;
+	while (y < map->height)
 	{
-		head++;
-		to_keep_count--;
-	}
-	if (content[head] == '\0')
-	{
-		free(content);
-		return (NULL);
-	}
-	tail = ft_strlen(content);
-	while (tail > 0 && content[--tail] == '\n')
-		to_keep_count--;
-	result = ft_strndup(&content[head], to_keep_count);
-	free(content);
-	return (result);
-}
-
-bool	check_empty_line(char *map)
-{
-	size_t	i;
-
-	i = 0;
-	while (map[i] != '\0')
-	{
-		if (map[i] == '\n')
+		x = 0;
+		while (x < map->width)
 		{
-			if (i == 0 || map[i + 1] == '\n' || map[i + 1] == '\0')
-				return (false);
+			c = map->array[y][x];
+			if (c == PLAYER_N || c == PLAYER_S || c == PLAYER_E || c == PLAYER_W)
+			{
+				if (map->has_player == true)
+					end_program(data, TOO_MUCH_PLAYER, TO_MUCH_PLAYER_MSG);
+				set_player_data(data, c, x, y);
+				map->array[y][x] = EMPTY;
+			}
+			else if (c != WALL && c != EMPTY && c != ' ')
+				end_program(data, UNDEFINED_CHARACTER, UNDEFINED_CHARACTER_MSG);
+			x++;
 		}
-		i++;
+		y++;
 	}
-	return (true);
 }
 
-void	get_file_content(t_data *data, char *filename)
+void	check_invalid_spaces(t_data *data, t_map *map)
 {
-	int		fd;
-	char	*content;
+	size_t	x;
+	size_t	y;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		end_program(data, OPENING_MAP_FAILED, FAILED_AT_OPENING_MAP_MSG);
-	content = read_all(fd);
-	close(fd);
-	if (content == NULL)
-		end_program(data, READING_MAP_FAILED, FAILED_AT_READING_MAP_MSG);
-	content = skip_head_tail_empty_lines(content);
-	if (content == NULL)
-		end_program(data, EMPTY_MAP, EMPTY_MAP_MSG);
-	if (check_empty_line(content) == false)
+	y = 0;
+	while (y < map->height)
 	{
-		free(content);
-		end_program(data, HAS_EMPTY_LINE, HAS_EMPTY_LINE_MSG);
+		x = 0;
+		while (x < map->width)
+		{
+			if (map->array[y][x] == ' ')
+				end_program(data, UNDEFINED_CHARACTER, UNDEFINED_CHARACTER_MSG);
+			x++;
+		}
+		y++;
 	}
-	data->map.array = ft_split(content, '\n');
-	free(content);
-	if (data->map.array == NULL)
-		end_program(data, MALLOC_FAILED, FAILED_ON_MALLOC_MSG);
 }
 
-void	check_map(t_data *data, char *filename)
+void	check_map(t_data *data, t_map *map)
 {
-	data->map.array = NULL;
-	check_filename(data, filename);
-	get_file_content(data, filename);
-	check_content(data);
+	map->has_player = false;
+	check_objects_on_map(data, map);
+	if (map->has_player == false)
+		end_program(data, HAS_NO_PLAYER, HAS_NO_PLAYER_MSG);
+	check_map_wall(data, map);
+	check_invalid_spaces(data, map);
 }

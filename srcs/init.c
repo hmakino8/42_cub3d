@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:41:05 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 18:11:24 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/21 16:04:08 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	init_window(t_data *data)
 
 void	pgrm_init(t_data *data, char *filename)
 {
-	check_map(data, filename);
+	init_map(data, &data->map, filename);
 	init_window(data);
 	images_init(data);
 }

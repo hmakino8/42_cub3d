@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 18:10:31 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/21 16:06:46 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define PLAYER_S 'S'
 # define PLAYER_E 'E'
 # define PLAYER_W 'W'
+# define CHECKED_SPACE 'X'
 
 # define MAP_FILE_EXTENSION ".cub"
 
@@ -77,6 +78,7 @@ typedef enum e_error
 	FAILED_AT_CLOSING_MAP,
 	HAS_EMPTY_LINE,
 	MALLOC_FAILED,
+	RESIZE_MALLOC_FAILED,
 	NOT_BORDERED_BY_WALL,
 	TOO_MUCH_PLAYER,
 	UNDEFINED_CHARACTER,
@@ -134,14 +136,21 @@ typedef struct s_data
 	t_player	player;
 }	t_data;
 
-/*			cub3D.c				*/
+/*			cub3D.c					*/
 void	print_error_messages(char *error_msg);
 
-/*			check_map.c			*/
-void	check_map(t_data *data, char *filename);
+/*			get_file_content.c		*/
+void	check_filename(t_data *data, char *str);
+void	get_file_content(t_data *data, char *filename);
 
-/*			check_map_content.c	*/
-void	check_content(t_data *data);
+/*			check_map.c				*/
+void	check_map(t_data *data, t_map *map);
+
+/*			init_map.c	*/
+void	init_map(t_data *data, t_map *map, char *filename);
+
+/*			check_map_wall.c	*/
+void	check_map_wall(t_data *data, t_map *map);
 
 /*			init.c				*/
 void	pgrm_init(t_data *data, char *filename);

@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:48:22 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 17:32:49 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/21 15:05:25 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	end_program(t_data *data, t_error error, char *error_msg)
 {
 	if (error != NONE)
 		print_error_messages(error_msg);
-	if (error >= NOT_BORDERED_BY_WALL)
+	if (error >= RESIZE_MALLOC_FAILED)
 		free_map(data->map.array);
 	if (error >= FAILED_AT_INIT_WALL_IMG)
 	{
