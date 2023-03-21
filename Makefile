@@ -6,7 +6,7 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/03/19 15:05:38 by pfrances         ###   ########.fr        #
+#    Updated: 2023/03/19 18:00:24 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,15 @@ CFLAGS = -Wall -Wextra -Werror
 SRCS_DIR = srcs
 OBJS_DIR = objs
 
-SRCS = $(addprefix $(SRCS_DIR)/,	cub3D.c)
+SRCS = $(addprefix $(SRCS_DIR)/,	cub3D.c				\
+									init.c				\
+									check_map.c			\
+									check_map_content.c	\
+									loop.c				\
+									render_image.c		\
+									end_program.c		\
+									maths_utils.c		\
+									read_all.c)
 OBJS = $(subst $(SRCS_DIR), $(OBJS_DIR), $(SRCS:.c=.o))
 
 LIBS_DIR = ./libraries
@@ -26,6 +34,7 @@ FT_PRINTF_DIR = $(LIBS_DIR)/ft_printf
 FT_PRINTF = $(FT_PRINTF_DIR)/ft_printf.a
 MLX_DIR = $(LIBS_DIR)/minilibx
 MLX_REPO = https://github.com/42Paris/minilibx-linux.git
+MATH_LIB = -lm
 INCLUDES = -I includes
 DEFINE_VARS = -D $(ESC) -D $(W) -D $(A) -D $(S) -D $(D) -D $(FRAMERATE) -D $(ADJUST)
 
@@ -61,7 +70,7 @@ endif
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX_LIBS) -lm -o $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX_LIBS) $(MATH_LIB) -o $(NAME)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(MLX)
 	@mkdir -p $(OBJS_DIR)
@@ -83,14 +92,16 @@ clean:
 	rm -rf $(OBJS_DIR)
 	make -C $(LIBFT_DIR) clean
 	make -C $(FT_PRINTF_DIR) clean
-#	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
+	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(LIBFT)
 	rm -f $(FT_PRINTF)
-#	rm -rf $(MLX_DIR)
+	rm -rf $(MLX_DIR)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+bonus: all
+
+.PHONY: all clean fclean re bonus
