@@ -3,94 +3,73 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
+#    By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/03/19 15:05:38 by pfrances         ###   ########.fr        #
+#    Created: 2022/11/15 03:03:24 by hiroaki           #+#    #+#              #
+#    Updated: 2023/03/21 09:05:54 by hiroaki          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cub3D
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-SRCS_DIR = srcs
-OBJS_DIR = objs
+NAME	=	cub3D
+CFLAGS	=	-Wall -Wextra -Werror $(INC)
 
-SRCS = $(addprefix $(SRCS_DIR)/,	cub3D.c)
-OBJS = $(subst $(SRCS_DIR), $(OBJS_DIR), $(SRCS:.c=.o))
+SRCS	=	main/main.c \
+			init/init.c \
+			parse/get_matrix.c \
+			parse/get_color_code.c \
+			parse/get_coord.c \
+			parse/parse_coord_info.c \
+			color/color.c \
+			render/draw.c \
+			render/render.c \
+			render/menu.c \
+			key/key_hook.c \
+			key/operation_key.c \
+			exit/exit.c \
+			exit/alloc.c \
+			utils/ft_atoi_base.c \
+			utils/ft_abs.c \
+			utils/ft_max.c \
+			utils/ft_min.c \
+			utils/check.c
 
-LIBS_DIR = ./libraries
-LIBFT_DIR = $(LIBS_DIR)/libft
-LIBFT = $(LIBFT_DIR)/libft.a
-FT_PRINTF_DIR = $(LIBS_DIR)/ft_printf
-FT_PRINTF = $(FT_PRINTF_DIR)/ft_printf.a
-MLX_DIR = $(LIBS_DIR)/minilibx
-MLX_REPO = https://github.com/42Paris/minilibx-linux.git
-INCLUDES = -I includes
-DEFINE_VARS = -D $(ESC) -D $(W) -D $(A) -D $(S) -D $(D) -D $(FRAMERATE) -D $(ADJUST)
+SRCS_PATH	= 	$(addprefix src/, $(SRCS))
+OBJS_PATH	=	$(SRCS_PATH:%.c=%.o)
+MLX_PATH	=	./libs/minilibx-linux/
+INC			=	-I./include/ -I$(MLX_PATH)
 
-#--------------------------------------------------------------------------#
+all:	$(NAME)
 
-OS = $(shell uname -s)
+$(NAME):	$(OBJS_PATH) $(LIBFT) $(PRINT) $(GNL)
+	$(MAKE) -C libs/libft
+	$(MAKE) -C libs/ft_print
+	$(MAKE) -C libs/gnl
+	$(MAKE) -C $(MLX_PATH)
+	$(CC) $(FLAGS) $(MLX) $(OBJS_PATH) $(LIBFT) $(PRINT) $(GNL) -L/usr/lib -lXext -lX11 -lm -lz -o $(NAME)
+	#for linux ver
 
-ifeq ($(OS),Linux)
-ESC = ESC=65307
-W = W=119
-A = A=97
-S = S=115
-D = D=100
-FRAMERATE = FRAMERATE=1000
-ADJUST = ADJUST=0
-MLX = $(MLX_DIR)/libmlx.a
-MLX_LIBS = -I $(MLX_DIR) -L $(MLX_DIR) -lmlx -lXext -lX11 $(MLX)
-else
-ESC = ESC=53
-W = W=13
-A = A=0
-S = S=1
-D = D=2
-FRAMERATE = FRAMERATE=200
-ADJUST = ADJUST=20
-MLX = $(MLX_DIR)/libmlx_Darwin.a
-INCLUDES += -I/usr/X11/include
-MLX_LIBS = -L $(MLX_DIR) -L /usr/X11/include/../lib -lmlx_Darwin -lXext -lX11 -framework OpenGL -framework AppKit
-endif
+	#$(CC) $(FLAGS) $(OBJS_PATH) $(LIBFT) $(PRINT) $(GNL) -L$(MLX_PATH) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	#for macos ver
 
-#--------------------------------------------------------------------------#
-
-all: $(NAME)
-
-$(NAME): $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX_LIBS) -lm -o $(NAME)
-
-$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(MLX)
-	@mkdir -p $(OBJS_DIR)
-	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINE_VARS) -c $< -o $@
-
-$(LIBFT):
-	make -C $(LIBFT_DIR) bonus
-
-$(FT_PRINTF):
-	make -C $(FT_PRINTF_DIR)
-
-$(MLX): $(MLX_DIR)/Makefile
-	make -C $(MLX_DIR)
-
-$(MLX_DIR)/Makefile:
-	git clone $(MLX_REPO) $(MLX_DIR)
+LIBFT	=	libs/libft/libft.a
+PRINT	=	libs/ft_print/libftprint.a
+GNL		=	libs/gnl/libftgnl.a
+MLX		=	$(MLX_PATH)/libmlx_darwin.a
 
 clean:
-	rm -rf $(OBJS_DIR)
-	make -C $(LIBFT_DIR) clean
-	make -C $(FT_PRINTF_DIR) clean
-#	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
+	$(MAKE) -C libs/libft clean
+	$(MAKE) -C libs/ft_print clean
+	$(MAKE) -C libs/gnl clean
+	$(MAKE) -C $(MLX_PATH) clean
+	$(RM) $(OBJS_PATH)
 
-fclean: clean
-	rm -f $(NAME)
-	rm -f $(LIBFT)
-	rm -f $(FT_PRINTF)
-#	rm -rf $(MLX_DIR)
+fclean:	clean
+	$(RM) $(LIBFT)
+	$(RM) $(PRINT)
+	$(RM) $(GNL)
+	$(RM) $(MLX)
+	$(RM) $(NAME)
 
-re: fclean all
+re:	fclean all
 
-.PHONY: all clean fclean re
+.PHONY:	all clean fclean re
