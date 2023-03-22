@@ -6,7 +6,7 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 12:36:49 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/03/22 11:50:51 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_data
 	int			cur_img;
 	int			window_width;
 	int			window_height;
-	char		*file_content;
 	t_img		wall_img;
 	t_img		empty_img;
 	t_img		player_img;

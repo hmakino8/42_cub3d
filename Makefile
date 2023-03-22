@@ -6,18 +6,18 @@
 #    By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/03/22 12:35:44 by hiroaki          ###   ########.fr        #
+#    Updated: 2023/03/21 21:08:25 by hiroaki          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= cub3D
 LEAKS		= -g -fsanitize=address
 CFLAGS		= #-Wall -Wextra -Werror $(LEAKS)
-INCLUDE		= -I includes
 
 SRCS_DIR	= ./srcs
 OBJS_DIR	= ./objs
 LIBS_DIR	= ./libs
+INC_DIR		= -I includes -I MLX_DIR
 
 SRCS = $(addprefix $(SRCS_DIR)/,	cub3D.c				\
 									init.c				\
@@ -37,7 +37,6 @@ FT_PRINTF_DIR	= $(LIBS_DIR)/ft_printf
 FT_PRINTF		= $(FT_PRINTF_DIR)/ft_printf.a
 
 MLX_DIR		= $(LIBS_DIR)/minilibx
-INCLUDE		+= -I $(MLX_DIR)
 MLX_REPO	= https://github.com/42Paris/minilibx-linux.git
 
 MATH_LIB 	= -lm
@@ -66,7 +65,7 @@ else
 	FRAMERATE	= FRAMERATE=200
 	ADJUST		= ADJUST=20
 	MLX			= $(MLX_DIR)/libmlx_Darwin.a
-	INCLUDE			+= -I/usr/X11/include
+	INC_DIR		+= -I/usr/X11/include
 	MLX_LIBS	= -L $(MLX_DIR) -L /usr/X11/include/../lib -lmlx_Darwin -lXext -lX11 -framework OpenGL -framework AppKit
 endif
 
@@ -75,11 +74,11 @@ endif
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX)
-	$(CC) $(CFLAGS) $(INCLUDE) $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX_LIBS) $(MATH_LIB) -o $(NAME)
+	$(CC) $(CFLAGS) $(INC_DIR) $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX_LIBS) $(MATH_LIB) -o $(NAME)
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(MLX)
 	@mkdir -p $(OBJS_DIR)
-	$(CC) $(CFLAGS) $(INCLUDE) $(DEFINE_VARS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INC_DIR) $(DEFINE_VARS) -c $< -o $@
 
 $(LIBFT):
 	make -C $(LIBFT_DIR) bonus
