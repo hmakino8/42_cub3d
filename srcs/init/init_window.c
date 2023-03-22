@@ -1,33 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_window.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/19 15:41:05 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 18:11:24 by pfrances         ###   ########.fr       */
+/*   Created: 2023/03/22 08:45:04 by pfrances          #+#    #+#             */
+/*   Updated: 2023/03/22 08:45:15 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-bool	set_xpm_img(void *mlx_ptr, t_img *img, char *path)
-{
-	img->mlx_img = mlx_xpm_file_to_image(mlx_ptr, path,
-			&img->width, &img->height);
-	return (img->mlx_img != NULL);
-}
-
-void	images_init(t_data *data)
-{
-	if (set_xpm_img(data->mlx_ptr, &data->wall_img, WALL_XPM_PATH) == false)
-		return ;
-	if (set_xpm_img(data->mlx_ptr, &data->empty_img, EMPTY_XPM_PATH) == false)
-		return ;
-	if (set_xpm_img(data->mlx_ptr, &data->player_img, PLAYER_XPM_PATH) == false)
-		return ;
-}
 
 void	check_window_size(t_data *data)
 {
@@ -53,11 +36,4 @@ void	init_window(t_data *data)
 			data->window_height, "cub3D");
 	if (data->win_ptr == NULL)
 		end_program(data, INIT_WINDOW_FAILED, FAILED_AT_INIT_WINDOW_MSG);
-}
-
-void	pgrm_init(t_data *data, char *filename)
-{
-	check_map(data, filename);
-	init_window(data);
-	images_init(data);
 }

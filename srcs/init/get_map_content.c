@@ -1,36 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_map.c                                        :+:      :+:    :+:   */
+/*   get_map_content.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/01 14:45:46 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 18:10:09 by pfrances         ###   ########.fr       */
+/*   Created: 2023/03/22 08:47:12 by pfrances          #+#    #+#             */
+/*   Updated: 2023/03/22 08:47:39 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	check_filename(t_data *data, char *str)
-{
-	size_t	filename_len;
-	size_t	extension_len;
-	char	*filename;
-
-	filename = ft_strrchr(str, '/');
-	if (filename == NULL)
-		filename = str;
-	else
-		filename++;
-	filename_len = ft_strlen(filename);
-	extension_len = ft_strlen(MAP_FILE_EXTENSION);
-	if (filename_len <= extension_len)
-		end_program(data, WRONG_MAP_NAME, WRONG_MAP_NAME_MSG);
-	if (ft_strncmp(MAP_FILE_EXTENSION,
-			&filename[filename_len - extension_len], extension_len) != 0)
-		end_program(data, WRONG_MAP_NAME, WRONG_MAP_NAME_MSG);
-}
 
 char	*skip_head_tail_empty_lines(char *content)
 {
@@ -76,36 +56,23 @@ bool	check_empty_line(char *map)
 	return (true);
 }
 
-void	get_file_content(t_data *data, char *filename)
+void	get_map_content(t_data *data, size_t i)
 {
-	int		fd;
-	char	*content;
+	char *map_content;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		end_program(data, OPENING_MAP_FAILED, FAILED_AT_OPENING_MAP_MSG);
-	content = read_all(fd);
-	close(fd);
-	if (content == NULL)
-		end_program(data, READING_MAP_FAILED, FAILED_AT_READING_MAP_MSG);
-	content = skip_head_tail_empty_lines(content);
-	if (content == NULL)
+	map_content = ft_strdup(&data->file_content[i]);
+	free(data->file_content);
+	if (map_content == NULL)
+		end_program(data, MALLOC_FAILED, FAILED_ON_MALLOC_MSG);
+	map_content = skip_head_tail_empty_lines(map_content);
+	if (map_content == NULL)
 		end_program(data, EMPTY_MAP, EMPTY_MAP_MSG);
-	if (check_empty_line(content) == false)
+	if (check_empty_line(map_content) == false)
 	{
-		free(content);
+		free(map_content);
 		end_program(data, HAS_EMPTY_LINE, HAS_EMPTY_LINE_MSG);
 	}
-	data->map.array = ft_split(content, '\n');
-	free(content);
+	data->map.array = ft_split(map_content, '\n');
 	if (data->map.array == NULL)
 		end_program(data, MALLOC_FAILED, FAILED_ON_MALLOC_MSG);
-}
-
-void	check_map(t_data *data, char *filename)
-{
-	data->map.array = NULL;
-	check_filename(data, filename);
-	get_file_content(data, filename);
-	check_content(data);
 }

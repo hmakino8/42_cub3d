@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 17:58:17 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/21 16:23:17 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	render_map(t_data *data)
 
 	if (data->win_ptr == NULL)
 		return (1);
-	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	y = 0;
 	while (y < data->map.height)
 	{

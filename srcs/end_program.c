@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:48:22 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 17:32:49 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/21 20:09:43 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,21 @@ void	destroy_images(t_data *data, t_error error)
 		mlx_destroy_image(data->mlx_ptr, data->empty_img.mlx_img);
 	if (error >= FAILED_AT_INIT_PLAYER_IMG)
 		mlx_destroy_image(data->mlx_ptr, data->player_img.mlx_img);
+	// if (error >= FAILED_AT_INIT_WALL_IMG)
+	// 	mlx_destroy_image(data->mlx_ptr, data->north_texture_img.mlx_img);
+	// if (error >= FAILED_AT_SOUTH_TEXTURE_IMG)
+	// 	mlx_destroy_image(data->mlx_ptr, data->south_texture_img.mlx_img);
+	// if (error >= FAILED_AT_WEST_TEXTURE_IMG)
+	// 	mlx_destroy_image(data->mlx_ptr, data->west_texture_img.mlx_img);
+	// if (error >= FAILED_AT_EST_TEXTURE_IMG)
+	// 	mlx_destroy_image(data->mlx_ptr, data->east_texture_img.mlx_img);
 }
 
 void	end_program(t_data *data, t_error error, char *error_msg)
 {
 	if (error != NONE)
 		print_error_messages(error_msg);
-	if (error >= NOT_BORDERED_BY_WALL)
+	if (error >= RESIZE_MALLOC_FAILED)
 		free_map(data->map.array);
 	if (error >= FAILED_AT_INIT_WALL_IMG)
 	{
