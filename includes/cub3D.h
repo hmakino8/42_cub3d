@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 12:15:58 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 14:02:20 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@
 # define BUFFER_SIZE 1024
 # define HEIGHT_MIN 3
 # define WITDH_MIN 3
-# define CUBE_SIZE 64
+# define BPP 64
 # define PLAYER_SIZE 10
-# define PLAYER_MOVE 5
+# define P_MOVE 5
 
 # define EMPTY '0'
 # define WALL '1'
-# define PLAYER_N 'N'
-# define PLAYER_S 'S'
-# define PLAYER_E 'E'
-# define PLAYER_W 'W'
-# define CHECKED_SPACE 'X'
+# define P_N 'N'
+# define P_S 'S'
+# define P_E 'E'
+# define P_W 'W'
+# define CHECK 'X'
 
 # define MAP_FILE_EXTENSION ".cub"
 
@@ -62,7 +62,7 @@
 # define MAP_HAS_EMPTY_LINE_MSG "The map has empty line(s)."
 # define WRONG_SHAPE_MSG "The map shape is wrong. "
 # define TO_MUCH_PLAYER_MSG "There are more than one player."
-# define MAP_UNDEFINED_CHARACTER_MSG "There are undefined character(s)."
+# define MAP_UNDEF_CHAR_MSG "There are undefined character(s)."
 # define HAS_NO_PLAYER_MSG "There no player."
 # define NOT_BORDERED_BY_WALL_MSG "The map has to be bordered by walls."
 # define FAILED_AT_INIT_MLX_MSG "Failed at init MLX."
@@ -91,7 +91,7 @@ typedef enum e_error
 	WRONG_SHAPE,
 	RESIZE_MALLOC_FAILED,
 	TOO_MUCH_PLAYER,
-	MAP_UNDEFINED_CHARACTER,
+	MAP_UNDEF_CHAR,
 	HAS_NO_PLAYER,
 	NOT_BORDERED_BY_WALL,
 	INIT_MLX_FAILED,
@@ -101,10 +101,10 @@ typedef enum e_error
 	FAILED_AT_INIT_WALL_IMG,
 	FAILED_AT_INIT_EMPTY_IMG,
 	FAILED_AT_INIT_PLAYER_IMG,
-	FAILED_AT_NORTH_TEXTURE_IMG,
-	FAILED_AT_SOUTH_TEXTURE_IMG,
-	FAILED_AT_WEST_TEXTURE_IMG,
-	FAILED_AT_EST_TEXTURE_IMG,
+	FAILED_AT_INIT_N_TEXT_IMG,
+	FAILED_AT_INIT_S_TEXT_IMG,
+	FAILED_AT_INIT_W_TEXT_IMG,
+	FAILED_AT_INIT_E_TEXT_IMG,
 	NONE
 }	t_error;
 
@@ -125,7 +125,7 @@ typedef struct s_rgb_color
 	int		green;
 	int		blue;
 	bool	is_set;
-}	t_rgb_color;
+}	t_rgb;
 
 typedef struct s_player
 {
@@ -155,18 +155,18 @@ typedef struct s_data
 	t_img		wall_img;
 	t_img		empty_img;
 	t_img		player_img;
-	t_img		north_texture_img;
-	t_img		south_texture_img;
-	t_img		west_texture_img;
-	t_img		east_texture_img;
+	t_img		no_text_img;
+	t_img		so_text_img;
+	t_img		we_text_img;
+	t_img		ea_text_img;
 	t_img		floor_texture_img;
 	t_img		ceiling_texture_img;
-	char		*north_texture_img_path;
-	char		*south_texture_img_path;
-	char		*west_texture_img_path;
-	char		*east_texture_img_path;
-	t_rgb_color	floor_color;
-	t_rgb_color	ceiling_color;
+	char		*no_text_img_path;
+	char		*so_text_img_path;
+	char		*we_text_img_path;
+	char		*ea_text_img_path;
+	t_rgb		floor_color;
+	t_rgb		ceiling_color;
 	t_map		map;
 	t_player	player;
 }	t_data;
@@ -210,6 +210,9 @@ void	pgrm_init(t_data *data, char *filename);
 
 /*								set_texture_and_color.c						*/
 size_t	set_texture_and_color(t_data *data);
+
+/*								set_rgb_color.c								*/
+void	set_rgb_color(t_data *data, char *content, size_t *i, t_rgb *color);
 
 /****************************************************************************/
 /************************************LOOP************************************/

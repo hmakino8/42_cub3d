@@ -6,7 +6,7 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/03/22 09:42:13 by pfrances         ###   ########.fr        #
+#    Updated: 2023/03/22 13:32:08 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ INIT_SRCS = $(addprefix $(INIT_SRCS_DIR)/,	check_wall.c				\
 											init_map.c					\
 											init_window.c				\
 											init.c						\
-											set_textures_colors.c)
+											set_textures_colors.c		\
+											set_rgb_color.c)
 INIT_OBJS = $(subst $(INIT_SRCS_DIR), $(INIT_OBJS_DIR), $(INIT_SRCS:.c=.o))
 SRCS += $(INIT_SRCS)
 OBJS += $(INIT_OBJS)

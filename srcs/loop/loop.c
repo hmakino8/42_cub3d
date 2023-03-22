@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:40:20 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 18:18:47 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:25:56 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	player_moves(t_data *data, size_t x, size_t y)
 {
-	if (data->map.array[(y + PLAYER_MOVE) / CUBE_SIZE][(x + PLAYER_MOVE) / CUBE_SIZE] == WALL)
+	if (data->map.array[(y + P_MOVE) / BPP][(x + P_MOVE) / BPP] == WALL)
 		return ;
 	data->player.x = x;
 	data->player.y = y;
@@ -25,13 +25,13 @@ int	deal_keys(int key, t_data *data)
 	if (key == XK_Escape)
 		end_program(data, NONE, NULL);
 	if (key == XK_w)
-		player_moves(data, data->player.x, data->player.y - PLAYER_MOVE);
+		player_moves(data, data->player.x, data->player.y - P_MOVE);
 	if (key == XK_a)
-		player_moves(data, data->player.x - PLAYER_MOVE, data->player.y);
+		player_moves(data, data->player.x - P_MOVE, data->player.y);
 	if (key == XK_s)
-		player_moves(data, data->player.x, data->player.y + PLAYER_MOVE);
+		player_moves(data, data->player.x, data->player.y + P_MOVE);
 	if (key == XK_d)
-		player_moves(data, data->player.x + PLAYER_MOVE, data->player.y);
+		player_moves(data, data->player.x + P_MOVE, data->player.y);
 	if (key == XK_Left || key == XK_Right)
 	{
 		if (key == XK_Left)

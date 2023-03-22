@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   images_init.c                                      :+:      :+:    :+:   */
+/*   init_images.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 08:43:14 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 08:43:35 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:58:30 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ bool	set_xpm_img(void *mlx_ptr, t_img *img, char *path)
 
 void	images_init(t_data *data)
 {
-	if (set_xpm_img(data->mlx_ptr, &data->wall_img, WALL_XPM_PATH) == false)
+	if (!set_xpm_img(data->mlx_ptr, &data->wall_img, WALL_XPM_PATH))
 		end_program(data, FAILED_AT_INIT_WALL_IMG, FAILED_AT_INIT_IMGS_MSG);
-	if (set_xpm_img(data->mlx_ptr, &data->empty_img, EMPTY_XPM_PATH) == false)
+	if (!set_xpm_img(data->mlx_ptr, &data->empty_img, EMPTY_XPM_PATH))
 		end_program(data, FAILED_AT_INIT_EMPTY_IMG, FAILED_AT_INIT_IMGS_MSG);
-	if (set_xpm_img(data->mlx_ptr, &data->player_img, PLAYER_XPM_PATH) == false)
+	if (!set_xpm_img(data->mlx_ptr, &data->player_img, PLAYER_XPM_PATH))
 		end_program(data, FAILED_AT_INIT_PLAYER_IMG, FAILED_AT_INIT_IMGS_MSG);
-	// if (set_xpm_img(data->mlx_ptr, &data->north_texture_img, data->north_texture_img_path) == false)
-	// 	end_program(data, FAILED_AT_NORTH_TEXTURE_IMG, FAILED_AT_INIT_IMGS_MSG);
-	// if (set_xpm_img(data->mlx_ptr, &data->south_texture_img, data->south_texture_img_path) == false)
-	// 	end_program(data, FAILED_AT_SOUTH_TEXTURE_IMG, FAILED_AT_INIT_IMGS_MSG);
-	// if (set_xpm_img(data->mlx_ptr, &data->west_texture_img, data->west_texture_img_path) == false)
-	// 	end_program(data, FAILED_AT_WEST_TEXTURE_IMG, FAILED_AT_INIT_IMGS_MSG);
-	// if (set_xpm_img(data->mlx_ptr, &data->east_texture_img, data->east_texture_img_path) == false)
-	// 	end_program(data, FAILED_AT_EST_TEXTURE_IMG, FAILED_AT_INIT_IMGS_MSG);
+	// if (!set_xpm_img(data->mlx_ptr, &data->no_text_img, data->no_text_img_path))
+	// 	end_program(data, FAILED_AT_INIT_N_TEXT_IMG, FAILED_AT_INIT_IMGS_MSG);
+	// if (!set_xpm_img(data->mlx_ptr, &data->so_text_img, data->so_text_img_path))
+	// 	end_program(data, FAILED_AT_INIT_S_TEXT_IMG, FAILED_AT_INIT_IMGS_MSG);
+	// if (!set_xpm_img(data->mlx_ptr, &data->we_text_img, data->we_text_img_path))
+	// 	end_program(data, FAILED_AT_INIT_W_TEXT_IMG, FAILED_AT_INIT_IMGS_MSG);
+	// if (!set_xpm_img(data->mlx_ptr, &data->ea_text_img, data->ea_text_img_path))
+	// 	end_program(data, FAILED_AT_INIT_E_TEXT_IMG, FAILED_AT_INIT_IMGS_MSG);
 }

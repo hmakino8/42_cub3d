@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/21 16:23:17 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:25:32 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	put_images(t_data *data, size_t x, size_t y)
 {
 	if (data->map.array[y][x] == WALL)
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->wall_img.mlx_img, x * CUBE_SIZE, y * CUBE_SIZE);
+			data->wall_img.mlx_img, x * BPP, y * BPP);
 	else if (data->map.array[y][x] == EMPTY)
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->empty_img.mlx_img, x * CUBE_SIZE, y * CUBE_SIZE);
+			data->empty_img.mlx_img, x * BPP, y * BPP);
 }
 
 int	render_map(t_data *data)
