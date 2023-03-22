@@ -6,13 +6,13 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/03/22 13:32:08 by pfrances         ###   ########.fr        #
+#    Updated: 2023/03/22 17:01:11 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = #-Wall -Wextra -Werror -g
 SRCS_DIR = srcs
 OBJS_DIR = objs
 
@@ -49,7 +49,8 @@ OBJS += $(INIT_OBJS)
 ###############################################################################
 LOOP_SRCS_DIR = $(SRCS_DIR)/loop
 LOOP_OBJS_DIR = $(OBJS_DIR)/loop
-LOOP_SRCS = $(addprefix $(LOOP_SRCS_DIR)/,	loop.c						\
+LOOP_SRCS = $(addprefix $(LOOP_SRCS_DIR)/,	deal_keys.c					\
+											loop.c						\
 											render_image.c)
 LOOP_OBJS = $(subst $(LOOP_SRCS_DIR), $(LOOP_OBJS_DIR), $(LOOP_SRCS:.c=.o))
 SRCS += $(LOOP_SRCS)
@@ -74,7 +75,7 @@ FT_PRINTF = $(FT_PRINTF_DIR)/ft_printf.a
 MLX_DIR = $(LIBS_DIR)/minilibx
 MLX_REPO = https://github.com/42Paris/minilibx-linux.git
 MATH_LIB = -lm
-INCLUDES = -I includes
+INCLUDES = -I includes -I $(MLX_DIR)
 DEFINE_VARS = -D $(ESC) -D $(W) -D $(A) -D $(S) -D $(D) -D $(FRAMERATE) -D $(ADJUST)
 
 #--------------------------------------------------------------------------#
@@ -143,13 +144,13 @@ clean:
 	rm -rf $(OBJS_DIR)
 	make -C $(LIBFT_DIR) clean
 	make -C $(FT_PRINTF_DIR) clean
-	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
+#	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(LIBFT)
 	rm -f $(FT_PRINTF)
-	rm -rf $(MLX_DIR)
+#	rm -rf $(MLX_DIR)
 
 re: fclean all
 

@@ -14,8 +14,8 @@
 
 void	set_map_height_width(t_map *map)
 {
-	size_t	line_len;
-	size_t	y;
+	int	line_len;
+	int	y;
 
 	map->width = 0;
 	y = 0;
@@ -51,7 +51,7 @@ void	resize_line(t_data *data, char **line_adress, size_t witdh)
 
 void	init_map(t_data *data, t_map *map)
 {
-	size_t	y;
+	int	y;
 
 	set_map_height_width(map);
 	if (map->height < HEIGHT_MIN || map->width < WITDH_MIN)
@@ -59,7 +59,7 @@ void	init_map(t_data *data, t_map *map)
 	y = 0;
 	while (map->array[y] != NULL)
 	{
-		if (ft_strlen(map->array[y]) < map->width)
+		if ((int)ft_strlen(map->array[y]) < map->width)
 			resize_line(data, &map->array[y], map->width);
 		y++;
 	}

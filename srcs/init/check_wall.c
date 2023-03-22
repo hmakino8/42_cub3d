@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:18:03 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 13:52:28 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 16:27:38 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_invalid_border_cell(t_data *data, char c)
 		end_program(data, NOT_BORDERED_BY_WALL, NOT_BORDERED_BY_WALL_MSG);
 }
 
-void	check_adjacent(t_data *data, t_map *map, size_t x, size_t y)
+void	check_adjacent(t_data *data, t_map *map, int x, int y)
 {
 	if (x > 0)
 		check_invalid_border_cell(data, map->array[y][x - 1]);
@@ -40,8 +40,8 @@ void	check_adjacent(t_data *data, t_map *map, size_t x, size_t y)
 
 void	check_horizontal_wall(t_data *data, t_map *map)
 {
-	size_t	x;
-	size_t	y;
+	int	x;
+	int	y;
 
 	y = 0;
 	while (y < map->height)
@@ -71,8 +71,8 @@ void	check_horizontal_wall(t_data *data, t_map *map)
 
 void	check_vertical_wall(t_data *data, t_map *map)
 {
-	size_t	x;
-	size_t	y;
+	int	x;
+	int	y;
 
 	x = 0;
 	while (x < map->width)
