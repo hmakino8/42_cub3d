@@ -56,9 +56,11 @@ void	put_image_to_window(t_data *data, void *img, t_pos pos)
 
 void	draw_player(t_data *data, t_pos cur)
 {
-	void	*img;
-	t_pos	p_pos;
-	t_pos	pos;
+	void		*img;
+	t_pos		p_pos;
+	t_pos		pos;
+	t_pos		tmp;
+	t_delta_pos	delta;
 
 	p_pos.x = data->player.pos.x;
 	p_pos.y = data->player.pos.y;
@@ -66,13 +68,23 @@ void	draw_player(t_data *data, t_pos cur)
 	put_image_to_window(data, img, p_pos);
 	pos.x = p_pos.x + 5;
 	pos.y = p_pos.y + 5;
+	delta.x = 0;
+	delta.y = 0;
+	tmp.x = 0;
+	tmp.y = 0;
 	while (is_drawable(data->map.array, &cur, pos))
 	{
 		mlx_pixel_put(data->mlx_ptr, data->win_ptr, pos.x, pos.y, RAY);
 		if (is_within_the_view_point(p_pos, pos))
 			draw_view_point(data, pos, 0);
-		pos.x++;
-		pos.y++;
+		printf("pos.x = %zd\n", tmp.x);
+		printf("pos.y = %zd\n", tmp.y);
+		delta.x += data->player.delta.x;
+		delta.y += data->player.delta.y;
+		tmp.x = delta.x;
+		tmp.y = delta.y;
+		pos.x += tmp.x;
+		pos.y += tmp.y;
 	}
 }
 

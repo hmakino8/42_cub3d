@@ -6,7 +6,7 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:40:20 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 12:07:33 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/03/22 13:20:12 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	is_directory_key(int key)
 	return  (key == XK_Left || key == XK_Right);
 }
 
-void	player_moves(int key, t_pos *p_pos, t_data *data)
+void	player_moves(int key, t_pos *p_pos, char **map_array)
 {
 	int		adj;
 	t_pos	new;
@@ -46,32 +46,33 @@ void	player_moves(int key, t_pos *p_pos, t_data *data)
 		new.x += PLAYER_MOVE;
 	tmp.y = (new.y + PLAYER_MOVE + adj) / CUBE_SIZE;
 	tmp.x = (new.x + PLAYER_MOVE + adj) / CUBE_SIZE;
-	if (data->map.array[tmp.y][tmp.x] == WALL)
+	if (map_array[tmp.y][tmp.x] == WALL)
 		return ;
 	*p_pos = new;
 }
 
+void	player_change_direction(int key, float *angle, t_delta_pos *delta)
+{
+	if (key == XK_Left)
+		*angle += 5;
+	else
+		*angle -= 5;
+	*angle = fix_ang(*angle);
+	delta->x = cos(deg_to_rad(*angle));
+	delta->y = -sin(deg_to_rad(*angle));
+}
+
 int	deal_keys(int key, t_data *data)
 {
-	t_pos		*p_pos;
-	t_delta_pos	*delta;
+	t_player	*player;
 
-	p_pos = &data->player.pos;
-	delta = &data->player.delta;
+	player = &data->player;
 	if (key == XK_Escape)
 		end_program(data, NONE, NULL);
 	if (is_move_key(key))
-		player_moves(key, p_pos, data);
+		player_moves(key, &player->pos, data->map.array);
 	if (is_directory_key(key))
-	{
-		if (key == XK_Left)
-			data->player.angle += 5;
-		else
-			data->player.angle -= 5;
-		data->player.angle = fix_ang(data->player.angle);
-		data->player.delta.x = cos(deg_to_rad(data->player.angle));
-		data->player.delta.y = -sin(deg_to_rad(data->player.angle));
-	}
+		player_change_direction(key, &player->angle, &player->delta);
 	return (0);
 }
 
