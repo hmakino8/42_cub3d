@@ -6,7 +6,7 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 12:19:33 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/03/22 12:36:49 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,66 +27,6 @@
 # include <stdlib.h>
 
 # include <printf.h>
-
-# define ERROR_MSG "Error"
-# define WRONG_NB_OF_ARGS_MSG "The programm take one argument: map path."
-# define WRONG_MAP_NAME_MSG "The map name should be named like '[FILENAME].cub'"
-# define FAILED_AT_OPENING_MAP_MSG "Failed at opening the map."
-# define FAILED_AT_READING_MAP_MSG "Failed at reading the map."
-# define EMPTY_MAP_MSG "The map is empty."
-# define FAILED_AT_CLOSING_MAP_MSG "Failed at closing the map."
-# define HAS_EMPTY_LINE_MSG "The map has empty line(s)."
-# define FAILED_ON_MALLOC_MSG "Failed on memory allocation."
-# define NOT_BORDERED_BY_WALL_MSG "The map has to be bordered by walls."
-# define TO_MUCH_PLAYER_MSG "There are more than one player."
-# define WRONG_SHAPE_MSG "The map shape is wrong. "
-# define UNDEFINED_CHARACTER_MSG "There are undefined character(s)."
-# define MAP_TOO_HIGH_MSG "The map is too high."
-# define MAP_TOO_WIDE_MSG "The map is too wide."
-# define HAS_NO_PLAYER_MSG "There no player."
-# define FAILED_AT_INIT_MLX_MSG "Failed at init MLX."
-# define FAILED_AT_INIT_WINDOW_MSG "Failed at init window."
-# define FAILED_AT_INIT_IMGS_MSG "Failed at init images."
-# define MLX_LOOP_ISSUE_MSG "Issue occured on MLX loop."
-
-# define HAS_DOUBLE_ENTRIE_MSG "A same element was declared twice."
-
-# define ELEMENT_MISSING_MSG "An element is missing."
-
-# define INVALID_COLOR_MSG "A color set is invalid."
-
-typedef enum e_error
-{
-	WRONG_NB_OF_ARGS,
-	WRONG_MAP_NAME,
-	OPENING_MAP_FAILED,
-	READING_MAP_FAILED,
-	EMPTY_MAP,
-	FAILED_AT_CLOSING_MAP,
-	HAS_DOUBLE_ENTRIE,
-	ELEMENT_MISSING,
-	INVALID_COLOR,
-	HAS_EMPTY_LINE,
-	MALLOC_FAILED,
-	RESIZE_MALLOC_FAILED,
-	NOT_BORDERED_BY_WALL,
-	TOO_MUCH_PLAYER,
-	UNDEFINED_CHARACTER,
-	WRONG_SHAPE,
-	HAS_NO_PLAYER,
-	INIT_MLX_FAILED,
-	MAP_TOO_HIGH,
-	MAP_TOO_WIDE,
-	INIT_WINDOW_FAILED,
-	FAILED_AT_INIT_WALL_IMG,
-	FAILED_AT_INIT_EMPTY_IMG,
-	FAILED_AT_INIT_PLAYER_IMG,
-	FAILED_AT_NORTH_TEXTURE_IMG,
-	FAILED_AT_SOUTH_TEXTURE_IMG,
-	FAILED_AT_WEST_TEXTURE_IMG,
-	FAILED_AT_EST_TEXTURE_IMG,
-	NONE
-}	t_error;
 
 typedef struct s_img
 {
