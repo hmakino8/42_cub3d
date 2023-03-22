@@ -6,11 +6,17 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:48:22 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/21 20:09:43 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:56:43 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+void	print_error_messages(char *error_msg)
+{
+	ft_putendl_fd(ERROR_MSG, STDERR_FILENO);
+	ft_putendl_fd(error_msg, STDERR_FILENO);
+}
 
 void	free_map(char **map_array)
 {
@@ -33,21 +39,29 @@ void	destroy_images(t_data *data, t_error error)
 		mlx_destroy_image(data->mlx_ptr, data->empty_img.mlx_img);
 	if (error >= FAILED_AT_INIT_PLAYER_IMG)
 		mlx_destroy_image(data->mlx_ptr, data->player_img.mlx_img);
-	// if (error >= FAILED_AT_INIT_WALL_IMG)
-	// 	mlx_destroy_image(data->mlx_ptr, data->north_texture_img.mlx_img);
-	// if (error >= FAILED_AT_SOUTH_TEXTURE_IMG)
-	// 	mlx_destroy_image(data->mlx_ptr, data->south_texture_img.mlx_img);
-	// if (error >= FAILED_AT_WEST_TEXTURE_IMG)
-	// 	mlx_destroy_image(data->mlx_ptr, data->west_texture_img.mlx_img);
-	// if (error >= FAILED_AT_EST_TEXTURE_IMG)
-	// 	mlx_destroy_image(data->mlx_ptr, data->east_texture_img.mlx_img);
+	// if (error >= FAILED_AT_INIT_N_TEXT_IMG)
+	// 	mlx_destroy_image(data->mlx_ptr, data->no_text_img.mlx_img);
+	// if (error >= FAILED_AT_INIT_S_TEXT_IMG)
+	// 	mlx_destroy_image(data->mlx_ptr, data->so_text_img.mlx_img);
+	// if (error >= FAILED_AT_INIT_W_TEXT_IMG)
+	// 	mlx_destroy_image(data->mlx_ptr, data->we_text_img.mlx_img);
+	// if (error >= FAILED_AT_INIT_E_TEXT_IMG)
+	// 	mlx_destroy_image(data->mlx_ptr, data->ea_text_img.mlx_img);
 }
 
 void	end_program(t_data *data, t_error error, char *error_msg)
 {
 	if (error != NONE)
 		print_error_messages(error_msg);
-	if (error >= RESIZE_MALLOC_FAILED)
+	if (error >= HAS_DOUBLE_ENTRIE)
+	{
+		free(data->no_text_img_path);
+		free(data->so_text_img_path);
+		free(data->we_text_img_path);
+		free(data->ea_text_img_path);
+		free(data->file_content);
+	}
+	if (error >= WRONG_SHAPE)
 		free_map(data->map.array);
 	if (error >= FAILED_AT_INIT_WALL_IMG)
 	{

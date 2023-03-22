@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:42:24 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/21 19:00:03 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:10:58 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,16 @@ void	get_file_content(t_data *data, char *filename)
 
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
-		end_program(data, OPENING_MAP_FAILED, FAILED_AT_OPENING_MAP_MSG);
+		end_program(data, OPENING_FILE_FAILED, FAILED_AT_OPENING_FILE_MSG);
 	data->file_content = read_all(fd);
-	close(fd);
 	if (data->file_content == NULL)
-		end_program(data, READING_MAP_FAILED, FAILED_AT_READING_MAP_MSG);
+	{
+		close(fd);
+		end_program(data, READING_FILE_FAILED, FAILED_AT_READING_FILE_MSG);
+	}
+	if (close(fd) < 0)
+	{
+		free(data->file_content);
+		end_program(data, CLOSING_FILE_FAILED, FAILED_AT_CLOSING_FILE_MSG);
+	}
 }

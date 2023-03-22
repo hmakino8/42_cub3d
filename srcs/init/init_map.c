@@ -63,5 +63,4 @@ void	init_map(t_data *data, t_map *map)
 			resize_line(data, &map->array[y], map->width);
 		y++;
 	}
-	check_map(data, map);
 }

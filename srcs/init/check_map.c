@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 14:45:46 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/21 16:09:29 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:50:52 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	set_player_data(t_data *data, char c, size_t x, size_t y)
 {
-	data->player.x = (x * CUBE_SIZE) + (CUBE_SIZE / 2);
-	data->player.y = (y * CUBE_SIZE) + (CUBE_SIZE / 2);
+	data->player.x = (x * BPP) + (BPP / 2);
+	data->player.y = (y * BPP) + (BPP / 2);
 	data->map.has_player = true;
-	if (c == PLAYER_E)
+	if (c == P_E)
 		data->player.angle = 0;
-	else if (c == PLAYER_N)
+	else if (c == P_N)
 		data->player.angle = 90;
-	else if (c == PLAYER_W)
+	else if (c == P_W)
 		data->player.angle = 180;
-	else if (c == PLAYER_S)
+	else if (c == P_S)
 		data->player.angle = 270;
 }
 
@@ -40,7 +40,7 @@ void	check_objects_on_map(t_data *data, t_map *map)
 		while (x < map->width)
 		{
 			c = map->array[y][x];
-			if (c == PLAYER_N || c == PLAYER_S || c == PLAYER_E || c == PLAYER_W)
+			if (c == P_N || c == P_S || c == P_W || c == P_E)
 			{
 				if (map->has_player == true)
 					end_program(data, TOO_MUCH_PLAYER, TO_MUCH_PLAYER_MSG);
@@ -48,7 +48,7 @@ void	check_objects_on_map(t_data *data, t_map *map)
 				map->array[y][x] = EMPTY;
 			}
 			else if (c != WALL && c != EMPTY && c != ' ')
-				end_program(data, UNDEFINED_CHARACTER, UNDEFINED_CHARACTER_MSG);
+				end_program(data, MAP_UNDEF_CHAR, MAP_UNDEF_CHAR_MSG);
 			x++;
 		}
 		y++;
@@ -67,7 +67,7 @@ void	check_invalid_spaces(t_data *data, t_map *map)
 		while (x < map->width)
 		{
 			if (map->array[y][x] == ' ')
-				end_program(data, UNDEFINED_CHARACTER, UNDEFINED_CHARACTER_MSG);
+				end_program(data, MAP_UNDEF_CHAR, MAP_UNDEF_CHAR_MSG);
 			x++;
 		}
 		y++;

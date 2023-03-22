@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 08:47:12 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 08:47:39 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:22:49 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,21 @@ bool	check_empty_line(char *map)
 
 void	get_map_content(t_data *data, size_t i)
 {
-	char *map_content;
+	char	*map_content;
 
 	map_content = ft_strdup(&data->file_content[i]);
-	free(data->file_content);
 	if (map_content == NULL)
-		end_program(data, MALLOC_FAILED, FAILED_ON_MALLOC_MSG);
+		end_program(data, GET_MAP_MALLOC_FAILED, FAILED_ON_MALLOC_MSG);
 	map_content = skip_head_tail_empty_lines(map_content);
 	if (map_content == NULL)
 		end_program(data, EMPTY_MAP, EMPTY_MAP_MSG);
 	if (check_empty_line(map_content) == false)
 	{
 		free(map_content);
-		end_program(data, HAS_EMPTY_LINE, HAS_EMPTY_LINE_MSG);
+		end_program(data, MAP_HAS_EMPTY_LINE, MAP_HAS_EMPTY_LINE_MSG);
 	}
 	data->map.array = ft_split(map_content, '\n');
+	free(map_content);
 	if (data->map.array == NULL)
-		end_program(data, MALLOC_FAILED, FAILED_ON_MALLOC_MSG);
+		end_program(data, MAP_SPLIT_MALLOC_FAILED, FAILED_ON_MALLOC_MSG);
 }

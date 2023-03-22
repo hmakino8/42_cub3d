@@ -6,17 +6,11 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 10:45:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 18:11:02 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 13:25:32 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	print_error_messages(char *error_msg)
-{
-	ft_putendl_fd(ERROR_MSG, STDERR_FILENO);
-	ft_putendl_fd(error_msg, STDERR_FILENO);
-}
 
 int	main(int argc, char *argv[])
 {
@@ -25,8 +19,8 @@ int	main(int argc, char *argv[])
 	if (argc != 2)
 		end_program(&data, WRONG_NB_OF_ARGS, WRONG_NB_OF_ARGS_MSG);
 	pgrm_init(&data, argv[1]);
-	data.window_height = data.map.height * CUBE_SIZE;
-	data.window_width = data.map.width * CUBE_SIZE;
+	data.window_height = data.map.height * BPP;
+	data.window_width = data.map.width * BPP;
 	data.player.delta_x = cos(deg_to_rad(data.player.angle));
 	data.player.delta_y = -sin(deg_to_rad(data.player.angle));
 	put_in_loop(&data);
