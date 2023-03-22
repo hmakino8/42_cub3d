@@ -6,17 +6,11 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 10:45:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 18:11:02 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 11:30:21 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-void	print_error_messages(char *error_msg)
-{
-	ft_putendl_fd(ERROR_MSG, STDERR_FILENO);
-	ft_putendl_fd(error_msg, STDERR_FILENO);
-}
 
 int	main(int argc, char *argv[])
 {

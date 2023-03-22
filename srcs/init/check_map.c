@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 14:45:46 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/21 16:09:29 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 12:09:56 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	check_objects_on_map(t_data *data, t_map *map)
 				map->array[y][x] = EMPTY;
 			}
 			else if (c != WALL && c != EMPTY && c != ' ')
-				end_program(data, UNDEFINED_CHARACTER, UNDEFINED_CHARACTER_MSG);
+				end_program(data, MAP_UNDEFINED_CHARACTER, MAP_UNDEFINED_CHARACTER_MSG);
 			x++;
 		}
 		y++;
@@ -67,7 +67,7 @@ void	check_invalid_spaces(t_data *data, t_map *map)
 		while (x < map->width)
 		{
 			if (map->array[y][x] == ' ')
-				end_program(data, UNDEFINED_CHARACTER, UNDEFINED_CHARACTER_MSG);
+				end_program(data, MAP_UNDEFINED_CHARACTER, MAP_UNDEFINED_CHARACTER_MSG);
 			x++;
 		}
 		y++;

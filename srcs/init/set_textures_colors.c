@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 18:42:14 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 09:39:45 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 11:52:26 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	set_img_path(t_data *data, char *content, size_t *i, char **path_to_set)
 	*path_to_set = ft_strndup(&content[*i], path_len);
 	(*i) += path_len;
 	if (*path_to_set == NULL)
-		end_program(data, MALLOC_FAILED, FAILED_ON_MALLOC_MSG);
+		end_program(data, IMG_PATH_MALLOC_FAILED, FAILED_ON_MALLOC_MSG);
 }
 
 void	set_default_texture_color(t_data *data)
@@ -135,7 +135,7 @@ size_t	set_texture_and_color(t_data *data)
 		else if (ft_strncmp(&content[i], "C", 1) == 0)
 			set_rgb_color(data, content, &i, &data->ceiling_color);
 		else
-			end_program(data, UNDEFINED_CHARACTER, UNDEFINED_CHARACTER_MSG);
+			end_program(data, UNDEFINED_ENTRIE, UNDEFINED_ENTRIE_MSG);
 	}
 	if (content[i] == '\0' || !check_texture_and_color(data))
 		end_program(data, ELEMENT_MISSING, ELEMENT_MISSING_MSG);
