@@ -49,13 +49,10 @@ void	resize_line(t_data *data, char **line_adress, size_t witdh)
 	*line_adress = resized_line;
 }
 
-void	init_map(t_data *data, t_map *map, char *filename)
+void	init_map(t_data *data, t_map *map)
 {
 	size_t	y;
 
-	map->array = NULL;
-	check_filename(data, filename);
-	get_file_content(data, filename);
 	set_map_height_width(map);
 	if (map->height < HEIGHT_MIN || map->width < WITDH_MIN)
 		end_program(data, WRONG_SHAPE, WRONG_SHAPE_MSG);

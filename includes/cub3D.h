@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/21 16:06:46 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/22 09:40:19 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,12 @@
 # define FAILED_AT_INIT_IMGS_MSG "Failed at init images."
 # define MLX_LOOP_ISSUE_MSG "Issue occured on MLX loop."
 
+# define HAS_DOUBLE_ENTRIE_MSG "A same element was declared twice."
+
+# define ELEMENT_MISSING_MSG "An element is missing."
+
+# define INVALID_COLOR_MSG "A color set is invalid."
+
 typedef enum e_error
 {
 	WRONG_NB_OF_ARGS,
@@ -76,6 +82,9 @@ typedef enum e_error
 	READING_MAP_FAILED,
 	EMPTY_MAP,
 	FAILED_AT_CLOSING_MAP,
+	HAS_DOUBLE_ENTRIE,
+	ELEMENT_MISSING,
+	INVALID_COLOR,
 	HAS_EMPTY_LINE,
 	MALLOC_FAILED,
 	RESIZE_MALLOC_FAILED,
@@ -91,6 +100,10 @@ typedef enum e_error
 	FAILED_AT_INIT_WALL_IMG,
 	FAILED_AT_INIT_EMPTY_IMG,
 	FAILED_AT_INIT_PLAYER_IMG,
+	FAILED_AT_NORTH_TEXTURE_IMG,
+	FAILED_AT_SOUTH_TEXTURE_IMG,
+	FAILED_AT_WEST_TEXTURE_IMG,
+	FAILED_AT_EST_TEXTURE_IMG,
 	NONE
 }	t_error;
 
@@ -104,6 +117,14 @@ typedef struct s_img
 	int		width;
 	int		height;
 }	t_img;
+
+typedef struct s_rgb_color
+{
+	int		red;
+	int		green;
+	int		blue;
+	bool	is_set;
+}	t_rgb_color;
 
 typedef struct s_player
 {
@@ -129,47 +150,68 @@ typedef struct s_data
 	int			cur_img;
 	int			window_width;
 	int			window_height;
+	char		*file_content;
 	t_img		wall_img;
 	t_img		empty_img;
 	t_img		player_img;
+	t_img		north_texture_img;
+	t_img		south_texture_img;
+	t_img		west_texture_img;
+	t_img		east_texture_img;
+	t_img		floor_texture_img;
+	t_img		ceiling_texture_img;
+	char		*north_texture_img_path;
+	char		*south_texture_img_path;
+	char		*west_texture_img_path;
+	char		*east_texture_img_path;
+	t_rgb_color	floor_color;
+	t_rgb_color	ceiling_color;
 	t_map		map;
 	t_player	player;
 }	t_data;
 
+/******************************************************************************/
+/*************************************ROOT*************************************/
+/******************************************************************************/
 /*			cub3D.c					*/
 void	print_error_messages(char *error_msg);
-
+/*			end_program.c		*/
+void	end_program(t_data *data, t_error error, char *error_msg);
+/******************************************************************************/
+/*************************************INIT*************************************/
+/******************************************************************************/
+/*			check_map.c				*/
+void	check_map(t_data *data, t_map *map);
+/*			check_wall.c	*/
+void	check_map_wall(t_data *data, t_map *map);
 /*			get_file_content.c		*/
 void	check_filename(t_data *data, char *str);
 void	get_file_content(t_data *data, char *filename);
-
-/*			check_map.c				*/
-void	check_map(t_data *data, t_map *map);
-
-/*			init_map.c	*/
-void	init_map(t_data *data, t_map *map, char *filename);
-
-/*			check_map_wall.c	*/
-void	check_map_wall(t_data *data, t_map *map);
-
+/*			get_map_content.c		*/
+void	get_map_content(t_data *data, size_t i);
+/*			init_map.c				*/
+void	init_map(t_data *data, t_map *map);
+/*			init_images.c			*/
+void	images_init(t_data *data);
+/*			init_window.c			*/
+void	init_window(t_data *data);
 /*			init.c				*/
 void	pgrm_init(t_data *data, char *filename);
-void	init_window(t_data *data);
-void	images_init(t_data *data);
-
+/*			set_texture_and_color.c	*/
+size_t	set_texture_and_color(t_data *data);
+/******************************************************************************/
+/*************************************LOOP*************************************/
+/******************************************************************************/
 /*			loop.c				*/
 void	put_in_loop(t_data *data);
-
 /*			render_image.c		*/
 int		render_map(t_data *data);
-
-/*			end_program.c		*/
-void	end_program(t_data *data, t_error error, char *error_msg);
-
+/******************************************************************************/
+/*************************************TOOLS************************************/
+/******************************************************************************/
 /*			maths_utils.c		*/
 float	deg_to_rad(int a);
 int		fix_ang(int a);
-
 /*			read_all.c			*/
 char	*read_all(int fd);
 

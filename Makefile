@@ -6,28 +6,64 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/03/21 16:58:31 by pfrances         ###   ########.fr        #
+#    Updated: 2023/03/22 09:42:13 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 SRCS_DIR = srcs
 OBJS_DIR = objs
 
-SRCS = $(addprefix $(SRCS_DIR)/,	cub3D.c					\
-									init.c					\
-									init_map.c				\
-									get_file_content.c		\
-									check_map.c				\
-									check_map_wall.c		\
-									loop.c					\
-									render_image.c			\
-									end_program.c			\
-									maths_utils.c			\
-									read_all.c)
-OBJS = $(subst $(SRCS_DIR), $(OBJS_DIR), $(SRCS:.c=.o))
+###############################################################################
+###################################MAIN########################################
+###############################################################################
+SRCS_DIR = ./srcs
+OBJS_DIR = ./objs
+MAIN_SRCS = $(addprefix $(SRCS_DIR)/,			cub3D.c					\
+												end_program.c)
+MAIN_OBJS = $(subst $(SRCS_DIR), $(OBJS_DIR), $(MAIN_SRCS:.c=.o))
+SRCS = $(MAIN_SRCS)
+OBJS = $(MAIN_OBJS)
+###############################################################################
+###################################INIT########################################
+###############################################################################
+INIT_SRCS_DIR = $(SRCS_DIR)/init
+INIT_OBJS_DIR = $(OBJS_DIR)/init
+INIT_SRCS = $(addprefix $(INIT_SRCS_DIR)/,	check_wall.c				\
+											check_map.c					\
+											get_file_content.c			\
+											get_map_content.c			\
+											init_images.c				\
+											init_map.c					\
+											init_window.c				\
+											init.c						\
+											set_textures_colors.c)
+INIT_OBJS = $(subst $(INIT_SRCS_DIR), $(INIT_OBJS_DIR), $(INIT_SRCS:.c=.o))
+SRCS += $(INIT_SRCS)
+OBJS += $(INIT_OBJS)
+###############################################################################
+###################################LOOP########################################
+###############################################################################
+LOOP_SRCS_DIR = $(SRCS_DIR)/loop
+LOOP_OBJS_DIR = $(OBJS_DIR)/loop
+LOOP_SRCS = $(addprefix $(LOOP_SRCS_DIR)/,	loop.c						\
+											render_image.c)
+LOOP_OBJS = $(subst $(LOOP_SRCS_DIR), $(LOOP_OBJS_DIR), $(LOOP_SRCS:.c=.o))
+SRCS += $(LOOP_SRCS)
+OBJS += $(LOOP_OBJS)
+###############################################################################
+###################################TOOLS#######################################
+###############################################################################
+TOOLS_SRCS_DIR = $(SRCS_DIR)/tools
+TOOLS_OBJS_DIR = $(OBJS_DIR)/tools
+TOOLS_SRCS = $(addprefix $(TOOLS_SRCS_DIR)/,	maths_utils.c			\
+												read_all.c)
+TOOLS_OBJS = $(subst $(TOOLS_SRCS_DIR), $(TOOLS_OBJS_DIR), $(TOOLS_SRCS:.c=.o))
+SRCS += $(TOOLS_SRCS)
+OBJS += $(TOOLS_OBJS)
+###############################################################################
 
 LIBS_DIR = ./libraries
 LIBFT_DIR = $(LIBS_DIR)/libft
@@ -73,6 +109,18 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX_LIBS) $(MATH_LIB) -o $(NAME)
+
+$(INIT_OBJS_DIR)/%.o: $(INIT_SRCS_DIR)/%.c $(MLX)
+	@mkdir -p $(INIT_OBJS_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINE_VARS) -c $< -o $@
+
+$(LOOP_OBJS_DIR)/%.o: $(LOOP_SRCS_DIR)/%.c $(MLX)
+	@mkdir -p $(LOOP_OBJS_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINE_VARS) -c $< -o $@
+
+$(TOOLS_OBJS_DIR)/%.o: $(TOOLS_SRCS_DIR)/%.c $(MLX)
+	@mkdir -p $(TOOLS_OBJS_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINE_VARS) -c $< -o $@
 
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(MLX)
 	@mkdir -p $(OBJS_DIR)
