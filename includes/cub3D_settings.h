@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 17:01:45 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/26 14:12:21 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define RAY 0x000000
 # define VIEW_POINT 0xFF0000
 # define BUFFER_SIZE 1024
+# define FOV 66
+# define DICT_CHANGE 5
 # define HEIGHT_MIN 3
 # define WITDH_MIN 3
 # define BPP 64

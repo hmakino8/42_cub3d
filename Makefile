@@ -6,7 +6,7 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/03/22 17:01:11 by pfrances         ###   ########.fr        #
+#    Updated: 2023/03/26 14:18:16 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -144,13 +144,13 @@ clean:
 	rm -rf $(OBJS_DIR)
 	make -C $(LIBFT_DIR) clean
 	make -C $(FT_PRINTF_DIR) clean
-#	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
+	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(LIBFT)
 	rm -f $(FT_PRINTF)
-#	rm -rf $(MLX_DIR)
+	rm -rf $(MLX_DIR)
 
 re: fclean all
 
