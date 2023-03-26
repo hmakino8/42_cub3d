@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:53:32 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 16:48:52 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/26 14:22:27 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void	player_moves(int key, t_pos *p_pos, char **map_array)
 void	player_change_direction(int key, float *angle, t_delta_pos *delta)
 {
 	if (key == XK_Left)
-		*angle += 5;
+		*angle += DICT_CHANGE;
 	else
-		*angle -= 5;
+		*angle -= DICT_CHANGE;
 	*angle = fix_ang(*angle);
 	delta->x = cos(deg_to_rad(*angle));
 	delta->y = -sin(deg_to_rad(*angle));

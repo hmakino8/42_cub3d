@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 16:49:02 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/26 14:21:58 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_delta_pos
 typedef struct s_player
 {
 	t_pos		pos_pxl;
-	t_pos		pos_map;
 	t_delta_pos	delta;
 	float		angle;
 }	t_player;

@@ -6,76 +6,78 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 17:03:33 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/26 14:22:51 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-// bool	is_here_player(t_pos cur, t_pos p_pos)
-// {
-// 	return (cur.x == p_pos.x / BPP && cur.y == p_pos.y / BPP);
-// }
-
-bool	is_within_the_view_point(t_pos p_pos, t_pos pos)
+bool	is_here_player(t_pos cur, t_pos p_pos)
 {
-	return (pos.y < p_pos.y + 20 && pos.x < p_pos.x + 20);
+	if (cur.x == p_pos.x / BPP && cur.y == p_pos.y / BPP)
+		return (true);
+	else if (cur.x == (p_pos.x + PLAYER_SIZE) / BPP && cur.y == p_pos.y / BPP)
+		return (true);
+	else if (cur.x == p_pos.x / BPP && cur.y == (p_pos.y + PLAYER_SIZE) / BPP)
+		return (true);
+	else if (cur.x == (p_pos.x + PLAYER_SIZE) / BPP
+		&& cur.y == (p_pos.y + PLAYER_SIZE) / BPP)
+	return (true);
 }
 
-bool	is_drawable(char **array, t_pos *ray)
+void	draw_rays(t_data *data)
 {
-	// if (pos.x / BPP > cur->x)
-	// 	ray->x++;
-	// if (pos.y / BPP > cur->y)
-	// 	->y++;
-	return (array[ray->y / BPP][ray->x / BPP] != WALL);
-}
-
-void	draw_view_point(t_data *data, t_pos pos, int i)
-{
-	void		*mlx_ptr;
-	void		*win_ptr;
-
-	mlx_ptr = data->mlx_ptr;
-	win_ptr = data->win_ptr;
-	mlx_pixel_put(mlx_ptr, win_ptr, pos.x - 1 + i, pos.y, VIEW_POINT);
-	if (i < 2)
-		draw_view_point(data, pos, i + 1);
-}
-
-void	draw_player(t_data *data, t_pos cur)
-{
-	t_pos		p_pos;
 	t_pos		ray;
+	t_pos		player_pxl;
+	t_delta_pos	side;
 	t_delta_pos	delta;
 
-	p_pos.x = data->player.pos_pxl.x;
-	p_pos.y = data->player.pos_pxl.y;
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->player_img.mlx_img, p_pos.x, p_pos.y);
-	ray.x = p_pos.x + PLAYER_SIZE / 2;
-	ray.y = p_pos.y + PLAYER_SIZE / 2;
-	delta.x = 0;
-	delta.y = 0;
+	delta = data->player.delta;
+	delta.x *= BPP;
+	delta.y *= BPP;
 
-	//int i = 0;
-	//(void)cur;
-	while (is_drawable(data->map.array, &ray))
-	//while (i < 10)
+	player_pxl = data->player.pos_pxl;
+
+	if (delta.x > 0)
+		side.x = BPP - (player_pxl.x % BPP);
+	else
+		side.x = -(player_pxl.x % BPP);
+	if (delta.y > 0)
+		side.y = BPP - (player_pxl.y % BPP);
+	else
+		side.y = -(player_pxl.y % BPP);
+
+	if (fabs(side.x / delta.x) < fabs(side.y / delta.y))
 	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, ray.x, ray.y, RAY);
-		if (is_within_the_view_point(p_pos, ray))
-			draw_view_point(data, ray, 0);
-		printf("pos.x = %f\n", delta.x);
-		printf("pos.y = %f\n", delta.y);
-		delta.x += data->player.delta.x;
-		delta.y += data->player.delta.y;
-		ray.x += (int)delta.x;
-		ray.y += (int)delta.y;
-		// pos.x += tmp.x;
-		// pos.y += tmp.y;
-		//i++;
+		//x de susumu
+		ray.x = player_pxl.x + side.x;
+		ray.y = player_pxl.y + fabs(side.x) * delta.y / BPP;
+
+		side.x = BPP;
+		side.y -= side.x * delta.y / BPP;
 	}
+	else if (fabs(side.x / delta.x) > fabs(side.y / delta.y))
+	{
+		//y de susumu
+		ray.x = player_pxl.x + fabs(side.y) * delta.x / BPP;
+		ray.y = player_pxl.y + side.y;
+
+		side.x -= side.y * delta.x / BPP;
+		side.y = BPP;
+	}
+	else {
+		ray.x = player_pxl.x + side.x;
+		ray.y = player_pxl.y + side.y;
+
+		side.x = BPP;
+		side.y = BPP;
+	}
+
+	ray.x -= PLAYER_SIZE / 2;
+	ray.y -= PLAYER_SIZE / 2;
+	printf("delta.x: %f  | delta.y: %f\n", delta.x, delta.y);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+		data->player_img.mlx_img, ray.x, ray.y);
 }
 
 void	put_images(t_data *data, t_pos cur)
@@ -95,8 +97,13 @@ void	put_images(t_data *data, t_pos cur)
 	{
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 			data->empty_img.mlx_img, pos.x, pos.y);
+		if (is_here_player(cur, data->player.pos_pxl))
+		{
+			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+				data->player_img.mlx_img,
+				data->player.pos_pxl.x, data->player.pos_pxl.y);
+		}
 	}
-	draw_player(data, cur);
 }
 
 int	render_map(t_data *data)
@@ -116,5 +123,6 @@ int	render_map(t_data *data)
 		}
 		cur.y++;
 	}
+	draw_rays(data);
 	return (0);
 }

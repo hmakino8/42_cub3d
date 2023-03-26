@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 14:45:46 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 16:49:48 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/26 14:22:16 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	set_player_data(t_data *data, char c, t_pos pos)
 {
-	data->player.pos_map.x = pos.x;
-	data->player.pos_map.y = pos.y;
 	data->player.pos_pxl.x = (pos.x * BPP) + (BPP / 2);
 	data->player.pos_pxl.y = (pos.y * BPP) + (BPP / 2);
 	data->map.has_player = true;
