@@ -6,16 +6,16 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 14:45:46 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/26 14:22:16 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/27 10:16:45 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	set_player_data(t_data *data, char c, t_pos pos)
+void	set_player_data(t_data *data, char c, t_pos cur)
 {
-	data->player.pos_pxl.x = (pos.x * BPP) + (BPP / 2);
-	data->player.pos_pxl.y = (pos.y * BPP) + (BPP / 2);
+	data->player.pixel.x = (cur.x * BPP) + (BPP / 2);
+	data->player.pixel.y = (cur.y * BPP) + (BPP / 2);
 	data->map.has_player = true;
 	if (c == P_E)
 		data->player.angle = 0;
@@ -29,46 +29,46 @@ void	set_player_data(t_data *data, char c, t_pos pos)
 
 void	check_objects_on_map(t_data *data, t_map *map)
 {
-	t_pos	pos;
+	t_pos	cur;
 	char	c;
 
-	pos.y = 0;
-	while (pos.y < map->height)
+	cur.y = 0;
+	while (cur.y < map->size.h)
 	{
-		pos.x = 0;
-		while (pos.x < map->width)
+		cur.x = 0;
+		while (cur.x < map->size.w)
 		{
-			c = map->array[pos.y][pos.x];
+			c = map->array[cur.y][cur.x];
 			if (c == P_N || c == P_S || c == P_W || c == P_E)
 			{
 				if (map->has_player == true)
 					end_program(data, TOO_MUCH_PLAYER, TO_MUCH_PLAYER_MSG);
-				set_player_data(data, c, pos);
-				map->array[pos.y][pos.x] = EMPTY;
+				set_player_data(data, c, cur);
+				map->array[cur.y][cur.x] = EMPTY;
 			}
 			else if (c != WALL && c != EMPTY && c != ' ')
 				end_program(data, MAP_UNDEF_CHAR, MAP_UNDEF_CHAR_MSG);
-			pos.x++;
+			cur.x++;
 		}
-		pos.y++;
+		cur.y++;
 	}
 }
 
 void	check_invalid_spaces(t_data *data, t_map *map)
 {
-	t_pos	pos;
+	t_pos	cur;
 
-	pos.y = 0;
-	while (pos.y < map->height)
+	cur.y = 0;
+	while (cur.y < map->size.h)
 	{
-		pos.x = 0;
-		while (pos.x < map->width)
+		cur.x = 0;
+		while (cur.x < map->size.w)
 		{
-			if (map->array[pos.y][pos.x] == ' ')
+			if (map->array[cur.y][cur.x] == ' ')
 				end_program(data, MAP_UNDEF_CHAR, MAP_UNDEF_CHAR_MSG);
-			pos.x++;
+			cur.x++;
 		}
-		pos.y++;
+		cur.y++;
 	}
 }
 

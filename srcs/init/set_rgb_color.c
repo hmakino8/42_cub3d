@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 13:30:06 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 14:02:12 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/27 10:17:32 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	get_and_check_rgb_value(char *content, size_t *i, bool is_last)
 	return (value);
 }
 
-void	set_rgb_color(t_data *data, char *content, size_t *i, t_rgb *color)
+void	set_rgb_color(t_data *data, char *content, size_t *i, t_rgb_info *color)
 {
 	if (color->is_set == true)
 		end_program(data, HAS_DOUBLE_ENTRIE, HAS_DOUBLE_ENTRIE_MSG);

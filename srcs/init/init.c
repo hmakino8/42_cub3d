@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:41:05 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 16:41:01 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/27 10:17:24 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@ void	check_parse(t_data *data)
 	size_t	y;
 
 	ft_printf("north: '%s'\nsouth: '%s'\nwest: '%s'\neast: '%s'\n\n",
-		data->no_text_img_path, data->so_text_img_path,
-		data->we_text_img_path, data->ea_text_img_path);
+		data->img.north_text.path, data->img.south_text.path,
+		data->img.west_text.path, data->img.east_text.path);
 	ft_printf("f_red: '%d'\nf_green: '%d'\nf_blue: '%d'\nf_is_set : '%d'\n\n",
-		data->floor_color.red, data->floor_color.green,
-		data->floor_color.blue, data->floor_color.is_set);
+		data->color.floor.red, data->color.floor.green,
+		data->color.floor.blue, data->color.floor.is_set);
 	ft_printf("c_red: '%d'\nc_green: '%d'\nc_blue: '%d'\nc_is_set : '%d'\n\n",
-		data->ceiling_color.red, data->ceiling_color.green,
-		data->ceiling_color.blue, data->ceiling_color.is_set);
+		data->color.ceiling.red, data->color.ceiling.green,
+		data->color.ceiling.blue, data->color.ceiling.is_set);
 	y = 0;
 	while (data->map.array[y] != NULL)
 	{

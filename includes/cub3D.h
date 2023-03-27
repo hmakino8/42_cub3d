@@ -6,16 +6,15 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/26 14:21:58 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/27 10:16:10 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-///debug
+/* for debug*/
 # include <stdio.h>
-///
 
 # include "ft_printf.h"
 # include "libft.h"
@@ -31,78 +30,94 @@
 # include <stdbool.h>
 # include <stdlib.h>
 
-typedef struct s_img
+
+typedef struct s_size		t_size;
+typedef struct s_map		t_map;
+typedef struct s_pos		t_pos;
+typedef struct s_img_info	t_img_info;
+typedef struct s_img		t_img;
+typedef struct s_rgb_info	t_rgb_info;
+typedef struct s_rgb		t_rgb;
+typedef struct s_player		t_player;
+typedef struct s_data		t_data;
+
+struct s_size
+{
+	int	w;
+	int	h;
+};
+
+struct s_pos
+{
+	int		x;
+	int		y;
+	float	f_x;
+	float	f_y;
+};
+
+struct s_img_info
 {
 	void	*mlx_img;
 	char	*addr;
 	int		bpp;
-	int		line_len;
 	int		endian;
-	int		width;
-	int		height;
-}	t_img;
+	char	*path;
+	t_size	size;
+};
 
-typedef struct s_rgb_color
+struct s_img
+{
+	t_img_info	wall;
+	t_img_info	empty;
+	t_img_info	player;
+	t_img_info	north_text;
+	t_img_info	south_text;
+	t_img_info	west_text;
+	t_img_info	east_text;
+	t_img_info	floor_text;
+	t_img_info	ceiling_text;
+};
+
+struct s_rgb_info
 {
 	int		red;
 	int		green;
 	int		blue;
 	bool	is_set;
-}	t_rgb;
+};
 
-typedef struct s_pos
+struct s_rgb
 {
-	int	x;
-	int	y;
-}	t_pos;
+	t_rgb_info	floor;
+	t_rgb_info	ceiling;
+};
 
-typedef struct s_delta_pos
+struct s_player
 {
-	float	x;
-	float	y;
-}	t_delta_pos;
+	t_pos	pixel;
+	t_pos	delta;
+	float	angle;
+};
 
-typedef struct s_player
-{
-	t_pos		pos_pxl;
-	t_delta_pos	delta;
-	float		angle;
-}	t_player;
-
-typedef struct s_map
+struct s_map
 {
 	char	**array;
-	int		height;
-	int		width;
 	bool	has_player;
-}	t_map;
+	t_size	size;
+};
 
-typedef struct s_data
+struct s_data
 {
+	int			cur_img;
+	char		*file_content;
 	void		*mlx_ptr;
 	void		*win_ptr;
-	int			cur_img;
-	int			window_width;
-	int			window_height;
-	char		*file_content;
-	t_img		wall_img;
-	t_img		empty_img;
-	t_img		player_img;
-	t_img		no_text_img;
-	t_img		so_text_img;
-	t_img		we_text_img;
-	t_img		ea_text_img;
-	t_img		floor_texture_img;
-	t_img		ceiling_texture_img;
-	char		*no_text_img_path;
-	char		*so_text_img_path;
-	char		*we_text_img_path;
-	char		*ea_text_img_path;
-	t_rgb		floor_color;
-	t_rgb		ceiling_color;
+	t_size		win_size;
+	t_img		img;
+	t_rgb		color;
 	t_map		map;
 	t_player	player;
-}	t_data;
+};
 
 /****************************************************************************/
 /************************************ROOT************************************/
@@ -145,7 +160,7 @@ void	pgrm_init(t_data *data, char *filename);
 size_t	set_texture_and_color(t_data *data);
 
 /*								set_rgb_color.c								*/
-void	set_rgb_color(t_data *data, char *content, size_t *i, t_rgb *color);
+void	set_rgb_color(t_data *data, char *content, size_t *i, t_rgb_info *color);
 
 /****************************************************************************/
 /************************************LOOP************************************/

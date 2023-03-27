@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 18:42:14 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 14:01:38 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/27 10:17:41 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,28 @@ void	set_img_path(t_data *data, char *content, size_t *i, char **path_to_set)
 
 void	set_default_texture_color(t_data *data)
 {
-	data->no_text_img_path = NULL;
-	data->so_text_img_path = NULL;
-	data->we_text_img_path = NULL;
-	data->ea_text_img_path = NULL;
-	data->floor_color.red = -1;
-	data->floor_color.green = -1;
-	data->floor_color.blue = -1;
-	data->floor_color.is_set = false;
-	data->ceiling_color.red = -1;
-	data->ceiling_color.green = -1;
-	data->ceiling_color.blue = -1;
-	data->ceiling_color.is_set = false;
+	data->img.north_text.path = NULL;
+	data->img.south_text.path = NULL;
+	data->img.west_text.path = NULL;
+	data->img.east_text.path = NULL;
+	data->color.floor.red = -1;
+	data->color.floor.green = -1;
+	data->color.floor.blue = -1;
+	data->color.floor.is_set = false;
+	data->color.ceiling.red = -1;
+	data->color.ceiling.green = -1;
+	data->color.ceiling.blue = -1;
+	data->color.ceiling.is_set = false;
 }
 
 bool	check_texture_and_color(t_data *data)
 {
-	if (data->no_text_img_path == NULL
-		|| data->so_text_img_path == NULL
-		|| data->we_text_img_path == NULL
-		|| data->ea_text_img_path == NULL
-		|| data->floor_color.is_set == false
-		|| data->ceiling_color.is_set == false)
+	if (data->img.north_text.path == NULL
+		|| data->img.south_text.path == NULL
+		|| data->img.west_text.path == NULL
+		|| data->img.east_text.path == NULL
+		|| data->color.floor.is_set == false
+		|| data->color.ceiling.is_set == false)
 		return (false);
 	return (true);
 }
@@ -62,17 +62,17 @@ bool	check_texture_and_color(t_data *data)
 void	set_right_element(t_data *data, char *content, size_t *i)
 {
 	if (ft_strncmp(&content[*i], "NO", 2) == 0)
-		set_img_path(data, content, i, &data->no_text_img_path);
+		set_img_path(data, content, i, &data->img.north_text.path);
 	else if (ft_strncmp(&content[*i], "SO", 2) == 0)
-		set_img_path(data, content, i, &data->so_text_img_path);
+		set_img_path(data, content, i, &data->img.south_text.path);
 	else if (ft_strncmp(&content[*i], "WE", 2) == 0)
-		set_img_path(data, content, i, &data->we_text_img_path);
+		set_img_path(data, content, i, &data->img.west_text.path);
 	else if (ft_strncmp(&content[*i], "EA", 2) == 0)
-		set_img_path(data, content, i, &data->ea_text_img_path);
+		set_img_path(data, content, i, &data->img.east_text.path);
 	else if (ft_strncmp(&content[*i], "F", 1) == 0)
-		set_rgb_color(data, content, i, &data->floor_color);
+		set_rgb_color(data, content, i, &data->color.floor);
 	else if (ft_strncmp(&content[*i], "C", 1) == 0)
-		set_rgb_color(data, content, i, &data->ceiling_color);
+		set_rgb_color(data, content, i, &data->color.ceiling);
 	else
 		end_program(data, UNDEFINED_ENTRIE, UNDEFINED_ENTRIE_MSG);
 }
