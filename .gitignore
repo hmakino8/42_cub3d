@@ -1,3 +1,6 @@
 example.c
 *.o
 cub3D
+*.a
+.gitignore
+.vscode
