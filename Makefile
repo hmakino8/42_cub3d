@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+         #
+#    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/03/26 23:39:21 by hiroaki          ###   ########.fr        #
+#    Updated: 2023/03/27 10:14:46 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -144,13 +144,13 @@ clean:
 	rm -rf $(OBJS_DIR)
 	make -C $(LIBFT_DIR) clean
 	make -C $(FT_PRINTF_DIR) clean
-	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
+#	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(LIBFT)
 	rm -f $(FT_PRINTF)
-	rm -rf $(MLX_DIR)
+#	rm -rf $(MLX_DIR)
 
 re: fclean all
 
