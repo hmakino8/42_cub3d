@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 18:42:14 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/27 10:17:41 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:21:34 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ void	set_right_element(t_data *data, char *content, size_t *i)
 	else if (ft_strncmp(&content[*i], "EA", 2) == 0)
 		set_img_path(data, content, i, &data->img.east_text.path);
 	else if (ft_strncmp(&content[*i], "F", 1) == 0)
-		set_rgb_color(data, content, i, &data->color.floor);
+		set_rgb(data, content, i, &data->color.floor);
 	else if (ft_strncmp(&content[*i], "C", 1) == 0)
-		set_rgb_color(data, content, i, &data->color.ceiling);
+		set_rgb(data, content, i, &data->color.ceiling);
 	else
 		end_program(data, UNDEFINED_ENTRIE, UNDEFINED_ENTRIE_MSG);
 }

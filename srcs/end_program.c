@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:48:22 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/27 10:16:31 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:19:54 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@ void	destroy_images(t_data *data, t_error error)
 		mlx_destroy_image(data->mlx_ptr, data->img.empty.mlx_img);
 	if (error >= FAILED_AT_INIT_PLAYER_IMG)
 		mlx_destroy_image(data->mlx_ptr, data->img.player.mlx_img);
-	 //if (error >= FAILED_AT_INIT_N_TEXT_IMG)
-	 //	mlx_destroy_image(data->mlx_ptr, data->img.north_text.mlx_img);
-	 //if (error >= FAILED_AT_INIT_S_TEXT_IMG)
-	 //	mlx_destroy_image(data->mlx_ptr, data->img.south_text.mlx_img);
-	 //if (error >= FAILED_AT_INIT_W_TEXT_IMG)
-	 //	mlx_destroy_image(data->mlx_ptr, data->img.west_text.mlx_img);
-	 //if (error >= FAILED_AT_INIT_E_TEXT_IMG)
-	 //	mlx_destroy_image(data->mlx_ptr, data->img.east_text.mlx_img);
+	//if (error >= FAILED_AT_INIT_N_TEXT_IMG)
+	//	mlx_destroy_image(data->mlx_ptr, data->img.north_text.mlx_img);
+	//if (error >= FAILED_AT_INIT_S_TEXT_IMG)
+	//	mlx_destroy_image(data->mlx_ptr, data->img.south_text.mlx_img);
+	//if (error >= FAILED_AT_INIT_W_TEXT_IMG)
+	//	mlx_destroy_image(data->mlx_ptr, data->img.west_text.mlx_img);
+	//if (error >= FAILED_AT_INIT_E_TEXT_IMG)
+	//	mlx_destroy_image(data->mlx_ptr, data->img.east_text.mlx_img);
 }
 
 void	end_program(t_data *data, t_error error, char *error_msg)

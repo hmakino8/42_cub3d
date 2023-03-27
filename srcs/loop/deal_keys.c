@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:53:32 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/27 10:17:53 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:19:28 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	is_move_key(int key)
 
 bool	is_directory_key(int key)
 {
-	return  (key == XK_Left || key == XK_Right);
+	return (key == XK_Left || key == XK_Right);
 }
 
 void	player_moves(int key, t_pos *p_pos, char **map_array)
@@ -51,15 +51,13 @@ void	player_moves(int key, t_pos *p_pos, char **map_array)
 	*p_pos = new;
 }
 
-void	player_change_direction(int key, float *angle, t_pos *delta)
+void	player_change_direction(int key, float *angle)
 {
 	if (key == XK_Left)
 		*angle += DICT_CHANGE;
 	else
 		*angle -= DICT_CHANGE;
 	*angle = fix_ang(*angle);
-	delta->f_x = cos(deg_to_rad(*angle));
-	delta->f_y = -sin(deg_to_rad(*angle));
 }
 
 int	deal_keys(int key, t_data *data)
@@ -70,8 +68,8 @@ int	deal_keys(int key, t_data *data)
 	if (key == XK_Escape)
 		end_program(data, NONE, NULL);
 	if (is_move_key(key))
-		player_moves(key, &player->pixel, data->map.array);
+		player_moves(key, &player->p_pos, data->map.array);
 	if (is_directory_key(key))
-		player_change_direction(key, &player->angle, &player->delta);
+		player_change_direction(key, &player->angle);
 	return (0);
 }

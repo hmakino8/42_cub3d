@@ -6,13 +6,13 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/03/27 10:14:46 by pfrances         ###   ########.fr        #
+#    Updated: 2023/03/27 14:21:45 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-CFLAGS = #-Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g
 SRCS_DIR = srcs
 OBJS_DIR = objs
 
@@ -40,7 +40,7 @@ INIT_SRCS = $(addprefix $(INIT_SRCS_DIR)/,	check_wall.c				\
 											init_window.c				\
 											init.c						\
 											set_textures_colors.c		\
-											set_rgb_color.c)
+											set_rgb.c)
 INIT_OBJS = $(subst $(INIT_SRCS_DIR), $(INIT_OBJS_DIR), $(INIT_SRCS:.c=.o))
 SRCS += $(INIT_SRCS)
 OBJS += $(INIT_OBJS)
@@ -51,6 +51,7 @@ LOOP_SRCS_DIR = $(SRCS_DIR)/loop
 LOOP_OBJS_DIR = $(OBJS_DIR)/loop
 LOOP_SRCS = $(addprefix $(LOOP_SRCS_DIR)/,	deal_keys.c					\
 											loop.c						\
+											rays.c						\
 											render_image.c)
 LOOP_OBJS = $(subst $(LOOP_SRCS_DIR), $(LOOP_OBJS_DIR), $(LOOP_SRCS:.c=.o))
 SRCS += $(LOOP_SRCS)
@@ -144,13 +145,13 @@ clean:
 	rm -rf $(OBJS_DIR)
 	make -C $(LIBFT_DIR) clean
 	make -C $(FT_PRINTF_DIR) clean
-#	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
+	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(LIBFT)
 	rm -f $(FT_PRINTF)
-#	rm -rf $(MLX_DIR)
+	rm -rf $(MLX_DIR)
 
 re: fclean all
 

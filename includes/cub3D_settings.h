@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/27 10:15:15 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/27 12:15:22 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,12 @@ typedef enum e_error
 	FAILED_AT_INIT_E_TEXT_IMG,
 	NONE
 }	t_error;
+
+typedef enum e_slide
+{
+	X_SLIDE,
+	Y_SLIDE,
+	XY_SLIDE
+}	t_slide;
 
 #endif

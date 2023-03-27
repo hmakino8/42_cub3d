@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/27 10:18:07 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/27 13:10:42 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,66 +26,6 @@ bool	is_here_player(t_pos cur, t_pos p_pos)
 	return (false);
 }
 
-//void	draw_rays(t_data *data)
-//{
-//	t_pos
-//}
-
-void	draw_rays(t_data *data)
-{
-	t_pos	ray;
-	t_pos	player_pxl;
-	t_pos	side;
-	t_pos	delta;
-
-	delta = data->player.delta;
-	delta.f_x *= BPP;
-	delta.f_y *= BPP;
-
-	player_pxl = data->player.pixel;
-
-	if (delta.f_x > 0)
-		side.f_x = BPP - (player_pxl.x % BPP);
-	else
-		side.f_x = -(player_pxl.x % BPP);
-	if (delta.f_y > 0)
-		side.f_y = BPP - (player_pxl.y % BPP);
-	else
-		side.f_y = -(player_pxl.y % BPP);
-
-	if (fabs(side.f_x / delta.f_x) < fabs(side.f_y / delta.f_y))
-	{
-		//x de susumu
-		ray.x = player_pxl.x + side.f_x;
-		ray.y = player_pxl.y + fabs(side.f_x) * delta.f_y / BPP;
-
-		side.f_x = BPP;
-		side.f_y -= side.f_x * delta.f_y / BPP;
-	}
-	else if (fabs(side.f_x / delta.f_x) > fabs(side.f_y / delta.f_y))
-	{
-		//y de susumu
-		ray.x = player_pxl.x + fabs(side.f_y) * delta.f_x / BPP;
-		ray.y = player_pxl.y + side.f_y;
-
-		side.f_x -= side.f_y * delta.f_x / BPP;
-		side.f_y = BPP;
-	}
-	else {
-		ray.x = player_pxl.x + side.f_x;
-		ray.y = player_pxl.y + side.f_y;
-
-		side.f_x = BPP;
-		side.f_y = BPP;
-	}
-
-	ray.x -= PLAYER_SIZE / 2;
-	ray.y -= PLAYER_SIZE / 2;
-	printf("delta.f_x: %f  | delta.f_y: %f\n", delta.f_x, delta.f_y);
-	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-		data->img.player.mlx_img, ray.x, ray.y);
-}
-
 void	put_images(t_data *data, t_pos cur)
 {
 	char	**map;
@@ -103,11 +43,11 @@ void	put_images(t_data *data, t_pos cur)
 	{
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 			data->img.empty.mlx_img, pos.x, pos.y);
-		if (is_here_player(cur, data->player.pixel))
+		if (is_here_player(cur, data->player.p_pos))
 		{
 			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 				data->img.player.mlx_img,
-				data->player.pixel.x, data->player.pixel.y);
+				data->player.p_pos.x, data->player.p_pos.y);
 		}
 	}
 }
@@ -129,6 +69,6 @@ int	render_map(t_data *data)
 		}
 		cur.y++;
 	}
-	draw_rays(data);
+	draw_rays(data, &data->player, &data->ray);
 	return (0);
 }

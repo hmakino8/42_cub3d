@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/27 10:16:10 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/27 14:21:34 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "cub3D_settings.h"
 
 # include <math.h>
+# include <float.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <sys/types.h>
@@ -30,15 +31,16 @@
 # include <stdbool.h>
 # include <stdlib.h>
 
-
 typedef struct s_size		t_size;
 typedef struct s_map		t_map;
 typedef struct s_pos		t_pos;
+typedef struct s_fpos		t_fpos;
 typedef struct s_img_info	t_img_info;
 typedef struct s_img		t_img;
 typedef struct s_rgb_info	t_rgb_info;
 typedef struct s_rgb		t_rgb;
 typedef struct s_player		t_player;
+typedef struct s_ray		t_ray;
 typedef struct s_data		t_data;
 
 struct s_size
@@ -51,6 +53,10 @@ struct s_pos
 {
 	int		x;
 	int		y;
+};
+
+struct s_fpos
+{
 	float	f_x;
 	float	f_y;
 };
@@ -92,10 +98,19 @@ struct s_rgb
 	t_rgb_info	ceiling;
 };
 
+struct s_ray
+{
+	t_pos	r_pos;
+	t_pos	side;
+	t_pos	dir;
+	t_fpos	delta;
+	float	angle;
+	bool	hit;
+};
+
 struct s_player
 {
-	t_pos	pixel;
-	t_pos	delta;
+	t_pos	p_pos;
 	float	angle;
 };
 
@@ -117,6 +132,7 @@ struct s_data
 	t_rgb		color;
 	t_map		map;
 	t_player	player;
+	t_ray		ray;
 };
 
 /****************************************************************************/
@@ -159,8 +175,8 @@ void	pgrm_init(t_data *data, char *filename);
 /*								set_texture_and_color.c						*/
 size_t	set_texture_and_color(t_data *data);
 
-/*								set_rgb_color.c								*/
-void	set_rgb_color(t_data *data, char *content, size_t *i, t_rgb_info *color);
+/*								set_rgb.c								*/
+void	set_rgb(t_data *data, char *content, size_t *i, t_rgb_info *color);
 
 /****************************************************************************/
 /************************************LOOP************************************/
@@ -172,6 +188,9 @@ int		deal_keys(int key, t_data *data);
 /*								loop.c										*/
 void	put_in_loop(t_data *data);
 
+/*								rays.c										*/
+void	draw_rays(t_data *data, t_player *player, t_ray *ray);
+
 /*								render_image.c								*/
 int		render_map(t_data *data);
 
@@ -182,6 +201,7 @@ int		render_map(t_data *data);
 /*								maths_utils.c								*/
 float	deg_to_rad(int a);
 int		fix_ang(int a);
+float	do_div(float num, float denum);
 
 /*								read_all.c									*/
 char	*read_all(int fd);

@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:41:05 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/27 10:17:24 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/27 11:29:25 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,4 @@ void	pgrm_init(t_data *data, char *filename)
 	check_map(data, &data->map);
 	init_window(data);
 	images_init(data);
-
-	data->player.delta.x = cos(deg_to_rad(data->player.angle));
-	data->player.delta.y = -sin(deg_to_rad(data->player.angle));
 }

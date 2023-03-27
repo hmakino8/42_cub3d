@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_rgb_color.c                                    :+:      :+:    :+:   */
+/*   set_rgb.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -60,7 +60,7 @@ int	get_and_check_rgb_value(char *content, size_t *i, bool is_last)
 	return (value);
 }
 
-void	set_rgb_color(t_data *data, char *content, size_t *i, t_rgb_info *color)
+void	set_rgb(t_data *data, char *content, size_t *i, t_rgb_info *color)
 {
 	if (color->is_set == true)
 		end_program(data, HAS_DOUBLE_ENTRIE, HAS_DOUBLE_ENTRIE_MSG);
