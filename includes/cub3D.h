@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/27 14:21:34 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/28 15:35:11 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct s_img_info	t_img_info;
 typedef struct s_img		t_img;
 typedef struct s_rgb_info	t_rgb_info;
 typedef struct s_rgb		t_rgb;
-typedef struct s_player		t_player;
 typedef struct s_ray		t_ray;
 typedef struct s_data		t_data;
 
@@ -57,8 +56,8 @@ struct s_pos
 
 struct s_fpos
 {
-	float	f_x;
-	float	f_y;
+	double	f_x;
+	double	f_y;
 };
 
 struct s_img_info
@@ -100,18 +99,17 @@ struct s_rgb
 
 struct s_ray
 {
+	t_pos	p_pos;
 	t_pos	r_pos;
-	t_pos	side;
+	t_pos	p_side;
+	t_pos	r_side;
 	t_pos	dir;
 	t_fpos	delta;
-	float	angle;
+	double	r_angle;
+	double	p_angle;
 	bool	hit;
-};
-
-struct s_player
-{
-	t_pos	p_pos;
-	float	angle;
+	t_pos	slide_count;
+	t_slide	next_slide;
 };
 
 struct s_map
@@ -131,7 +129,6 @@ struct s_data
 	t_img		img;
 	t_rgb		color;
 	t_map		map;
-	t_player	player;
 	t_ray		ray;
 };
 
@@ -189,7 +186,7 @@ int		deal_keys(int key, t_data *data);
 void	put_in_loop(t_data *data);
 
 /*								rays.c										*/
-void	draw_rays(t_data *data, t_player *player, t_ray *ray);
+void	draw_rays(t_data *data, t_ray *ray);
 
 /*								render_image.c								*/
 int		render_map(t_data *data);
@@ -199,9 +196,9 @@ int		render_map(t_data *data);
 /****************************************************************************/
 
 /*								maths_utils.c								*/
-float	deg_to_rad(int a);
+double	deg_to_rad(int a);
 int		fix_ang(int a);
-float	do_div(float num, float denum);
+double	do_div(double num, double denum);
 
 /*								read_all.c									*/
 char	*read_all(int fd);

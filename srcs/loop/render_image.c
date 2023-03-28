@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/27 13:10:42 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:29:48 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ void	put_images(t_data *data, t_pos cur)
 	{
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 			data->img.empty.mlx_img, pos.x, pos.y);
-		if (is_here_player(cur, data->player.p_pos))
+		if (is_here_player(cur, data->ray.p_pos))
 		{
 			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 				data->img.player.mlx_img,
-				data->player.p_pos.x, data->player.p_pos.y);
+				data->ray.p_pos.x - PLAYER_SIZE / 2,
+				data->ray.p_pos.y - PLAYER_SIZE / 2);
 		}
 	}
 }
@@ -69,6 +70,6 @@ int	render_map(t_data *data)
 		}
 		cur.y++;
 	}
-	draw_rays(data, &data->player, &data->ray);
+	draw_rays(data, &data->ray);
 	return (0);
 }

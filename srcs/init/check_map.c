@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 14:45:46 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/27 11:32:11 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/28 11:28:29 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 void	set_player_data(t_data *data, char c, t_pos cur)
 {
-	data->player.p_pos.x = (cur.x * BPP) + (BPP / 2);
-	data->player.p_pos.y = (cur.y * BPP) + (BPP / 2);
+	data->ray.p_pos.x = (cur.x * BPP) + (BPP / 2);
+	data->ray.p_pos.y = (cur.y * BPP) + (BPP / 2);
 	data->map.has_player = true;
 	if (c == P_E)
-		data->player.angle = 0;
+		data->ray.p_angle = 0;
 	else if (c == P_N)
-		data->player.angle = 90;
+		data->ray.p_angle = 90;
 	else if (c == P_W)
-		data->player.angle = 180;
+		data->ray.p_angle = 180;
 	else if (c == P_S)
-		data->player.angle = 270;
+		data->ray.p_angle = 270;
 }
 
 void	check_objects_on_map(t_data *data, t_map *map)
