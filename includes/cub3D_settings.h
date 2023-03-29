@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 11:56:49 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:02:58 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@
 # define VIEW_POINT 0xFF0000
 # define BUFFER_SIZE 1024
 # define FOV 66.0
-# define DICT_CHANGE 5
+# define DICT_CHANGE 5.0
 # define HEIGHT_MIN 3
 # define WITDH_MIN 3
-# define BPP 64
-# define PLAYER_SIZE 10
-# define P_MOVE 5
+# define BPP 1024
+# define CELL_SIZE 10
+# define PLAYER_SIZE 2
+# define P_MOVE 50
 
 # define EMPTY '0'
 # define WALL '1'
