@@ -6,11 +6,28 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:53:32 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 18:20:24 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/30 00:02:34 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
+
+bool	check_new_pos(t_pos new_pos, char **map)
+{
+	if (map[(new_pos.y + (PLAYER_SIZE / 2) * BPP / C_SIZE) / BPP]
+		[(new_pos.x + (PLAYER_SIZE / 2) * BPP / C_SIZE) / BPP] == WALL)
+		return (false);
+	else if (map[(new_pos.y + (PLAYER_SIZE / 2) * BPP / C_SIZE) / BPP]
+		[(new_pos.x - (PLAYER_SIZE / 2) * BPP / C_SIZE) / BPP] == WALL)
+		return (false);
+	else if (map[(new_pos.y - (PLAYER_SIZE / 2) * BPP / C_SIZE) / BPP]
+		[(new_pos.x + (PLAYER_SIZE / 2) * BPP / C_SIZE) / BPP] == WALL)
+		return (false);
+	else if (map[(new_pos.y - (PLAYER_SIZE / 2) * BPP / C_SIZE) / BPP]
+		[(new_pos.x - (PLAYER_SIZE / 2) * BPP / C_SIZE) / BPP] == WALL)
+		return (false);
+	return (true);
+}
 
 t_pos	move(t_pos pos, double angle, double distance)
 {
@@ -36,9 +53,8 @@ void	do_action(int key, t_ray *ray, char **map)
 			p_pos = move(p_pos, ray->p_angle - 180.0, P_MOVE);
 		else if (key == XK_d)
 			p_pos = move(p_pos, ray->p_angle + 90.0, P_MOVE);
-		if (map[p_pos.y / BPP][p_pos.x / BPP] == WALL)
-			return ;
-		ray->p_pos = p_pos;
+		if (check_new_pos(p_pos, map))
+			ray->p_pos = p_pos;
 	}
 	else if (key == XK_Left || key == XK_Right)
 	{

@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 18:11:29 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 22:54:10 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ struct s_size
 
 struct s_pos
 {
-	int		x;
-	int		y;
+	int	x;
+	int	y;
 };
 
 struct s_fpos
@@ -122,19 +122,20 @@ struct s_map
 	char	**array;
 	bool	has_player;
 	t_size	size;
+	t_size	mini_map_size;
 };
 
 struct s_data
 {
-	int			cur_img;
-	char		*file_content;
-	void		*mlx_ptr;
-	void		*win_ptr;
-	t_size		win_size;
-	t_img		img;
-	t_rgb		color;
-	t_map		map;
-	t_ray		ray;
+	int		cur_img;
+	char	*file_content;
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_size	win_size;
+	t_img	img;
+	t_rgb	color;
+	t_map	map;
+	t_ray	ray;
 };
 
 /****************************************************************************/
@@ -186,12 +187,14 @@ void	set_rgb(t_data *data, char *content, size_t *i, t_rgb_info *color);
 
 /*								deal_keys.c									*/
 int		deal_keys(int key, t_data *data);
+t_pos	move(t_pos pos, double angle, double distance);
 
 /*								loop.c										*/
 void	put_in_loop(t_data *data);
 
 /*								rays.c										*/
 void	draw_rays(t_data *data, t_ray *ray);
+
 /*								rays_utils.c								*/
 t_pos	get_side(t_pos pos, t_fpos delta);
 void	update_ray_pos(t_ray *ray);
