@@ -6,28 +6,11 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 17:47:06 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 19:01:59 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-t_pos	get_side(t_pos pos, t_fpos delta)
-{
-	if (delta.f_x > 0)
-		pos.x = BPP - (pos.x % BPP);
-	else
-		pos.x = pos.x % BPP;
-	if (delta.f_y > 0)
-		pos.y = BPP - (pos.y % BPP);
-	else
-		pos.y = pos.y % BPP;
-	if (pos.x == 0)
-		pos.x = BPP;
-	if (pos.y == 0)
-		pos.y = BPP;
-	return (pos);
-}
 
 void	init_ray(t_pos p_pos, t_ray *ray)
 {
@@ -55,84 +38,47 @@ void	check_wall(char **map, t_ray *ray)
 	t_pos	cell;
 
 	cell.x = (ray->r_pos.x + ray->r_dir.x) / BPP;
-	cell.y = (ray->r_pos.y +  ray->r_dir.y) / BPP;
+	cell.y = (ray->r_pos.y + ray->r_dir.y) / BPP;
 	if (map[cell.y][cell.x] == WALL)
-	{
 		ray->hit_wall = true;
-		ray->perpWallDist = fabs((ray->r_pos.x - ray->p_pos.x) * cos(deg_to_rad(ray->r_angle))
-				+ (ray->r_pos.y - ray->p_pos.y) * -sin(deg_to_rad(ray->r_angle)))
-				* cos(deg_to_rad(ray->r_angle - ray->p_angle));
-	}
 }
 
-void	update_ray_pos(t_ray *ray)
+void	calculate_ray_size(t_data *data, t_ray *ray)
 {
-	ray->r_pos = ray->p_pos;
-	if (ray->slide == X_SLIDE)
-	{
-		ray->r_pos.x += (ray->p_side.x + ray->slide_cnt.x * BPP) * ray->r_dir.x;
-		ray->r_pos.y += ((double)(ray->p_side.x + ray->slide_cnt.x * BPP)
-				* (ray->r_delta.f_y / fabs(ray->r_delta.f_x)));
-		ray->slide_cnt.x++;
-	}
-	else if (ray->slide == Y_SLIDE)
-	{
-		ray->r_pos.x += ((double)(ray->p_side.y + ray->slide_cnt.y * BPP)
-				* (ray->r_delta.f_x / fabs(ray->r_delta.f_y)));
-		ray->r_pos.y += (ray->p_side.y + ray->slide_cnt.y * BPP) * ray->r_dir.y;
-		ray->slide_cnt.y++;
-	}
-	else
-	{
-		ray->r_pos.x += (ray->p_side.x + ray->slide_cnt.x * BPP) * ray->r_dir.x;
-		ray->r_pos.y += (ray->p_side.y + ray->slide_cnt.y * BPP) * ray->r_dir.y;
-		ray->slide_cnt.y++;
-		ray->slide_cnt.x++;
-	}
-	ray->r_side = get_side(ray->r_pos, ray->r_delta);
-}
-
-void	set_next_slide(t_ray *ray)
-{
-	t_fpos	side_div_delta;
-	double	epsilon;
-
-	epsilon = 0.00001;
-	side_div_delta.f_x = do_div(ray->r_side.x, fabs(ray->r_delta.f_x));
-	side_div_delta.f_y = do_div(ray->r_side.y, fabs(ray->r_delta.f_y));
-	if (fabs(side_div_delta.f_x - side_div_delta.f_y) < epsilon)
-		ray->slide = XY_SLIDE;
-	else if (side_div_delta.f_x < side_div_delta.f_y)
-		ray->slide = X_SLIDE;
-	else
-		ray->slide = Y_SLIDE;
+	ray->perp_wall_dist = fabs((ray->r_pos.x - ray->p_pos.x)
+			* cos(deg_to_rad(ray->r_angle))
+			+ (ray->r_pos.y - ray->p_pos.y)
+			* -sin(deg_to_rad(ray->r_angle)))
+		* cos(deg_to_rad(ray->r_angle - ray->p_angle));
+	ray->line_height = ((data->win_size.h * BPP) / (ray->perp_wall_dist));
+	ray->w_start = -ray->line_height / 2 + data->win_size.h / 2;
+	ray->w_end = ray->line_height / 2 + data->win_size.h / 2;
+	if (ray->w_start < 0)
+		ray->w_start = 0;
+	if (ray->w_end >= data->win_size.h)
+		ray->w_end = data->win_size.h - 1;
 }
 
 void	render_ray(t_data *data, t_ray *ray, int x)
 {
 	int	y;
-	int	lineHeight;
-	int	drawStart;
-	int	drawEnd;
 
 	y = 0;
-	lineHeight = (int)((data->win_size.h * BPP) / (ray->perpWallDist + 1));
-	drawStart = -lineHeight / 2 + data->win_size.h / 2;
-	if(drawStart < 0)
-		drawStart = 0;
-	drawEnd = lineHeight / 2 + data->win_size.h / 2;
-	if(drawEnd >= data->win_size.h)
-		drawEnd = data->win_size.h - 1;
 	while (y < data->win_size.h)
 	{
-		if (y >= drawStart && y <= drawEnd && ray->slide == X_SLIDE)
+		if (x < data->map.size.w * CELL_SIZE
+			&& y < data->map.size.h * CELL_SIZE)
+			;
+		else if (y >= ray->w_start && y <= ray->w_end && ray->slide == X_SLIDE)
 			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0xFF0000);
-		else if (y >= drawStart && y <= drawEnd && ray->slide == Y_SLIDE)
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0xF80000);
-		else if (y < drawStart)
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, data->color.ceiling.bit_color);
+		else if (y >= ray->w_start && y <= ray->w_end && ray->slide == Y_SLIDE)
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x000000);
+		else if (y < ray->w_start)
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y,
+				data->color.ceiling.bit_color);
 		else
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, data->color.floor.bit_color);
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y,
+				data->color.floor.bit_color);
 		y++;
 	}
 }
@@ -144,7 +90,8 @@ void	draw_rays(t_data *data, t_ray *ray)
 	i = 0;
 	while (i < data->win_size.w)
 	{
-		ray->r_angle = ray->p_angle - FOV / 2.0 + i / (double)data->win_size.w * FOV;
+		ray->r_angle = ray->p_angle - FOV / 2.0 + i
+			/ (double)data->win_size.w * FOV;
 		init_ray(ray->p_pos, ray);
 		while (ray->hit_wall == false)
 		{
@@ -152,10 +99,7 @@ void	draw_rays(t_data *data, t_ray *ray)
 			update_ray_pos(ray);
 			check_wall(data->map.array, ray);
 		}
-			// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			// 	data->img.player.mlx_img,
-			// 	(ray->r_pos.x * CELL_SIZE / BPP) - PLAYER_SIZE / 2,
-			// 	(ray->r_pos.y * CELL_SIZE / BPP) - PLAYER_SIZE / 2);
+		calculate_ray_size(data, ray);
 		render_ray(data, ray, i);
 		i++;
 	}

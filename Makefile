@@ -6,7 +6,7 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/03/29 17:25:52 by pfrances         ###   ########.fr        #
+#    Updated: 2023/03/29 18:00:37 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ LOOP_OBJS_DIR = $(OBJS_DIR)/loop
 LOOP_SRCS = $(addprefix $(LOOP_SRCS_DIR)/,	deal_keys.c					\
 											loop.c						\
 											rays.c						\
+											rays_utils.c				\
 											render_image.c)
 LOOP_OBJS = $(subst $(LOOP_SRCS_DIR), $(LOOP_OBJS_DIR), $(LOOP_SRCS:.c=.o))
 SRCS += $(LOOP_SRCS)

@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 17:45:23 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 18:11:29 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,10 @@ struct s_ray
 	t_pos	slide_cnt;
 	t_slide	slide;
 	bool	hit_wall;
-	int		perpWallDist;
+	int		perp_wall_dist;
+	int		line_height;
+	int		w_start;
+	int		w_end;
 };
 
 struct s_map
@@ -189,6 +192,10 @@ void	put_in_loop(t_data *data);
 
 /*								rays.c										*/
 void	draw_rays(t_data *data, t_ray *ray);
+/*								rays_utils.c								*/
+t_pos	get_side(t_pos pos, t_fpos delta);
+void	update_ray_pos(t_ray *ray);
+void	set_next_slide(t_ray *ray);
 
 /*								render_image.c								*/
 int		render_map(t_data *data);
