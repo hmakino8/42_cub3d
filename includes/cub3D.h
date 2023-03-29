@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 13:51:05 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 17:45:23 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ struct s_rgb_info
 	int		red;
 	int		green;
 	int		blue;
+	int		bit_color;
 	bool	is_set;
 };
 
@@ -107,9 +108,10 @@ struct s_ray
 	t_fpos	r_delta;
 	double	r_angle;
 	double	p_angle;
-	bool	hit_wall;
 	t_pos	slide_cnt;
 	t_slide	slide;
+	bool	hit_wall;
+	int		perpWallDist;
 };
 
 struct s_map

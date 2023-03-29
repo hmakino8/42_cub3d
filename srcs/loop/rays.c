@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 14:00:01 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 17:47:06 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,12 @@ void	check_wall(char **map, t_ray *ray)
 	cell.x = (ray->r_pos.x + ray->r_dir.x) / BPP;
 	cell.y = (ray->r_pos.y +  ray->r_dir.y) / BPP;
 	if (map[cell.y][cell.x] == WALL)
+	{
 		ray->hit_wall = true;
+		ray->perpWallDist = fabs((ray->r_pos.x - ray->p_pos.x) * cos(deg_to_rad(ray->r_angle))
+				+ (ray->r_pos.y - ray->p_pos.y) * -sin(deg_to_rad(ray->r_angle)))
+				* cos(deg_to_rad(ray->r_angle - ray->p_angle));
+	}
 }
 
 void	update_ray_pos(t_ray *ray)
@@ -103,6 +108,35 @@ void	set_next_slide(t_ray *ray)
 		ray->slide = Y_SLIDE;
 }
 
+void	render_ray(t_data *data, t_ray *ray, int x)
+{
+	int	y;
+	int	lineHeight;
+	int	drawStart;
+	int	drawEnd;
+
+	y = 0;
+	lineHeight = (int)((data->win_size.h * BPP) / (ray->perpWallDist + 1));
+	drawStart = -lineHeight / 2 + data->win_size.h / 2;
+	if(drawStart < 0)
+		drawStart = 0;
+	drawEnd = lineHeight / 2 + data->win_size.h / 2;
+	if(drawEnd >= data->win_size.h)
+		drawEnd = data->win_size.h - 1;
+	while (y < data->win_size.h)
+	{
+		if (y >= drawStart && y <= drawEnd && ray->slide == X_SLIDE)
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0xFF0000);
+		else if (y >= drawStart && y <= drawEnd && ray->slide == Y_SLIDE)
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0xF80000);
+		else if (y < drawStart)
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, data->color.ceiling.bit_color);
+		else
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, data->color.floor.bit_color);
+		y++;
+	}
+}
+
 void	draw_rays(t_data *data, t_ray *ray)
 {
 	double	i;
@@ -112,18 +146,17 @@ void	draw_rays(t_data *data, t_ray *ray)
 	{
 		ray->r_angle = ray->p_angle - FOV / 2.0 + i / (double)data->win_size.w * FOV;
 		init_ray(ray->p_pos, ray);
-		// printf("-------------------\n");
 		while (ray->hit_wall == false)
 		{
 			set_next_slide(ray);
 			update_ray_pos(ray);
 			check_wall(data->map.array, ray);
-		// printf("r.x: %d | r.y: %d\n", ray->r_pos.x, ray->r_pos.y);
 		}
-			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-				data->img.player.mlx_img,
-				(ray->r_pos.x * CELL_SIZE / BPP) - PLAYER_SIZE / 2,
-				(ray->r_pos.y * CELL_SIZE / BPP) - PLAYER_SIZE / 2);
+			// mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+			// 	data->img.player.mlx_img,
+			// 	(ray->r_pos.x * CELL_SIZE / BPP) - PLAYER_SIZE / 2,
+			// 	(ray->r_pos.y * CELL_SIZE / BPP) - PLAYER_SIZE / 2);
+		render_ray(data, ray, i);
 		i++;
 	}
 }

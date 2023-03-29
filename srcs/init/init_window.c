@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 08:45:04 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 13:54:19 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 17:40:07 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	check_window_size(t_data *data)
 {
-	t_size	screen;
-
-	mlx_get_screen_size(data->mlx_ptr, &screen.w, &screen.h);
-	data->win_size.h = data->map.size.h * CELL_SIZE;
-	if (data->win_size.h > screen.h)
+	mlx_get_screen_size(data->mlx_ptr, &data->win_size.w, &data->win_size.h);
+	if (data->map.size.h * CELL_SIZE > data->win_size.h)
 		end_program(data, MAP_TOO_HIGH, MAP_TOO_HIGH_MSG);
-	data->win_size.w = data->map.size.w * CELL_SIZE;
-	if (data->win_size.w > screen.w)
+	if (data->map.size.h * CELL_SIZE > data->win_size.w)
 		end_program(data, MAP_TOO_WIDE, MAP_TOO_WIDE_MSG);
+	if (data->win_size.w > MAX_WIN_WIDTH)
+		data->win_size.w = MAX_WIN_WIDTH;
+	if (data->win_size.h > MAX_WIN_HEIGHT)
+		data->win_size.h = MAX_WIN_HEIGHT;
 }
 
 void	init_window(t_data *data)
