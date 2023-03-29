@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 19:01:59 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 22:47:30 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ void	render_ray(t_data *data, t_ray *ray, int x)
 	y = 0;
 	while (y < data->win_size.h)
 	{
-		if (x < data->map.size.w * CELL_SIZE
-			&& y < data->map.size.h * CELL_SIZE)
+		if (x < data->map.mini_map_size.w + MINI_MAP_BORDER * 2
+			&& y < data->map.mini_map_size.h + MINI_MAP_BORDER * 2)
 			;
 		else if (y >= ray->w_start && y <= ray->w_end && ray->slide == X_SLIDE)
 			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0xFF0000);
 		else if (y >= ray->w_start && y <= ray->w_end && ray->slide == Y_SLIDE)
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x000000);
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x8F0000);
 		else if (y < ray->w_start)
 			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y,
 				data->color.ceiling.bit_color);
