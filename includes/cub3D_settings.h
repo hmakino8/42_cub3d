@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 17:41:12 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 19:02:30 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define PLAYER_SIZE 4
 # define P_MOVE 50
 
-# define MAX_WIN_WIDTH 1024
-# define MAX_WIN_HEIGHT 720
+# define WIN_WIDTH 1024
+# define WIN_HEIGHT 720
 
 # define EMPTY '0'
 # define WALL '1'

@@ -1,8 +1,8 @@
 
-NO ./path_to_the_north_texture
-SO ./path_to_the_south_texture
-WE ./path_to_the_west_texture
-EA ./path_to_the_east_texture
+NO ./xpm_files/eagle.xpm
+SO ./xpm_files/redbrick.xpm
+WE ./xpm_files/wood.xpm
+EA ./xpm_files/wall.xpm
 
         F 220,100,0
         C 225,30,0

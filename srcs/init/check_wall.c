@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:18:03 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/27 10:16:58 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 18:33:48 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ void	check_adjacent(t_data *data, t_map *map, int x, int y)
 		check_invalid_border_cell(data, map->array[y + 1][x + 1]);
 	if (x < map->size.w - 1 && y > 0)
 		check_invalid_border_cell(data, map->array[y - 1][x + 1]);
+	map->array[y][x] = CHECK;
 }
 
-void	check_horizontal_wall(t_data *data, t_map *map)
+void	check_horizontal_wall(t_data *data, t_map *map, char **arr)
 {
 	int	x;
 	int	y;
@@ -47,29 +48,26 @@ void	check_horizontal_wall(t_data *data, t_map *map)
 	while (y < map->size.h)
 	{
 		x = 0;
-		while (x < map->size.w - 1
-			&& (map->array[y][x] == ' ' || map->array[y][x] == CHECK))
+		while (x < map->size.w - 1 && (arr[y][x] == ' ' || arr[y][x] == CHECK))
 		{
 			check_adjacent(data, map, x, y);
-			map->array[y][x] = CHECK;
 			x++;
 		}
-		if (x != map->size.w - 1 && map->array[y][x] != WALL)
+		if (x != map->size.w - 1 && arr[y][x] != WALL)
 			end_program(data, NOT_BORDERED_BY_WALL, NOT_BORDERED_BY_WALL_MSG);
 		x = map->size.w - 1;
-		while (x > 0 && (map->array[y][x] == ' ' || map->array[y][x] == CHECK))
+		while (x > 0 && (arr[y][x] == ' ' || arr[y][x] == CHECK))
 		{
 			check_adjacent(data, map, x, y);
-			map->array[y][x] = CHECK;
 			x--;
 		}
-		if (x != 0 && map->array[y][x] != WALL)
+		if (x != 0 && arr[y][x] != WALL)
 			end_program(data, NOT_BORDERED_BY_WALL, NOT_BORDERED_BY_WALL_MSG);
 		y++;
 	}
 }
 
-void	check_vertical_wall(t_data *data, t_map *map)
+void	check_vertical_wall(t_data *data, t_map *map, char **arr)
 {
 	int	x;
 	int	y;
@@ -78,23 +76,20 @@ void	check_vertical_wall(t_data *data, t_map *map)
 	while (x < map->size.w)
 	{
 		y = 0;
-		while (y < map->size.h - 1
-			&& (map->array[y][x] == ' ' || map->array[y][x] == CHECK))
+		while (y < map->size.h - 1 && (arr[y][x] == ' ' || arr[y][x] == CHECK))
 		{
 			check_adjacent(data, map, x, y);
-			map->array[y][x] = CHECK;
 			y++;
 		}
-		if (y != map->size.h - 1 && map->array[y][x] != WALL)
+		if (y != map->size.h - 1 && arr[y][x] != WALL)
 			end_program(data, NOT_BORDERED_BY_WALL, NOT_BORDERED_BY_WALL_MSG);
 		y = map->size.h - 1;
-		while (y > 0 && (map->array[y][x] == ' ' || map->array[y][x] == CHECK))
+		while (y > 0 && (arr[y][x] == ' ' || arr[y][x] == CHECK))
 		{
 			check_adjacent(data, map, x, y);
-			map->array[y][x] = CHECK;
 			y--;
 		}
-		if (y != 0 && map->array[y][x] != WALL)
+		if (y != 0 && arr[y][x] != WALL)
 			end_program(data, NOT_BORDERED_BY_WALL, NOT_BORDERED_BY_WALL_MSG);
 		x++;
 	}
@@ -102,6 +97,6 @@ void	check_vertical_wall(t_data *data, t_map *map)
 
 void	check_map_wall(t_data *data, t_map *map)
 {
-	check_vertical_wall(data, map);
-	check_horizontal_wall(data, map);
+	check_vertical_wall(data, map, data->map.array);
+	check_horizontal_wall(data, map, data->map.array);
 }

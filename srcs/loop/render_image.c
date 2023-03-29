@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 17:07:24 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 18:53:54 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	render_map(t_data *data)
 		cur.x = 0;
 		while (cur.x < data->map.size.w)
 		{
-			//put_images(data, cur);
+			put_images(data, cur);
 			cur.x++;
 		}
 		cur.y++;
