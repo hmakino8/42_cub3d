@@ -4,4 +4,5 @@ cub3D
 *.a
 .gitignore*
 .vscode*
+.DS_Store
 libraries/minilibx/*
