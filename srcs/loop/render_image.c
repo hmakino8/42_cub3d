@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/28 11:29:48 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 13:58:35 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,18 @@ void	put_images(t_data *data, t_pos cur)
 	if (map[cur.y][cur.x] == WALL)
 	{
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->img.wall.mlx_img, pos.x, pos.y);
+			data->img.wall.mlx_img, pos.x * CELL_SIZE / BPP, pos.y * CELL_SIZE / BPP);
 	}
 	else if (map[cur.y][cur.x] == EMPTY)
 	{
 		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->img.empty.mlx_img, pos.x, pos.y);
+			data->img.empty.mlx_img, pos.x * CELL_SIZE / BPP, pos.y * CELL_SIZE / BPP);
 		if (is_here_player(cur, data->ray.p_pos))
 		{
 			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 				data->img.player.mlx_img,
-				data->ray.p_pos.x - PLAYER_SIZE / 2,
-				data->ray.p_pos.y - PLAYER_SIZE / 2);
+				(data->ray.p_pos.x * CELL_SIZE / BPP) - PLAYER_SIZE / 2,
+				(data->ray.p_pos.y * CELL_SIZE / BPP) - PLAYER_SIZE / 2);
 		}
 	}
 }

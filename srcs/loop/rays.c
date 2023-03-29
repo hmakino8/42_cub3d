@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 12:47:38 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 14:00:01 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ void	update_ray_pos(t_ray *ray)
 	if (ray->slide == X_SLIDE)
 	{
 		ray->r_pos.x += (ray->p_side.x + ray->slide_cnt.x * BPP) * ray->r_dir.x;
-		ray->r_pos.y += lround((double)(ray->p_side.x + ray->slide_cnt.x * BPP)
+		ray->r_pos.y += ((double)(ray->p_side.x + ray->slide_cnt.x * BPP)
 				* (ray->r_delta.f_y / fabs(ray->r_delta.f_x)));
 		ray->slide_cnt.x++;
 	}
 	else if (ray->slide == Y_SLIDE)
 	{
-		ray->r_pos.x += lround((double)(ray->p_side.y + ray->slide_cnt.y * BPP)
+		ray->r_pos.x += ((double)(ray->p_side.y + ray->slide_cnt.y * BPP)
 				* (ray->r_delta.f_x / fabs(ray->r_delta.f_y)));
 		ray->r_pos.y += (ray->p_side.y + ray->slide_cnt.y * BPP) * ray->r_dir.y;
 		ray->slide_cnt.y++;
@@ -112,15 +112,18 @@ void	draw_rays(t_data *data, t_ray *ray)
 	{
 		ray->r_angle = ray->p_angle - FOV / 2.0 + i / (double)data->win_size.w * FOV;
 		init_ray(ray->p_pos, ray);
+		// printf("-------------------\n");
 		while (ray->hit_wall == false)
 		{
 			set_next_slide(ray);
 			update_ray_pos(ray);
 			check_wall(data->map.array, ray);
+		// printf("r.x: %d | r.y: %d\n", ray->r_pos.x, ray->r_pos.y);
 		}
 			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 				data->img.player.mlx_img,
-				ray->r_pos.x - PLAYER_SIZE / 2, ray->r_pos.y - PLAYER_SIZE / 2);
+				(ray->r_pos.x * CELL_SIZE / BPP) - PLAYER_SIZE / 2,
+				(ray->r_pos.y * CELL_SIZE / BPP) - PLAYER_SIZE / 2);
 		i++;
 	}
 }
