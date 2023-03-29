@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/28 15:35:11 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 12:28:25 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,13 @@ struct s_ray
 	t_pos	r_pos;
 	t_pos	p_side;
 	t_pos	r_side;
-	t_pos	dir;
-	t_fpos	delta;
+	t_pos	r_dir;
+	t_fpos	r_delta;
 	double	r_angle;
 	double	p_angle;
-	bool	hit;
-	t_pos	slide_count;
-	t_slide	next_slide;
+	bool	hit_wall;
+	t_pos	slide_cnt;
+	t_slide	slide;
 };
 
 struct s_map
