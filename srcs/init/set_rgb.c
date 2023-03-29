@@ -73,4 +73,5 @@ void	set_rgb(t_data *data, char *content, size_t *i, t_rgb_info *color)
 	color->is_set = true;
 	if (color->red == -1 || color->green == -1 || color->blue == -1)
 		end_program(data, INVALID_COLOR, INVALID_COLOR_MSG);
+	color->bit_color = (color->red << 16) + (color->green << 8) + color->blue;
 }

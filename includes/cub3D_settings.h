@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 14:02:58 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/29 17:41:12 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@
 # define DICT_CHANGE 5.0
 # define HEIGHT_MIN 3
 # define WITDH_MIN 3
-# define BPP 1024
+# define BPP 2048
 # define CELL_SIZE 10
-# define PLAYER_SIZE 2
+# define PLAYER_SIZE 4
 # define P_MOVE 50
+
+# define MAX_WIN_WIDTH 1024
+# define MAX_WIN_HEIGHT 720
 
 # define EMPTY '0'
 # define WALL '1'
