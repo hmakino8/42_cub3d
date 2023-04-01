@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 23:38:51 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/01 16:37:22 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,18 @@
 # define DICT_CHANGE 5.0
 # define HEIGHT_MIN 3
 # define WITDH_MIN 3
-# define HEIGHT_MAX 128
 # define WITDH_MAX 256
+# define HEIGHT_MAX 128
 # define BPP 2048
 # define C_SIZE 32
 # define PLAYER_SIZE 8
 # define P_MOVE 50
 
-# define WIN_WIDTH 1024
+# define WIN_WIDTH 1280
 # define WIN_HEIGHT 720
 
 # define MINI_MAP_WIDTH_MAX 256
-# define MINI_MAP_HEIGHT_MAX 192
+# define MINI_MAP_HEIGHT_MAX 128
 # define MINI_MAP_BORDER 5
 
 # define EMPTY '0'
@@ -108,6 +108,8 @@ typedef enum e_error
 	FAILED_AT_INIT_S_TEXT_IMG,
 	FAILED_AT_INIT_W_TEXT_IMG,
 	FAILED_AT_INIT_E_TEXT_IMG,
+	FAILED_AT_INIT_SCREEN_IMG,
+	FAILED_AT_INIT_MINI_MAP_IMG,
 	NONE
 }	t_error;
 

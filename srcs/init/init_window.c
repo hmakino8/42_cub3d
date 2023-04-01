@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 08:45:04 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 21:43:59 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/03/31 19:04:07 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_window_size(t_data *data)
 {
-	if (data->map.size.w > WIN_WIDTH)
+	if (data->map.size.w > WITDH_MAX)
 		end_program(data, MAP_TOO_HIGH, MAP_TOO_HIGH_MSG);
 	if (data->map.size.h > HEIGHT_MAX)
 		end_program(data, MAP_TOO_WIDE, MAP_TOO_WIDE_MSG);

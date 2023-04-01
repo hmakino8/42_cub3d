@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 22:47:30 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/01 18:51:41 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,46 +40,46 @@ void	check_wall(char **map, t_ray *ray)
 	cell.x = (ray->r_pos.x + ray->r_dir.x) / BPP;
 	cell.y = (ray->r_pos.y + ray->r_dir.y) / BPP;
 	if (map[cell.y][cell.x] == WALL)
+	{
 		ray->hit_wall = true;
+		if (ray->slide == X_SLIDE)
+			ray->wall_hit_x = ray->r_pos.y % BPP;
+		else
+			ray->wall_hit_x = ray->r_pos.x % BPP;
+	}
 }
 
 void	calculate_ray_size(t_data *data, t_ray *ray)
 {
-	ray->perp_wall_dist = fabs((ray->r_pos.x - ray->p_pos.x)
-			* cos(deg_to_rad(ray->r_angle))
-			+ (ray->r_pos.y - ray->p_pos.y)
-			* -sin(deg_to_rad(ray->r_angle)))
+	ray->perp_w_dist = ((ray->r_pos.x - ray->p_pos.x) * ray->r_delta.f_x
+			+ (ray->r_pos.y - ray->p_pos.y) * ray->r_delta.f_y)
 		* cos(deg_to_rad(ray->r_angle - ray->p_angle));
-	ray->line_height = ((data->win_size.h * BPP) / (ray->perp_wall_dist));
-	ray->w_start = -ray->line_height / 2 + data->win_size.h / 2;
-	ray->w_end = ray->line_height / 2 + data->win_size.h / 2;
-	if (ray->w_start < 0)
-		ray->w_start = 0;
-	if (ray->w_end >= data->win_size.h)
-		ray->w_end = data->win_size.h - 1;
+	ray->line_height = lroundf((double)(data->win_size.h * BPP)
+			/ ray->perp_w_dist);
+	ray->w_start = lroundf(((double)data->win_size.h / 2.0)
+			- ((double)ray->line_height / 2.0));
+	ray->w_end = lroundf(((double)data->win_size.h / 2.0)
+			+ ((double)ray->line_height / 2.0));
+	ray->w_size.h = ray->w_end - ray->w_start;
 }
 
 void	render_ray(t_data *data, t_ray *ray, int x)
 {
-	int	y;
+	t_pos	pos;
 
-	y = 0;
-	while (y < data->win_size.h)
+	pos.y = 0;
+	pos.x = x;
+	while (pos.y < data->win_size.h)
 	{
-		if (x < data->map.mini_map_size.w + MINI_MAP_BORDER * 2
-			&& y < data->map.mini_map_size.h + MINI_MAP_BORDER * 2)
-			;
-		else if (y >= ray->w_start && y <= ray->w_end && ray->slide == X_SLIDE)
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0xFF0000);
-		else if (y >= ray->w_start && y <= ray->w_end && ray->slide == Y_SLIDE)
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y, 0x8F0000);
-		else if (y < ray->w_start)
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y,
+		if (pos.y > 0 && pos.y >= ray->w_start && pos.y <= ray->w_end)
+			put_text_to_screen(data, ray, pos);
+		else if (pos.y < ray->w_start)
+			put_pixel_to_img(&data->img.screen, pos,
 				data->color.ceiling.bit_color);
 		else
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, x, y,
+			put_pixel_to_img(&data->img.screen, pos,
 				data->color.floor.bit_color);
-		y++;
+		pos.y++;
 	}
 }
 
@@ -90,8 +90,8 @@ void	draw_rays(t_data *data, t_ray *ray)
 	i = 0;
 	while (i < data->win_size.w)
 	{
-		ray->r_angle = ray->p_angle - FOV / 2.0 + i
-			/ (double)data->win_size.w * FOV;
+		ray->r_angle = ray->p_angle - FOV / 2.0 + (i * FOV)
+			/ (double)data->win_size.w;
 		init_ray(ray->p_pos, ray);
 		while (ray->hit_wall == false)
 		{
@@ -101,6 +101,7 @@ void	draw_rays(t_data *data, t_ray *ray)
 		}
 		calculate_ray_size(data, ray);
 		render_ray(data, ray, i);
+		draw_ray_lines(data, ray, VIEW_POINT);
 		i++;
 	}
 }

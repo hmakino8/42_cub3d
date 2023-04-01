@@ -6,7 +6,7 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/03/29 18:00:37 by pfrances         ###   ########.fr        #
+#    Updated: 2023/03/31 17:23:27 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,7 +62,8 @@ OBJS += $(LOOP_OBJS)
 ###############################################################################
 TOOLS_SRCS_DIR = $(SRCS_DIR)/tools
 TOOLS_OBJS_DIR = $(OBJS_DIR)/tools
-TOOLS_SRCS = $(addprefix $(TOOLS_SRCS_DIR)/,	maths_utils.c			\
+TOOLS_SRCS = $(addprefix $(TOOLS_SRCS_DIR)/,	images_tools.c			\
+												maths_utils.c			\
 												read_all.c)
 TOOLS_OBJS = $(subst $(TOOLS_SRCS_DIR), $(TOOLS_OBJS_DIR), $(TOOLS_SRCS:.c=.o))
 SRCS += $(TOOLS_SRCS)

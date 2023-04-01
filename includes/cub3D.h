@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 22:54:10 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/01 17:35:47 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,11 @@ struct s_fpos
 
 struct s_img_info
 {
-	void	*mlx_img;
+	void	*img_ptr;
 	char	*addr;
 	int		bpp;
 	int		endian;
+	int		line_len;
 	char	*path;
 	t_size	size;
 };
@@ -81,6 +82,8 @@ struct s_img
 	t_img_info	east_text;
 	t_img_info	floor_text;
 	t_img_info	ceiling_text;
+	t_img_info	screen;
+	t_img_info	mini_map;
 };
 
 struct s_rgb_info
@@ -111,10 +114,12 @@ struct s_ray
 	t_pos	slide_cnt;
 	t_slide	slide;
 	bool	hit_wall;
-	int		perp_wall_dist;
+	double	perp_w_dist;
 	int		line_height;
 	int		w_start;
 	int		w_end;
+	int		wall_hit_x;
+	t_size	w_size;
 };
 
 struct s_map
@@ -206,6 +211,13 @@ int		render_map(t_data *data);
 /****************************************************************************/
 /************************************TOOLS***********************************/
 /****************************************************************************/
+
+/*								images_tools.c								*/
+int		get_pixel(t_img_info *img, t_pos img_pos);
+void	put_pixel_to_img(t_img_info *img, t_pos pos, int color);
+void	put_img_to_img(t_img_info *img1, t_img_info *img2, t_pos start);
+void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos);
+void	draw_ray_lines(t_data *data, t_ray *ray, int color);
 
 /*								maths_utils.c								*/
 double	deg_to_rad(int a);
