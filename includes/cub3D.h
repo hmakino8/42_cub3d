@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/02 11:42:23 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/02 20:29:35 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ struct s_img
 	t_img_info	ceiling_text;
 	t_img_info	screen;
 	t_img_info	mini_map;
+	t_img_info	none;
 };
 
 struct s_rgb_info

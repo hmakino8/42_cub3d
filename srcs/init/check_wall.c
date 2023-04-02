@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:18:03 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 18:33:48 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/02 20:20:51 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,64 +39,20 @@ void	check_adjacent(t_data *data, t_map *map, int x, int y)
 	map->array[y][x] = CHECK;
 }
 
-void	check_horizontal_wall(t_data *data, t_map *map, char **arr)
-{
-	int	x;
-	int	y;
-
-	y = 0;
-	while (y < map->size.h)
-	{
-		x = 0;
-		while (x < map->size.w - 1 && (arr[y][x] == ' ' || arr[y][x] == CHECK))
-		{
-			check_adjacent(data, map, x, y);
-			x++;
-		}
-		if (x != map->size.w - 1 && arr[y][x] != WALL)
-			end_program(data, NOT_BORDERED_BY_WALL, NOT_BORDERED_BY_WALL_MSG);
-		x = map->size.w - 1;
-		while (x > 0 && (arr[y][x] == ' ' || arr[y][x] == CHECK))
-		{
-			check_adjacent(data, map, x, y);
-			x--;
-		}
-		if (x != 0 && arr[y][x] != WALL)
-			end_program(data, NOT_BORDERED_BY_WALL, NOT_BORDERED_BY_WALL_MSG);
-		y++;
-	}
-}
-
-void	check_vertical_wall(t_data *data, t_map *map, char **arr)
-{
-	int	x;
-	int	y;
-
-	x = 0;
-	while (x < map->size.w)
-	{
-		y = 0;
-		while (y < map->size.h - 1 && (arr[y][x] == ' ' || arr[y][x] == CHECK))
-		{
-			check_adjacent(data, map, x, y);
-			y++;
-		}
-		if (y != map->size.h - 1 && arr[y][x] != WALL)
-			end_program(data, NOT_BORDERED_BY_WALL, NOT_BORDERED_BY_WALL_MSG);
-		y = map->size.h - 1;
-		while (y > 0 && (arr[y][x] == ' ' || arr[y][x] == CHECK))
-		{
-			check_adjacent(data, map, x, y);
-			y--;
-		}
-		if (y != 0 && arr[y][x] != WALL)
-			end_program(data, NOT_BORDERED_BY_WALL, NOT_BORDERED_BY_WALL_MSG);
-		x++;
-	}
-}
-
 void	check_map_wall(t_data *data, t_map *map)
 {
-	check_vertical_wall(data, map, data->map.array);
-	check_horizontal_wall(data, map, data->map.array);
+	t_pos	pos;
+
+	pos.y = 0;
+	while (pos.y < map->size.h)
+	{
+		pos.x = 0;
+		while (pos.x < map->size.w)
+		{
+			if (map->array[pos.y][pos.x] == ' ')
+			check_adjacent(data, map, pos.x, pos.y);
+			pos.x++;
+		}
+		pos.y++;
+	}
 }

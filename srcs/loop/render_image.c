@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/01 18:25:42 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/02 20:39:34 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	put_images(t_data *data, t_pos cur)
 			put_img_to_img(&data->img.mini_map, &data->img.player, img_pos);
 		}
 	}
+	else
+		put_img_to_img(&data->img.mini_map, &data->img.none, img_pos);
 }
 
 void	set_start_end_pos(t_map *map, t_pos p_pos, t_pos *start, t_pos *end)
@@ -94,7 +96,8 @@ void	put_mini_map(t_data *data)
 		while (map_pos.x < end.x)
 		{
 			color = get_pixel(&data->img.mini_map, map_pos);
-			put_pixel_to_img(&data->img.screen, screen_pos, color);
+			if (color != NO_COLOR)
+				put_pixel_to_img(&data->img.screen, screen_pos, color);
 			map_pos.x++;
 			screen_pos.x++;
 		}

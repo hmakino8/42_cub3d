@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:48:22 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/01 16:37:46 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/02 20:30:24 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	destroy_images(t_data *data, t_error error)
 		mlx_destroy_image(data->mlx_ptr, data->img.west_text.img_ptr);
 	if (error > FAILED_AT_INIT_E_TEXT_IMG)
 		mlx_destroy_image(data->mlx_ptr, data->img.east_text.img_ptr);
+	if (error > FAILED_AT_INIT_NONE_IMG)
+		mlx_destroy_image(data->mlx_ptr, data->img.none.img_ptr);
 	if (error > FAILED_AT_INIT_SCREEN_IMG)
 		mlx_destroy_image(data->mlx_ptr, data->img.screen.img_ptr);
 	if (error > FAILED_AT_INIT_MINI_MAP_IMG)

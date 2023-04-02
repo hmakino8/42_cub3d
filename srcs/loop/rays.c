@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/02 16:59:19 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/02 19:10:10 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ void	check_wall(char **map, t_ray *ray)
 void	calculate_ray_size(t_data *data, t_ray *ray)
 {
 	ray->perp_w_dist = roundf(((ray->r_pos.x - ray->p_pos.x) * ray->r_delta.f_x
-			+ (ray->r_pos.y - ray->p_pos.y) * ray->r_delta.f_y)
-		* cos(deg_to_rad(fix_ang(ray->r_angle - ray->p_angle))));
-	ray->line_height = lroundf((double)(data->win_size.h * BPP) / ray->perp_w_dist);
+				+ (ray->r_pos.y - ray->p_pos.y) * ray->r_delta.f_y)
+			* cos(deg_to_rad(fix_ang(ray->r_angle - ray->p_angle))));
+	ray->line_height = lroundf((double)(data->win_size.h * BPP)
+			/ ray->perp_w_dist);
 	ray->w_start = lroundf(((double)data->win_size.h / 2.0)
 			- ((double)ray->line_height / 2.0));
 	ray->w_end = lroundf(((double)data->win_size.h / 2.0)
@@ -90,7 +91,7 @@ void	draw_rays(t_data *data, t_ray *ray)
 	while (i < data->win_size.w)
 	{
 		ray->r_angle = fix_ang(ray->p_angle + FOV / 2.0 - (i * FOV)
-			/ (double)data->win_size.w);
+				/ (double)data->win_size.w);
 		init_ray(ray->p_pos, ray);
 		while (ray->hit_wall == false)
 		{
