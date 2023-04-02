@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:53:32 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/31 18:45:28 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/02 17:01:19 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,20 @@ void	do_action(int key, t_ray *ray, char **map)
 		if (key == XK_w)
 			p_pos = move(p_pos, ray->p_angle, P_MOVE);
 		else if (key == XK_a)
-			p_pos = move(p_pos, ray->p_angle - 90.0, P_MOVE);
+			p_pos = move(p_pos, ray->p_angle + 90.0, P_MOVE);
 		else if (key == XK_s)
 			p_pos = move(p_pos, ray->p_angle - 180.0, P_MOVE);
 		else if (key == XK_d)
-			p_pos = move(p_pos, ray->p_angle + 90.0, P_MOVE);
+			p_pos = move(p_pos, ray->p_angle - 90.0, P_MOVE);
 		if (check_new_pos(p_pos, map))
 			ray->p_pos = p_pos;
 	}
 	else if (key == XK_Left || key == XK_Right)
 	{
 		if (key == XK_Left)
-			ray->p_angle -= DICT_CHANGE;
-		else if (key == XK_Right)
 			ray->p_angle += DICT_CHANGE;
+		else if (key == XK_Right)
+			ray->p_angle -= DICT_CHANGE;
 		ray->p_angle = fix_ang(ray->p_angle);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/02 11:31:20 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/02 16:59:19 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	draw_rays(t_data *data, t_ray *ray)
 	i = 0;
 	while (i < data->win_size.w)
 	{
-		ray->r_angle = fix_ang(ray->p_angle - FOV / 2.0 + (i * FOV)
+		ray->r_angle = fix_ang(ray->p_angle + FOV / 2.0 - (i * FOV)
 			/ (double)data->win_size.w);
 		init_ray(ray->p_pos, ray);
 		while (ray->hit_wall == false)
