@@ -6,18 +6,18 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:47:11 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/27 14:38:03 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/02 11:35:56 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-double	deg_to_rad(int a)
+double	deg_to_rad(double a)
 {
 	return ((a * M_PI) / 180.0);
 }
 
-int	fix_ang(int a)
+double	fix_ang(double a)
 {
 	if (a >= 360)
 		a -= 360;

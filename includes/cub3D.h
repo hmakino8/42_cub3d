@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/01 17:35:47 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/02 11:42:23 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,8 +220,8 @@ void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos);
 void	draw_ray_lines(t_data *data, t_ray *ray, int color);
 
 /*								maths_utils.c								*/
-double	deg_to_rad(int a);
-int		fix_ang(int a);
+double	deg_to_rad(double a);
+double	fix_ang(double a);
 double	do_div(double num, double denum);
 
 /*								read_all.c									*/

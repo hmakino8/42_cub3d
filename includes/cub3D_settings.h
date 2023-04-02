@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/01 16:37:22 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/02 11:30:25 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@
 # define BPP 2048
 # define C_SIZE 32
 # define PLAYER_SIZE 8
-# define P_MOVE 50
+# define P_MOVE 64
 
-# define WIN_WIDTH 1280
+# define WIN_WIDTH 1024
 # define WIN_HEIGHT 720
 
 # define MINI_MAP_WIDTH_MAX 256
-# define MINI_MAP_HEIGHT_MAX 128
+# define MINI_MAP_HEIGHT_MAX 256
 # define MINI_MAP_BORDER 5
 
 # define EMPTY '0'
