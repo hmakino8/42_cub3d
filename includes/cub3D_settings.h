@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/03 18:45:54 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/03 19:08:30 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 # define WITDH_MIN 3
 # define WITDH_MAX 256
 # define HEIGHT_MAX 128
-# define BPP 2048
+# define BPP 64000
 # define C_SIZE 32
 # define PLAYER_SIZE 8
-# define P_MOVE 64
+# define P_MOVE 6400
 
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 720
