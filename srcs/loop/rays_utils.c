@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 17:57:34 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/03 18:48:18 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/03 19:14:05 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ void	update_ray_pos(t_ray *ray)
 	{
 		ray->r_pos.x += (ray->p_side.x + ray->slide_cnt.x * BPP) * ray->r_dir.x;
 		ray->r_pos.y += (ray->p_side.x + ray->slide_cnt.x * BPP)
-				* (ray->r_delta.f_y / fabs(ray->r_delta.f_x));
+			* (ray->r_delta.f_y / fabs(ray->r_delta.f_x));
 		ray->slide_cnt.x++;
 	}
 	else if (ray->slide == Y_SLIDE)
 	{
 		ray->r_pos.x += (ray->p_side.y + ray->slide_cnt.y * BPP)
-				* (ray->r_delta.f_x / fabs(ray->r_delta.f_y));
+			* (ray->r_delta.f_x / fabs(ray->r_delta.f_y));
 		ray->r_pos.y += (ray->p_side.y + ray->slide_cnt.y * BPP) * ray->r_dir.y;
 		ray->slide_cnt.y++;
 	}
@@ -61,7 +61,7 @@ void	set_next_slide(t_ray *ray)
 	t_fpos	side_div_delta;
 	double	epsilon;
 
-	epsilon = 0.00001;
+	epsilon = 0.0000001;
 	side_div_delta.f_x = do_div(ray->r_side.x, fabs(ray->r_delta.f_x));
 	side_div_delta.f_y = do_div(ray->r_side.y, fabs(ray->r_delta.f_y));
 	if (fabs(side_div_delta.f_x - side_div_delta.f_y) < epsilon)

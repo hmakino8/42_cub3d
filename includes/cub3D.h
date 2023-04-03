@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/03 18:46:26 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/03 20:36:07 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ struct s_data
 	t_rgb	color;
 	t_map	map;
 	t_ray	ray;
+	int		old_mouse_x;
 };
 
 /****************************************************************************/
@@ -192,7 +193,7 @@ void	set_rgb(t_data *data, char *content, size_t *i, t_rgb_info *color);
 /****************************************************************************/
 
 /*								deal_keys.c									*/
-int		deal_keys(int key, t_data *data);
+int		deal_keys(int key, void *ptr);
 t_pos	move(t_pos pos, double angle, double distance);
 
 /*								loop.c										*/

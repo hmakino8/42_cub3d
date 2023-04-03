@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:53:32 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/03 10:03:26 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/03 20:51:26 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,11 @@ void	do_action(int key, t_ray *ray, char **map)
 	}
 }
 
-int	deal_keys(int key, t_data *data)
+int	deal_keys(int key, void *ptr)
 {
+	t_data	*data;
+
+	data = (t_data *)ptr;
 	if (key == XK_Escape)
 		end_program(data, NONE, NULL);
 	do_action(key, &data->ray, data->map.array);
