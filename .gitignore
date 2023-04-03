@@ -5,3 +5,4 @@ cub3D
 .gitignore*
 .vscode*
 libraries/minilibx/*
+*tester*
