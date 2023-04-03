@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/02 20:39:49 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:45:54 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # define NO_COLOR 0x123456
 # define RAY 0x000000
-# define VIEW_POINT 0xFF0000
 # define BUFFER_SIZE 1024
 # define FOV 66.0
 # define DICT_CHANGE 5.0

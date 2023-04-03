@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 17:22:53 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/02 20:39:00 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:49:22 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,9 @@ void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos)
 		img = &data->img.east_text;
 	else if (ray->slide == X_SLIDE && ray->r_dir.x < 0)
 		img = &data->img.west_text;
-	else if (ray->slide == Y_SLIDE && ray->r_dir.y > 0)
+	else if (ray->slide != X_SLIDE && ray->r_dir.y > 0)
 		img = &data->img.south_text;
-	else if (ray->slide == Y_SLIDE && ray->r_dir.y < 0)
-		img = &data->img.north_text;
-	else
+	else if (ray->slide != X_SLIDE && ray->r_dir.y < 0)
 		img = &data->img.north_text;
 	img_pos.y = lround((double)((screen_pos.y - ray->w_start
 					+ (ray->w_size.h - ray->line_height) / 2) * img->size.h)

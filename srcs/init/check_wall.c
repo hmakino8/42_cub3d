@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:18:03 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/02 20:20:51 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/03 11:04:21 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,6 @@ void	check_adjacent(t_data *data, t_map *map, int x, int y)
 		check_invalid_border_cell(data, map->array[y - 1][x]);
 	if (y < map->size.h - 1)
 		check_invalid_border_cell(data, map->array[y + 1][x]);
-	if (x > 0 && y > 0)
-		check_invalid_border_cell(data, map->array[y - 1][x - 1]);
-	if (x > 0 && y < map->size.h - 1)
-		check_invalid_border_cell(data, map->array[y + 1][x - 1]);
-	if (x < map->size.w - 1 && y < map->size.h - 1)
-		check_invalid_border_cell(data, map->array[y + 1][x + 1]);
-	if (x < map->size.w - 1 && y > 0)
-		check_invalid_border_cell(data, map->array[y - 1][x + 1]);
 	map->array[y][x] = CHECK;
 }
 
@@ -50,7 +42,7 @@ void	check_map_wall(t_data *data, t_map *map)
 		while (pos.x < map->size.w)
 		{
 			if (map->array[pos.y][pos.x] == ' ')
-			check_adjacent(data, map, pos.x, pos.y);
+				check_adjacent(data, map, pos.x, pos.y);
 			pos.x++;
 		}
 		pos.y++;

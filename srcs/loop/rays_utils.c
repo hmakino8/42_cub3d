@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_utils.c                                        :+:      :+:    :+:   */
+/*   rays_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 17:57:34 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 17:59:58 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:48:18 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ void	update_ray_pos(t_ray *ray)
 	if (ray->slide == X_SLIDE)
 	{
 		ray->r_pos.x += (ray->p_side.x + ray->slide_cnt.x * BPP) * ray->r_dir.x;
-		ray->r_pos.y += ((double)(ray->p_side.x + ray->slide_cnt.x * BPP)
-				* (ray->r_delta.f_y / fabs(ray->r_delta.f_x)));
+		ray->r_pos.y += (ray->p_side.x + ray->slide_cnt.x * BPP)
+				* (ray->r_delta.f_y / fabs(ray->r_delta.f_x));
 		ray->slide_cnt.x++;
 	}
 	else if (ray->slide == Y_SLIDE)
 	{
-		ray->r_pos.x += ((double)(ray->p_side.y + ray->slide_cnt.y * BPP)
-				* (ray->r_delta.f_x / fabs(ray->r_delta.f_y)));
+		ray->r_pos.x += (ray->p_side.y + ray->slide_cnt.y * BPP)
+				* (ray->r_delta.f_x / fabs(ray->r_delta.f_y));
 		ray->r_pos.y += (ray->p_side.y + ray->slide_cnt.y * BPP) * ray->r_dir.y;
 		ray->slide_cnt.y++;
 	}

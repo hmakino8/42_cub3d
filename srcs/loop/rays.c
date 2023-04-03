@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/02 19:10:10 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/03 18:50:33 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,19 @@ void	init_ray(t_pos p_pos, t_ray *ray)
 	ray->slide_cnt.y = 0;
 }
 
-void	check_wall(char **map, t_ray *ray)
+bool	check_wall(char **map, t_ray *ray)
 {
 	t_pos	cell;
 
 	cell.x = (ray->r_pos.x + ray->r_dir.x) / BPP;
 	cell.y = (ray->r_pos.y + ray->r_dir.y) / BPP;
 	if (map[cell.y][cell.x] == WALL)
-	{
-		ray->hit_wall = true;
-		if (ray->slide == X_SLIDE)
-			ray->wall_hit_x = ray->r_pos.y % BPP;
-		else
-			ray->wall_hit_x = ray->r_pos.x % BPP;
-	}
+		return (true);
+	if (ray->slide == XY_SLIDE
+		&& ((map[cell.y - ray->r_dir.y][cell.x] == WALL)
+		|| (map[cell.y][cell.x - ray->r_dir.x] == WALL)))
+		return (true);
+	return (false);
 }
 
 void	calculate_ray_size(t_data *data, t_ray *ray)
@@ -61,6 +60,10 @@ void	calculate_ray_size(t_data *data, t_ray *ray)
 	ray->w_end = lroundf(((double)data->win_size.h / 2.0)
 			+ ((double)ray->line_height / 2.0));
 	ray->w_size.h = ray->w_end - ray->w_start;
+	if (ray->slide == X_SLIDE)
+		ray->wall_hit_x = ray->r_pos.y % BPP;
+	else
+		ray->wall_hit_x = ray->r_pos.x % BPP;
 }
 
 void	render_ray(t_data *data, t_ray *ray, int x)
@@ -86,6 +89,7 @@ void	render_ray(t_data *data, t_ray *ray, int x)
 void	draw_rays(t_data *data, t_ray *ray)
 {
 	double	i;
+	t_pos	img_pos;
 
 	i = 0;
 	while (i < data->win_size.w)
@@ -97,11 +101,14 @@ void	draw_rays(t_data *data, t_ray *ray)
 		{
 			set_next_slide(ray);
 			update_ray_pos(ray);
-			check_wall(data->map.array, ray);
+			ray->hit_wall = check_wall(data->map.array, ray);
+			img_pos.x = data->ray.r_pos.x * C_SIZE / BPP - PLAYER_SIZE / 2;
+			img_pos.y = data->ray.r_pos.y * C_SIZE / BPP - PLAYER_SIZE / 2;
+			put_img_to_img(&data->img.mini_map, &data->img.player, img_pos);
 		}
 		calculate_ray_size(data, ray);
 		render_ray(data, ray, i);
-		draw_ray_lines(data, ray, VIEW_POINT);
+		draw_ray_lines(data, ray, RAY);
 		i++;
 	}
 }
