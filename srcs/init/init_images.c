@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 08:43:14 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/02 20:29:48 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/04 13:04:20 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,34 @@ bool	new_img(void *mlx_ptr, t_img_info *img, t_size size)
 	return (img->img_ptr != NULL);
 }
 
+void	images_init_end(t_data *data)
+{
+	data->img.door1.path = DOOR1_XPM_PATH;
+	data->img.door2.path = DOOR2_XPM_PATH;
+	data->img.door3.path = DOOR3_XPM_PATH;
+	data->img.door4.path = DOOR4_XPM_PATH;
+	data->img.none.path = NONE_XPM_PATH;
+	if (!set_xpm_img(data->mlx_ptr, &data->img.door1))
+		end_program(data, FAILED_AT_INIT_DOOR1_IMG, FAILED_AT_INIT_IMGS_MSG);
+	if (!set_xpm_img(data->mlx_ptr, &data->img.door2))
+		end_program(data, FAILED_AT_INIT_DOOR2_IMG, FAILED_AT_INIT_IMGS_MSG);
+	if (!set_xpm_img(data->mlx_ptr, &data->img.door3))
+		end_program(data, FAILED_AT_INIT_DOOR3_IMG, FAILED_AT_INIT_IMGS_MSG);
+	if (!set_xpm_img(data->mlx_ptr, &data->img.door4))
+		end_program(data, FAILED_AT_INIT_DOOR4_IMG, FAILED_AT_INIT_IMGS_MSG);
+	if (!set_xpm_img(data->mlx_ptr, &data->img.none))
+		end_program(data, FAILED_AT_INIT_NONE_IMG, FAILED_AT_INIT_IMGS_MSG);
+	if (!new_img(data->mlx_ptr, &data->img.screen, data->win_size))
+		end_program(data, FAILED_AT_INIT_SCREEN_IMG, FAILED_AT_INIT_IMGS_MSG);
+	if (!new_img(data->mlx_ptr, &data->img.mini_map, data->map.mini_map_size))
+		end_program(data, FAILED_AT_INIT_MINI_MAP_IMG, FAILED_AT_INIT_IMGS_MSG);
+}
+
 void	images_init(t_data *data)
 {
 	data->img.wall.path = WALL_XPM_PATH;
 	data->img.empty.path = EMPTY_XPM_PATH;
 	data->img.player.path = PLAYER_XPM_PATH;
-	data->img.none.path = NONE_XPM_PATH;
 	if (!set_xpm_img(data->mlx_ptr, &data->img.wall))
 		end_program(data, FAILED_AT_INIT_WALL_IMG, FAILED_AT_INIT_IMGS_MSG);
 	if (!set_xpm_img(data->mlx_ptr, &data->img.empty))
@@ -51,10 +73,5 @@ void	images_init(t_data *data)
 		end_program(data, FAILED_AT_INIT_W_TEXT_IMG, FAILED_AT_INIT_IMGS_MSG);
 	if (!set_xpm_img(data->mlx_ptr, &data->img.east_text))
 		end_program(data, FAILED_AT_INIT_E_TEXT_IMG, FAILED_AT_INIT_IMGS_MSG);
-	if (!set_xpm_img(data->mlx_ptr, &data->img.none))
-		end_program(data, FAILED_AT_INIT_NONE_IMG, FAILED_AT_INIT_IMGS_MSG);
-	if (!new_img(data->mlx_ptr, &data->img.screen, data->win_size))
-		end_program(data, FAILED_AT_INIT_SCREEN_IMG, FAILED_AT_INIT_IMGS_MSG);
-	if (!new_img(data->mlx_ptr, &data->img.mini_map, data->map.mini_map_size))
-		end_program(data, FAILED_AT_INIT_MINI_MAP_IMG, FAILED_AT_INIT_IMGS_MSG);
+	images_init_end(data);
 }
