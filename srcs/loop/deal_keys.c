@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:53:32 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/03 20:51:26 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/04 11:42:25 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,35 @@ t_pos	move(t_pos pos, double angle, double distance)
 	return (new_pos);
 }
 
+void	deviation(t_ray *ray, t_pos pos, char **map)
+{
+	double	angle;
+	int		i;
+	t_pos	new_pos;
+
+	i = 0;
+	angle = ray->p_angle;
+	new_pos = pos;
+	while (check_new_pos(new_pos, map) == false)
+	{
+		new_pos = move(ray->p_pos, angle, P_MOVE);
+		angle = fix_ang(angle + 1.0);
+		i++;
+	}
+	angle = ray->p_angle;
+	new_pos = pos;
+	while (check_new_pos(new_pos, map) == false)
+	{
+		new_pos = move(ray->p_pos, angle, P_MOVE);
+		angle = fix_ang(angle - 1.0);
+		i--;
+	}
+	if (i > 0)
+		ray->p_angle = fix_ang(ray->p_angle - 1.0);
+	else
+		ray->p_angle = fix_ang(ray->p_angle + 1.0);
+}
+
 void	do_action(int key, t_ray *ray, char **map)
 {
 	t_pos	p_pos;
@@ -54,6 +83,8 @@ void	do_action(int key, t_ray *ray, char **map)
 			p_pos = move(ray->p_pos, ray->p_angle - 90.0, P_MOVE);
 		if (check_new_pos(p_pos, map))
 			ray->p_pos = p_pos;
+		else
+			deviation(ray, p_pos, map);
 	}
 	else if (key == XK_Left || key == XK_Right)
 	{
@@ -61,8 +92,8 @@ void	do_action(int key, t_ray *ray, char **map)
 			ray->p_angle += DICT_CHANGE;
 		else if (key == XK_Right)
 			ray->p_angle -= DICT_CHANGE;
-		ray->p_angle = fix_ang(ray->p_angle);
 	}
+	ray->p_angle = fix_ang(ray->p_angle);
 }
 
 int	deal_keys(int key, void *ptr)
