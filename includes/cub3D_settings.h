@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/04 12:57:50 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/05 11:14:29 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define P_S 'S'
 # define P_E 'E'
 # define P_W 'W'
+# define DOOR 'D'
 # define CHECK 'X'
 
 # define MAP_FILE_EXTENSION ".cub"
@@ -48,10 +49,6 @@
 # define EMPTY_XPM_PATH "./xpm_files/empty.xpm"
 # define PLAYER_XPM_PATH "./xpm_files/player.xpm"
 # define NONE_XPM_PATH "./xpm_files/none.xpm"
-# define DOOR1_XPM_PATH "./xpm_files/door1.xpm"
-# define DOOR2_XPM_PATH "./xpm_files/door2.xpm"
-# define DOOR3_XPM_PATH "./xpm_files/door3.xpm"
-# define DOOR4_XPM_PATH "./xpm_files/door4.xpm"
 
 # define ERROR_MSG "Error"
 # define FAILED_ON_MALLOC_MSG "Failed on memory allocation."
@@ -111,10 +108,6 @@ typedef enum e_error
 	FAILED_AT_INIT_S_TEXT_IMG,
 	FAILED_AT_INIT_W_TEXT_IMG,
 	FAILED_AT_INIT_E_TEXT_IMG,
-	FAILED_AT_INIT_DOOR1_IMG,
-	FAILED_AT_INIT_DOOR2_IMG,
-	FAILED_AT_INIT_DOOR3_IMG,
-	FAILED_AT_INIT_DOOR4_IMG,
 	FAILED_AT_INIT_NONE_IMG,
 	FAILED_AT_INIT_SCREEN_IMG,
 	FAILED_AT_INIT_MINI_MAP_IMG,

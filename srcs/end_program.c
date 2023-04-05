@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:48:22 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/04 13:05:06 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/05 11:18:22 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,6 @@ void	free_map(char **map_array)
 	free(map_array);
 }
 
-void	destroy_images_end(t_data *data, t_error error)
-{
-	if (error > FAILED_AT_INIT_DOOR1_IMG)
-		mlx_destroy_image(data->mlx_ptr, data->img.door1.img_ptr);
-	if (error > FAILED_AT_INIT_DOOR2_IMG)
-		mlx_destroy_image(data->mlx_ptr, data->img.door2.img_ptr);
-	if (error > FAILED_AT_INIT_DOOR3_IMG)
-		mlx_destroy_image(data->mlx_ptr, data->img.door3.img_ptr);
-	if (error > FAILED_AT_INIT_DOOR4_IMG)
-		mlx_destroy_image(data->mlx_ptr, data->img.door4.img_ptr);
-	if (error > FAILED_AT_INIT_NONE_IMG)
-		mlx_destroy_image(data->mlx_ptr, data->img.none.img_ptr);
-	if (error > FAILED_AT_INIT_SCREEN_IMG)
-		mlx_destroy_image(data->mlx_ptr, data->img.screen.img_ptr);
-	if (error > FAILED_AT_INIT_MINI_MAP_IMG)
-		mlx_destroy_image(data->mlx_ptr, data->img.mini_map.img_ptr);
-}
-
 void	destroy_images(t_data *data, t_error error)
 {
 	if (error > FAILED_AT_INIT_WALL_IMG)
@@ -65,7 +47,12 @@ void	destroy_images(t_data *data, t_error error)
 		mlx_destroy_image(data->mlx_ptr, data->img.west_text.img_ptr);
 	if (error > FAILED_AT_INIT_E_TEXT_IMG)
 		mlx_destroy_image(data->mlx_ptr, data->img.east_text.img_ptr);
-	destroy_images_end(data, error);
+	if (error > FAILED_AT_INIT_NONE_IMG)
+		mlx_destroy_image(data->mlx_ptr, data->img.none.img_ptr);
+	if (error > FAILED_AT_INIT_SCREEN_IMG)
+		mlx_destroy_image(data->mlx_ptr, data->img.screen.img_ptr);
+	if (error > FAILED_AT_INIT_MINI_MAP_IMG)
+		mlx_destroy_image(data->mlx_ptr, data->img.mini_map.img_ptr);
 }
 
 void	end_program(t_data *data, t_error error, char *error_msg)

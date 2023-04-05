@@ -6,15 +6,12 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/04 12:58:31 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/05 11:18:47 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-
-/* for debug*/
-# include <stdio.h>
 
 # include "ft_printf.h"
 # include "libft.h"
@@ -82,10 +79,6 @@ struct s_img
 	t_img_info	east_text;
 	t_img_info	floor_text;
 	t_img_info	ceiling_text;
-	t_img_info	door1;
-	t_img_info	door2;
-	t_img_info	door3;
-	t_img_info	door4;
 	t_img_info	screen;
 	t_img_info	mini_map;
 	t_img_info	none;
