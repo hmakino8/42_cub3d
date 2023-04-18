@@ -6,25 +6,11 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 17:12:45 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 19:46:11 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-bool	is_here_player(t_pos cur, t_pos p_pos)
-{
-	if (cur.x == p_pos.x / MAP_SCALE && cur.y == p_pos.y / MAP_SCALE)
-		return (true);
-	else if (cur.x == (p_pos.x + PLAYER_SIZE) / MAP_SCALE && cur.y == p_pos.y / MAP_SCALE)
-		return (true);
-	else if (cur.x == p_pos.x / MAP_SCALE && cur.y == (p_pos.y + PLAYER_SIZE) / MAP_SCALE)
-		return (true);
-	else if (cur.x == (p_pos.x + PLAYER_SIZE) / MAP_SCALE
-		&& cur.y == (p_pos.y + PLAYER_SIZE) / MAP_SCALE)
-		return (true);
-	return (false);
-}
 
 void	put_images(t_data *data, t_pos cur)
 {
@@ -37,15 +23,7 @@ void	put_images(t_data *data, t_pos cur)
 	if (map[cur.y][cur.x] == WALL)
 		put_img_to_img(&data->img.mini_map, &data->img.wall, img_pos);
 	else if (map[cur.y][cur.x] == EMPTY)
-	{
 		put_img_to_img(&data->img.mini_map, &data->img.empty, img_pos);
-		if (is_here_player(cur, data->ray.p_pos))
-		{
-			img_pos.x = data->ray.p_pos.x * C_SIZE / MAP_SCALE - PLAYER_SIZE / 2;
-			img_pos.y = data->ray.p_pos.y * C_SIZE / MAP_SCALE - PLAYER_SIZE / 2;
-			put_img_to_img(&data->img.mini_map, &data->img.player, img_pos);
-		}
-	}
 	else
 		put_img_to_img(&data->img.mini_map, &data->img.none, img_pos);
 }
@@ -123,6 +101,9 @@ int	render_map(t_data *data)
 		}
 		pos.y++;
 	}
+	pos.x = data->ray.p_pos.x * C_SIZE / MAP_SCALE - P_SIZE / 2;
+	pos.y = data->ray.p_pos.y * C_SIZE / MAP_SCALE - P_SIZE / 2;
+	put_img_to_img(&data->img.mini_map, &data->img.player, pos);
 	draw_rays(data, &data->ray);
 	put_mini_map(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,

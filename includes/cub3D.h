@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 17:34:21 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 19:26:37 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <fcntl.h>
 # include <stdbool.h>
 # include <stdlib.h>
+# include <stdio.h>
 
 typedef struct s_size		t_size;
 typedef struct s_map		t_map;
@@ -115,11 +116,11 @@ struct s_ray
 	t_slide	slide;
 	bool	hit_wall;
 	double	perp_w_dist;
-	double	line_height;
+	int		line_height;
 	int		w_start;
 	int		w_end;
 	int		wall_hit_x;
-	double	w_height;
+	int		w_height;
 };
 
 struct s_map

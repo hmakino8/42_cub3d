@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 18:38:28 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 19:37:17 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # define CENTER_RAY_COLOR 0x0000FF
 # define MAP_SCALE 512
-# define TEXTURE_SCALE 256
 # define EPSILON 1e-10
 
 # define NO_COLOR 0x123456
@@ -28,7 +27,7 @@
 # define WITDH_MAX 256
 # define HEIGHT_MAX 128
 # define C_SIZE 32
-# define PLAYER_SIZE 8
+# define P_SIZE 8
 # define P_MOVE 32
 
 # define WIN_WIDTH 1024
