@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 05:36:19 by hiroaki           #+#    #+#             */
-/*   Updated: 2023/04/18 23:43:34 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/19 00:19:13 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ int	add_brightness_to_texture(int color, t_data *data, t_ray *ray)
 {
 	double	ratio;
 
-	ratio = (1.0 - ray->perp_w_dist / (double)data->win_size.h) * 3.0;
+	ratio = ray->line_height / (double)data->win_size.h;
 	if (ratio < 0.05)
 		ratio = 0.05;
+	else if (ratio > 1.0)
+		ratio = 1.0;
 	return (brightness(color, ratio));
 }
 
@@ -36,8 +38,10 @@ int	add_brightness_to_rgb(int y, int color, t_data *data)
 {
 	double	ratio;
 
-	ratio = ((double)y / (double)data->win_size.h) * 2.5;
-	if (ratio > 1.0)
+	ratio = (double)y / (double)data->win_size.h;
+	if (ratio < 0.05)
+		ratio = 0.05;
+	else if (ratio > 1.0)
 		ratio = 1.0;
 	return (brightness(color, ratio));
 }
