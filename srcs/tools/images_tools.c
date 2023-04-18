@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 17:22:53 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 19:35:39 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 23:23:06 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos)
 					+ (ray->w_height - ray->line_height) / 2) * img->size.h)
 			/ ray->w_height);
 	img_pos.x = lround(ray->wall_hit_x * img->size.w / MAP_SCALE);
-	put_pixel_to_img(&data->img.screen, screen_pos, get_pixel(img, img_pos));
+
+	put_pixel_to_img(&data->img.screen, screen_pos,
+		add_brightness_effect(get_pixel(img, img_pos), data, ray));
 }
 
 void	draw_ray_lines(t_data *data, t_ray *ray, int color)

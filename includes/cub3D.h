@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 19:26:37 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 23:14:45 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ struct s_rgb_info
 	int		red;
 	int		green;
 	int		blue;
-	int		bit_color;
+	int		rgb;
 	double	gradation;
 	bool	is_set;
 };
@@ -219,6 +219,10 @@ int		render_map(t_data *data);
 /****************************************************************************/
 /************************************TOOLS***********************************/
 /****************************************************************************/
+
+/*								gradation.c									*/
+int		add_brightness_effect(int color, t_data *data, t_ray *ray);
+int		get_ceiling_floor_color(int y, int color, t_data *data);
 
 /*								images_tools.c								*/
 int		get_pixel(t_img_info *img, t_pos img_pos);
