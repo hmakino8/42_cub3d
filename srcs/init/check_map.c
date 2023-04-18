@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 14:45:46 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/28 11:28:29 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 17:17:50 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	set_player_data(t_data *data, char c, t_pos cur)
 {
-	data->ray.p_pos.x = (cur.x * BPP) + (BPP / 2);
-	data->ray.p_pos.y = (cur.y * BPP) + (BPP / 2);
+	data->ray.p_pos.x = cur.x * MAP_SCALE + MAP_SCALE / 2;
+	data->ray.p_pos.y = cur.y * MAP_SCALE + MAP_SCALE / 2;
 	data->map.has_player = true;
 	if (c == P_E)
 		data->ray.p_angle = 0;

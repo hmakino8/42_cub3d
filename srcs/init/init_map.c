@@ -63,8 +63,4 @@ void	init_map(t_data *data, t_map *map)
 	}
 	map->mini_map_size.h = map->size.h * C_SIZE;
 	map->mini_map_size.w = map->size.w * C_SIZE;
-	if (map->mini_map_size.h > MINI_MAP_HEIGHT_MAX)
-		map->mini_map_size.h = MINI_MAP_HEIGHT_MAX;
-	if (map->mini_map_size.w > MINI_MAP_WIDTH_MAX)
-		map->mini_map_size.w = MINI_MAP_WIDTH_MAX;
 }

@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 23:39:04 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 17:12:45 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,123 +14,118 @@
 
 bool	is_here_player(t_pos cur, t_pos p_pos)
 {
-	if (cur.x == p_pos.x / BPP && cur.y == p_pos.y / BPP)
+	if (cur.x == p_pos.x / MAP_SCALE && cur.y == p_pos.y / MAP_SCALE)
 		return (true);
-	else if (cur.x == (p_pos.x + PLAYER_SIZE) / BPP && cur.y == p_pos.y / BPP)
+	else if (cur.x == (p_pos.x + PLAYER_SIZE) / MAP_SCALE && cur.y == p_pos.y / MAP_SCALE)
 		return (true);
-	else if (cur.x == p_pos.x / BPP && cur.y == (p_pos.y + PLAYER_SIZE) / BPP)
+	else if (cur.x == p_pos.x / MAP_SCALE && cur.y == (p_pos.y + PLAYER_SIZE) / MAP_SCALE)
 		return (true);
-	else if (cur.x == (p_pos.x + PLAYER_SIZE) / BPP
-		&& cur.y == (p_pos.y + PLAYER_SIZE) / BPP)
+	else if (cur.x == (p_pos.x + PLAYER_SIZE) / MAP_SCALE
+		&& cur.y == (p_pos.y + PLAYER_SIZE) / MAP_SCALE)
 		return (true);
 	return (false);
 }
 
-void	put_images(t_data *data, t_pos cur, t_pos start)
+void	put_images(t_data *data, t_pos cur)
 {
 	char	**map;
 	t_pos	img_pos;
 
 	map = data->map.array;
-	img_pos.x = (cur.x - start.x) * C_SIZE + MINI_MAP_BORDER;
-	img_pos.y = (cur.y - start.y) * C_SIZE + MINI_MAP_BORDER;
+	img_pos.x = cur.x * C_SIZE;
+	img_pos.y = cur.y * C_SIZE;
 	if (map[cur.y][cur.x] == WALL)
-	{
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->img.wall.mlx_img, img_pos.x, img_pos.y);
-	}
+		put_img_to_img(&data->img.mini_map, &data->img.wall, img_pos);
 	else if (map[cur.y][cur.x] == EMPTY)
 	{
-		mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-			data->img.empty.mlx_img, img_pos.x, img_pos.y);
+		put_img_to_img(&data->img.mini_map, &data->img.empty, img_pos);
 		if (is_here_player(cur, data->ray.p_pos))
 		{
-			img_pos.x = (data->ray.p_pos.x * C_SIZE / BPP)
-				- PLAYER_SIZE / 2 - start.x * C_SIZE + MINI_MAP_BORDER;
-			img_pos.y = (data->ray.p_pos.y * C_SIZE / BPP)
-				- PLAYER_SIZE / 2 - start.y * C_SIZE + MINI_MAP_BORDER;
-			mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
-				data->img.player.mlx_img, img_pos.x, img_pos.y);
+			img_pos.x = data->ray.p_pos.x * C_SIZE / MAP_SCALE - PLAYER_SIZE / 2;
+			img_pos.y = data->ray.p_pos.y * C_SIZE / MAP_SCALE - PLAYER_SIZE / 2;
+			put_img_to_img(&data->img.mini_map, &data->img.player, img_pos);
 		}
 	}
+	else
+		put_img_to_img(&data->img.mini_map, &data->img.none, img_pos);
 }
 
 void	set_start_end_pos(t_map *map, t_pos p_pos, t_pos *start, t_pos *end)
 {
-	start->x = (p_pos.x * C_SIZE / BPP - map->mini_map_size.w / 2) / C_SIZE;
-	start->y = (p_pos.y * C_SIZE / BPP - map->mini_map_size.h / 2) / C_SIZE;
-	end->x = (p_pos.x * C_SIZE / BPP + map->mini_map_size.w / 2) / C_SIZE;
-	end->y = (p_pos.y * C_SIZE / BPP + map->mini_map_size.h / 2) / C_SIZE;
+	start->x = ((p_pos.x * C_SIZE) / MAP_SCALE - MINI_MAP_WIDTH_MAX / 2);
+	start->y = ((p_pos.y * C_SIZE) / MAP_SCALE - MINI_MAP_HEIGHT_MAX / 2);
+	end->x = ((p_pos.x * C_SIZE) / MAP_SCALE + MINI_MAP_WIDTH_MAX / 2);
+	end->y = ((p_pos.y * C_SIZE) / MAP_SCALE + MINI_MAP_HEIGHT_MAX / 2);
 	if (start->x < 0)
 	{
 		start->x = 0;
-		end->x = start->x + map->mini_map_size.w / C_SIZE;
+		end->x = start->x + MINI_MAP_WIDTH_MAX;
 	}
 	if (start->y < 0)
 	{
 		start->y = 0;
-		end->y = start->y + map->mini_map_size.h / C_SIZE;
+		end->y = start->y + MINI_MAP_HEIGHT_MAX;
 	}
-	if (end->x >= map->size.w)
+	if (end->x >= map->mini_map_size.w)
 	{
-		end->x = map->size.w;
-		start->x = end->x - map->mini_map_size.w / C_SIZE;
+		end->x = map->mini_map_size.w;
+		start->x = (end->x - MINI_MAP_WIDTH_MAX) * (start->x > 0);
 	}
-	if (end->y >= map->size.h)
+	if (end->y >= map->mini_map_size.h)
 	{
-		end->y = map->size.h;
-		start->y = end->y - map->mini_map_size.h / C_SIZE;
+		end->y = map->mini_map_size.h;
+		start->y = (end->y - MINI_MAP_HEIGHT_MAX) * (start->y > 0);
 	}
 }
 
-void	draw_player_direction(t_data *data, t_ray *ray, t_pos start)
+void	put_mini_map(t_data *data)
 {
-	t_pos	pos;
-	t_pos	tmp;
-	double	angle;
-	int		i;
-	int		j;
+	t_pos	map_pos;
+	t_pos	screen_pos;
+	t_pos	start;
+	t_pos	end;
+	int		color;
 
-	pos.x = (ray->p_pos.x * C_SIZE / BPP) - start.x * C_SIZE + MINI_MAP_BORDER;
-	pos.y = (ray->p_pos.y * C_SIZE / BPP) - start.y * C_SIZE + MINI_MAP_BORDER;
-	i = 0;
-	while (i < VUE_CONE_SIZE)
+	set_start_end_pos(&data->map, data->ray.p_pos, &start, &end);
+	map_pos.y = start.y;
+	screen_pos.y = MINI_MAP_BORDER;
+	while (map_pos.y < end.y)
 	{
-		j = 0;
-		while (j < VUE_CONE_SIZE)
+		map_pos.x = start.x;
+		screen_pos.x = MINI_MAP_BORDER;
+		while (map_pos.x < end.x)
 		{
-			angle = ray->p_angle + FOV / 2 - (FOV / VUE_CONE_SIZE) * j;
-			tmp.x = move(pos, angle, i).x;
-			tmp.y = move(pos, angle, i).y;
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr,
-				tmp.x, tmp.y, VUE_CONE_COLOR);
-			j++;
+			color = get_pixel(&data->img.mini_map, map_pos);
+			if (color != NO_COLOR)
+				put_pixel_to_img(&data->img.screen, screen_pos, color);
+			map_pos.x++;
+			screen_pos.x++;
 		}
-		i++;
+		map_pos.y++;
+		screen_pos.y++;
 	}
 }
 
 int	render_map(t_data *data)
 {
-	t_pos	cur;
-	t_pos	start;
-	t_pos	end;
+	t_pos	pos;
 
 	if (data->win_ptr == NULL)
 		return (1);
-	set_start_end_pos(&data->map, data->ray.p_pos, &start, &end);
-	cur.y = start.y;
-	while (cur.y < end.y)
+	pos.y = 0;
+	while (pos.y < data->map.size.h)
 	{
-		cur.x = start.x;
-		while (cur.x < end.x)
+		pos.x = 0;
+		while (pos.x < data->map.size.w)
 		{
-			put_images(data, cur, start);
-			cur.x++;
+			put_images(data, pos);
+			pos.x++;
 		}
-		cur.y++;
+		pos.y++;
 	}
-	draw_player_direction(data, &data->ray, start);
 	draw_rays(data, &data->ray);
+	put_mini_map(data);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+		data->img.screen.img_ptr, 0, 0);
 	return (0);
 }

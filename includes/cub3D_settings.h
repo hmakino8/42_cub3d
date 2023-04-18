@@ -6,34 +6,36 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 23:38:51 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 18:38:28 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_SETTINGS_H
 # define CUB3D_SETTINGS_H
 
+# define CENTER_RAY_COLOR 0x0000FF
+# define MAP_SCALE 512
+# define TEXTURE_SCALE 256
+# define EPSILON 1e-10
+
+# define NO_COLOR 0x123456
 # define RAY 0x000000
-# define VIEW_POINT 0xFF0000
-# define VUE_CONE_SIZE 24
-# define VUE_CONE_COLOR 0xFF00FF
 # define BUFFER_SIZE 1024
 # define FOV 66.0
 # define DICT_CHANGE 5.0
 # define HEIGHT_MIN 3
 # define WITDH_MIN 3
-# define HEIGHT_MAX 128
 # define WITDH_MAX 256
-# define BPP 2048
+# define HEIGHT_MAX 128
 # define C_SIZE 32
 # define PLAYER_SIZE 8
-# define P_MOVE 50
+# define P_MOVE 32
 
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 720
 
 # define MINI_MAP_WIDTH_MAX 256
-# define MINI_MAP_HEIGHT_MAX 192
+# define MINI_MAP_HEIGHT_MAX 256
 # define MINI_MAP_BORDER 5
 
 # define EMPTY '0'
@@ -42,6 +44,7 @@
 # define P_S 'S'
 # define P_E 'E'
 # define P_W 'W'
+# define DOOR 'D'
 # define CHECK 'X'
 
 # define MAP_FILE_EXTENSION ".cub"
@@ -49,6 +52,7 @@
 # define WALL_XPM_PATH "./xpm_files/wall.xpm"
 # define EMPTY_XPM_PATH "./xpm_files/empty.xpm"
 # define PLAYER_XPM_PATH "./xpm_files/player.xpm"
+# define NONE_XPM_PATH "./xpm_files/none.xpm"
 
 # define ERROR_MSG "Error"
 # define FAILED_ON_MALLOC_MSG "Failed on memory allocation."
@@ -108,6 +112,9 @@ typedef enum e_error
 	FAILED_AT_INIT_S_TEXT_IMG,
 	FAILED_AT_INIT_W_TEXT_IMG,
 	FAILED_AT_INIT_E_TEXT_IMG,
+	FAILED_AT_INIT_NONE_IMG,
+	FAILED_AT_INIT_SCREEN_IMG,
+	FAILED_AT_INIT_MINI_MAP_IMG,
 	NONE
 }	t_error;
 

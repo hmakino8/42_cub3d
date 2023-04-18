@@ -6,7 +6,7 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/03/29 18:00:37 by pfrances         ###   ########.fr        #
+#    Updated: 2023/04/18 16:48:45 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ INIT_SRCS = $(addprefix $(INIT_SRCS_DIR)/,	check_wall.c				\
 											get_map_content.c			\
 											init_images.c				\
 											init_map.c					\
+											init_ray.c					\
 											init_window.c				\
 											init.c						\
 											set_textures_colors.c		\
@@ -51,8 +52,8 @@ LOOP_SRCS_DIR = $(SRCS_DIR)/loop
 LOOP_OBJS_DIR = $(OBJS_DIR)/loop
 LOOP_SRCS = $(addprefix $(LOOP_SRCS_DIR)/,	deal_keys.c					\
 											loop.c						\
+											raycast.c					\
 											rays.c						\
-											rays_utils.c				\
 											render_image.c)
 LOOP_OBJS = $(subst $(LOOP_SRCS_DIR), $(LOOP_OBJS_DIR), $(LOOP_SRCS:.c=.o))
 SRCS += $(LOOP_SRCS)
@@ -62,7 +63,8 @@ OBJS += $(LOOP_OBJS)
 ###############################################################################
 TOOLS_SRCS_DIR = $(SRCS_DIR)/tools
 TOOLS_OBJS_DIR = $(OBJS_DIR)/tools
-TOOLS_SRCS = $(addprefix $(TOOLS_SRCS_DIR)/,	maths_utils.c			\
+TOOLS_SRCS = $(addprefix $(TOOLS_SRCS_DIR)/,	images_tools.c			\
+												maths_utils.c			\
 												read_all.c)
 TOOLS_OBJS = $(subst $(TOOLS_SRCS_DIR), $(TOOLS_OBJS_DIR), $(TOOLS_SRCS:.c=.o))
 SRCS += $(TOOLS_SRCS)

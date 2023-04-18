@@ -6,15 +6,12 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 22:54:10 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 17:34:21 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-
-/* for debug*/
-# include <stdio.h>
 
 # include "ft_printf.h"
 # include "libft.h"
@@ -62,10 +59,11 @@ struct s_fpos
 
 struct s_img_info
 {
-	void	*mlx_img;
+	void	*img_ptr;
 	char	*addr;
 	int		bpp;
 	int		endian;
+	int		line_len;
 	char	*path;
 	t_size	size;
 };
@@ -81,6 +79,9 @@ struct s_img
 	t_img_info	east_text;
 	t_img_info	floor_text;
 	t_img_info	ceiling_text;
+	t_img_info	screen;
+	t_img_info	mini_map;
+	t_img_info	none;
 };
 
 struct s_rgb_info
@@ -89,6 +90,7 @@ struct s_rgb_info
 	int		green;
 	int		blue;
 	int		bit_color;
+	double	gradation;
 	bool	is_set;
 };
 
@@ -100,10 +102,11 @@ struct s_rgb
 
 struct s_ray
 {
+	t_pos	map;
 	t_pos	p_pos;
-	t_pos	r_pos;
+	t_fpos	r_pos;
 	t_pos	p_side;
-	t_pos	r_side;
+	t_fpos	r_side;
 	t_pos	r_dir;
 	t_fpos	r_delta;
 	double	r_angle;
@@ -111,10 +114,12 @@ struct s_ray
 	t_pos	slide_cnt;
 	t_slide	slide;
 	bool	hit_wall;
-	int		perp_wall_dist;
-	int		line_height;
+	double	perp_w_dist;
+	double	line_height;
 	int		w_start;
 	int		w_end;
+	int		wall_hit_x;
+	double	w_height;
 };
 
 struct s_map
@@ -136,6 +141,7 @@ struct s_data
 	t_rgb	color;
 	t_map	map;
 	t_ray	ray;
+	int		old_mouse_x;
 };
 
 /****************************************************************************/
@@ -166,6 +172,9 @@ void	get_map_content(t_data *data, size_t i);
 /*								init_map.c									*/
 void	init_map(t_data *data, t_map *map);
 
+/*								init_ray.c									*/
+void	init_ray(double x, double w, t_ray *ray);
+
 /*								init_images.c								*/
 void	images_init(t_data *data);
 
@@ -186,11 +195,14 @@ void	set_rgb(t_data *data, char *content, size_t *i, t_rgb_info *color);
 /****************************************************************************/
 
 /*								deal_keys.c									*/
-int		deal_keys(int key, t_data *data);
+int		deal_keys(int key, void *ptr);
 t_pos	move(t_pos pos, double angle, double distance);
 
 /*								loop.c										*/
 void	put_in_loop(t_data *data);
+
+/*								raycast.c									*/
+void	do_raycasting(t_ray *ray, t_fpos *r_pos, t_fpos *r_side);
 
 /*								rays.c										*/
 void	draw_rays(t_data *data, t_ray *ray);
@@ -207,9 +219,16 @@ int		render_map(t_data *data);
 /************************************TOOLS***********************************/
 /****************************************************************************/
 
+/*								images_tools.c								*/
+int		get_pixel(t_img_info *img, t_pos img_pos);
+void	put_pixel_to_img(t_img_info *img, t_pos pos, int color);
+void	put_img_to_img(t_img_info *img1, t_img_info *img2, t_pos start);
+void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos);
+void	draw_ray_lines(t_data *data, t_ray *ray, int color);
+
 /*								maths_utils.c								*/
-double	deg_to_rad(int a);
-int		fix_ang(int a);
+double	deg_to_rad(double a);
+double	fix_ang(double a);
 double	do_div(double num, double denum);
 
 /*								read_all.c									*/
