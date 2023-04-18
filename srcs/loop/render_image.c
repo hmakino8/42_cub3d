@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/02 20:39:34 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 17:12:45 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 bool	is_here_player(t_pos cur, t_pos p_pos)
 {
-	if (cur.x == p_pos.x / BPP && cur.y == p_pos.y / BPP)
+	if (cur.x == p_pos.x / MAP_SCALE && cur.y == p_pos.y / MAP_SCALE)
 		return (true);
-	else if (cur.x == (p_pos.x + PLAYER_SIZE) / BPP && cur.y == p_pos.y / BPP)
+	else if (cur.x == (p_pos.x + PLAYER_SIZE) / MAP_SCALE && cur.y == p_pos.y / MAP_SCALE)
 		return (true);
-	else if (cur.x == p_pos.x / BPP && cur.y == (p_pos.y + PLAYER_SIZE) / BPP)
+	else if (cur.x == p_pos.x / MAP_SCALE && cur.y == (p_pos.y + PLAYER_SIZE) / MAP_SCALE)
 		return (true);
-	else if (cur.x == (p_pos.x + PLAYER_SIZE) / BPP
-		&& cur.y == (p_pos.y + PLAYER_SIZE) / BPP)
+	else if (cur.x == (p_pos.x + PLAYER_SIZE) / MAP_SCALE
+		&& cur.y == (p_pos.y + PLAYER_SIZE) / MAP_SCALE)
 		return (true);
 	return (false);
 }
@@ -41,8 +41,8 @@ void	put_images(t_data *data, t_pos cur)
 		put_img_to_img(&data->img.mini_map, &data->img.empty, img_pos);
 		if (is_here_player(cur, data->ray.p_pos))
 		{
-			img_pos.x = data->ray.p_pos.x * C_SIZE / BPP - PLAYER_SIZE / 2;
-			img_pos.y = data->ray.p_pos.y * C_SIZE / BPP - PLAYER_SIZE / 2;
+			img_pos.x = data->ray.p_pos.x * C_SIZE / MAP_SCALE - PLAYER_SIZE / 2;
+			img_pos.y = data->ray.p_pos.y * C_SIZE / MAP_SCALE - PLAYER_SIZE / 2;
 			put_img_to_img(&data->img.mini_map, &data->img.player, img_pos);
 		}
 	}
@@ -52,10 +52,10 @@ void	put_images(t_data *data, t_pos cur)
 
 void	set_start_end_pos(t_map *map, t_pos p_pos, t_pos *start, t_pos *end)
 {
-	start->x = ((p_pos.x * C_SIZE) / BPP - MINI_MAP_WIDTH_MAX / 2);
-	start->y = ((p_pos.y * C_SIZE) / BPP - MINI_MAP_HEIGHT_MAX / 2);
-	end->x = ((p_pos.x * C_SIZE) / BPP + MINI_MAP_WIDTH_MAX / 2);
-	end->y = ((p_pos.y * C_SIZE) / BPP + MINI_MAP_HEIGHT_MAX / 2);
+	start->x = ((p_pos.x * C_SIZE) / MAP_SCALE - MINI_MAP_WIDTH_MAX / 2);
+	start->y = ((p_pos.y * C_SIZE) / MAP_SCALE - MINI_MAP_HEIGHT_MAX / 2);
+	end->x = ((p_pos.x * C_SIZE) / MAP_SCALE + MINI_MAP_WIDTH_MAX / 2);
+	end->y = ((p_pos.y * C_SIZE) / MAP_SCALE + MINI_MAP_HEIGHT_MAX / 2);
 	if (start->x < 0)
 	{
 		start->x = 0;

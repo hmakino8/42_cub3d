@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/05 11:18:47 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 17:34:21 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ struct s_rgb_info
 	int		green;
 	int		blue;
 	int		bit_color;
+	double	gradation;
 	bool	is_set;
 };
 
@@ -101,10 +102,11 @@ struct s_rgb
 
 struct s_ray
 {
+	t_pos	map;
 	t_pos	p_pos;
-	t_pos	r_pos;
+	t_fpos	r_pos;
 	t_pos	p_side;
-	t_pos	r_side;
+	t_fpos	r_side;
 	t_pos	r_dir;
 	t_fpos	r_delta;
 	double	r_angle;
@@ -113,11 +115,11 @@ struct s_ray
 	t_slide	slide;
 	bool	hit_wall;
 	double	perp_w_dist;
-	int		line_height;
+	double	line_height;
 	int		w_start;
 	int		w_end;
 	int		wall_hit_x;
-	t_size	w_size;
+	double	w_height;
 };
 
 struct s_map
@@ -170,6 +172,9 @@ void	get_map_content(t_data *data, size_t i);
 /*								init_map.c									*/
 void	init_map(t_data *data, t_map *map);
 
+/*								init_ray.c									*/
+void	init_ray(double x, double w, t_ray *ray);
+
 /*								init_images.c								*/
 void	images_init(t_data *data);
 
@@ -195,6 +200,9 @@ t_pos	move(t_pos pos, double angle, double distance);
 
 /*								loop.c										*/
 void	put_in_loop(t_data *data);
+
+/*								raycast.c									*/
+void	do_raycasting(t_ray *ray, t_fpos *r_pos, t_fpos *r_side);
 
 /*								rays.c										*/
 void	draw_rays(t_data *data, t_ray *ray);

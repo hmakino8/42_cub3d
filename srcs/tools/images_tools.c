@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 17:22:53 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/03 18:49:22 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 18:43:11 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,9 @@ void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos)
 		img = &data->img.south_text;
 	else if (ray->slide != X_SLIDE && ray->r_dir.y < 0)
 		img = &data->img.north_text;
-	img_pos.y = lround((double)((screen_pos.y - ray->w_start
-					+ (ray->w_size.h - ray->line_height) / 2) * img->size.h)
-			/ (double)ray->w_size.h);
-	img_pos.x = lround(ray->wall_hit_x * img->size.w / BPP);
+	img_pos.y = 0;//lround((double)((screen_pos.y - ray->w_start
+					//+ (ray->w_height - ray->line_height) / 2) * img->size.h) / ray->w_height);
+	img_pos.x = lround(ray->wall_hit_x * img->size.w / MAP_SCALE);
 	put_pixel_to_img(&data->img.screen, screen_pos, get_pixel(img, img_pos));
 }
 
@@ -78,14 +77,14 @@ void	draw_ray_lines(t_data *data, t_ray *ray, int color)
 	double	dist;
 	int		i;
 
-	dist = ((ray->r_delta.f_x * (ray->r_pos.x - ray->p_pos.x)
-				+ ray->r_delta.f_y * (ray->r_pos.y - ray->p_pos.y)) * C_SIZE)
-		/ BPP;
+	dist = ((ray->r_delta.f_x * (ray->r_pos.f_x - ray->p_pos.x)
+				+ ray->r_delta.f_y * (ray->r_pos.f_y - ray->p_pos.y)) * C_SIZE)
+		/ MAP_SCALE;
 	i = 0;
 	while (i < dist)
 	{
-		pos.x = ray->p_pos.x * C_SIZE / BPP;
-		pos.y = ray->p_pos.y * C_SIZE / BPP;
+		pos.x = ray->p_pos.x * C_SIZE / MAP_SCALE;
+		pos.y = ray->p_pos.y * C_SIZE / MAP_SCALE;
 		pos = move(pos, ray->r_angle, i);
 		put_pixel_to_img(&data->img.mini_map, pos, color);
 		i++;
