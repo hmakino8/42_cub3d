@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 23:14:19 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 23:43:26 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ static void	render_ray(t_data *data, t_ray *ray, int x)
 			put_text_to_screen(data, ray, pos);
 		else if (pos.y < ray->w_start)
 			put_pixel_to_img(&data->img.screen, pos,
-				get_ceiling_floor_color(pos.y, data->color.ceiling.rgb, data));
+				add_brightness_to_rgb(pos.y, data->color.ceiling.rgb, data));
 		else
 			put_pixel_to_img(&data->img.screen, pos,
-				get_ceiling_floor_color(pos.y, data->color.floor.rgb, data));
+				add_brightness_to_rgb(pos.y, data->color.floor.rgb, data));
 		pos.y++;
 	}
 }

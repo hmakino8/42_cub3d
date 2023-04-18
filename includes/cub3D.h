@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 23:14:45 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 23:43:34 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,8 +221,8 @@ int		render_map(t_data *data);
 /****************************************************************************/
 
 /*								gradation.c									*/
-int		add_brightness_effect(int color, t_data *data, t_ray *ray);
-int		get_ceiling_floor_color(int y, int color, t_data *data);
+int		add_brightness_to_texture(int color, t_data *data, t_ray *ray);
+int		add_brightness_to_rgb(int y, int color, t_data *data);
 
 /*								images_tools.c								*/
 int		get_pixel(t_img_info *img, t_pos img_pos);

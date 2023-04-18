@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 05:36:19 by hiroaki           #+#    #+#             */
-/*   Updated: 2023/04/18 23:24:56 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 23:43:34 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	brightness(int c, double rt)
 	return (rgb.red << 16 | (rgb.green << 8) | rgb.blue);
 }
 
-int	add_brightness_effect(int color, t_data *data, t_ray *ray)
+int	add_brightness_to_texture(int color, t_data *data, t_ray *ray)
 {
 	double	ratio;
 
@@ -32,7 +32,7 @@ int	add_brightness_effect(int color, t_data *data, t_ray *ray)
 	return (brightness(color, ratio));
 }
 
-int	get_ceiling_floor_color(int y, int color, t_data *data)
+int	add_brightness_to_rgb(int y, int color, t_data *data)
 {
 	double	ratio;
 
