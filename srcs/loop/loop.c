@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:40:20 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/03 20:45:13 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 22:40:36 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void	put_in_loop(t_data *data)
 	mlx_loop_hook(data->mlx_ptr, &render_map, data);
 	mlx_hook(data->win_ptr, ClientMessage, StructureNotifyMask,
 		&cross_button_event, data);
-	mlx_hook(data->win_ptr, MotionNotify, PointerMotionMask, &mouse_hook, data);
+	if (BONUS)
+		mlx_hook(data->win_ptr, MotionNotify, PointerMotionMask,
+			&mouse_hook, data);
 	mlx_hook(data->win_ptr, KeyPress, KeyPressMask, &deal_keys, data);
 	mlx_loop(data->mlx_ptr);
 }

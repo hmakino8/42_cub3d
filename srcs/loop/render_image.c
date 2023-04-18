@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 19:46:11 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 22:38:51 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,10 @@ void	put_mini_map(t_data *data)
 	}
 }
 
-int	render_map(t_data *data)
+void	render_minimap(t_data *data)
 {
 	t_pos	pos;
 
-	if (data->win_ptr == NULL)
-		return (1);
 	pos.y = 0;
 	while (pos.y < data->map.size.h)
 	{
@@ -104,8 +102,17 @@ int	render_map(t_data *data)
 	pos.x = data->ray.p_pos.x * C_SIZE / MAP_SCALE - P_SIZE / 2;
 	pos.y = data->ray.p_pos.y * C_SIZE / MAP_SCALE - P_SIZE / 2;
 	put_img_to_img(&data->img.mini_map, &data->img.player, pos);
+}
+
+int	render_map(t_data *data)
+{
+	if (data->win_ptr == NULL)
+		return (1);
+	if (BONUS)
+		render_minimap(data);
 	draw_rays(data, &data->ray);
-	put_mini_map(data);
+	if (BONUS)
+		put_mini_map(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 		data->img.screen.img_ptr, 0, 0);
 	return (0);

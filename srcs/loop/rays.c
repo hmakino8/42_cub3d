@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 19:40:35 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 22:39:02 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	ray_collision_detection(t_data *data, t_ray *ray)
 	}
 }
 
-void	render_ray(t_data *data, t_ray *ray, int x)
+static void	render_ray(t_data *data, t_ray *ray, int x)
 {
 	t_pos	pos;
 
@@ -83,7 +83,8 @@ void	draw_rays(t_data *data, t_ray *ray)
 		ray_collision_detection(data, ray);
 		set_wall_size(data, ray);
 		render_ray(data, ray, x);
-		draw_ray_lines(data, ray, RAY);
+		if (BONUS)
+			draw_ray_lines(data, ray, RAY);
 		x++;
 	}
 }

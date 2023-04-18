@@ -6,7 +6,7 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/04/18 19:56:23 by pfrances         ###   ########.fr        #
+#    Updated: 2023/04/18 22:34:09 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,6 +109,10 @@ INCLUDES += -I/usr/X11/include
 MLX_LIBS = -L $(MLX_DIR) -L /usr/X11/include/../lib -lmlx_Darwin -lXext -lX11 -framework OpenGL -framework AppKit
 endif
 
+ifdef WITH_BONUS
+	DEFINE_VARS += -D BONUS=true
+endif
+
 #--------------------------------------------------------------------------#
 
 all: $(NAME)
@@ -158,6 +162,7 @@ fclean: clean
 
 re: fclean all
 
-bonus: all
+bonus:
+	make all WITH_BONUS=TRUE
 
 .PHONY: all clean fclean re bonus

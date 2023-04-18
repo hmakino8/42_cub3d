@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:53:32 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 19:48:23 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/18 22:40:01 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ int	deal_keys(int key, void *ptr)
 	if (key == XK_w || key == XK_a || key == XK_s || key == XK_d)
 	{
 		dist = move_dist(key, ray);
-		dist = wall_collision(&dist, data->map.array, ray);
+		if (BONUS)
+			dist = wall_collision(&dist, data->map.array, ray);
 		ray->p_pos.x += dist.x;
 		ray->p_pos.y += dist.y;
 	}
