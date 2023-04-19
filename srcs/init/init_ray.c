@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 04:15:43 by hiroaki           #+#    #+#             */
-/*   Updated: 2023/04/18 22:46:31 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/19 18:06:04 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,16 @@ t_fpos	init_delta(double angle)
 	return (r_delta);
 }
 
-void	init_ray(double x, double w, t_ray *ray)
+void	init_r_angle(t_ray *ray, double x, double w)
 {
 	ray->r_angle = ray->p_angle + FOV / 2.0 - x / w * FOV;
-	if (fabs(ray->r_angle - ray->p_angle) < EPSILON)
+	if (fabs(ray->r_angle - 90.0) < EPSILON
+		|| fabs(ray->r_angle - 270.0) < EPSILON)
 		ray->r_angle = ray->p_angle + FOV / 2.0 - (x + EPSILON) / w * FOV;
+}
+
+void	init_ray(t_ray *ray)
+{
 	ray->map.x = ray->p_pos.x / MAP_SCALE;
 	ray->map.y = ray->p_pos.y / MAP_SCALE;
 	ray->r_delta = init_delta(ray->r_angle);

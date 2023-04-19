@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 08:45:04 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/03 20:37:28 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/19 13:15:54 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 void	check_window_size(t_data *data)
 {
-	if (data->map.size.w > WITDH_MAX)
+	if (data->map.size.w > WIDTH_MAX)
 		end_program(data, MAP_TOO_HIGH, MAP_TOO_HIGH_MSG);
 	if (data->map.size.h > HEIGHT_MAX)
 		end_program(data, MAP_TOO_WIDE, MAP_TOO_WIDE_MSG);
 	data->win_size.w = WIN_WIDTH;
 	data->win_size.h = WIN_HEIGHT;
 	data->old_mouse_x = data->win_size.w / 2;
+	data->w_colision_key = -1;
 }
 
 void	init_window(t_data *data)

@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 23:43:34 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/19 18:18:42 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@
 # include <stdlib.h>
 # include <stdio.h>
 
+typedef enum e_slide		t_slide;
+typedef enum e_error		t_error;
 typedef struct s_size		t_size;
 typedef struct s_map		t_map;
 typedef struct s_pos		t_pos;
@@ -39,6 +41,51 @@ typedef struct s_rgb_info	t_rgb_info;
 typedef struct s_rgb		t_rgb;
 typedef struct s_ray		t_ray;
 typedef struct s_data		t_data;
+
+enum e_slide
+{
+	X_SLIDE,
+	Y_SLIDE
+};
+
+enum e_error
+{
+	WRONG_NB_OF_ARGS,
+	WRONG_MAP_NAME,
+	OPENING_FILE_FAILED,
+	READING_FILE_FAILED,
+	CLOSING_FILE_FAILED,
+	HAS_DOUBLE_ENTRIE,
+	INVALID_COLOR,
+	IMG_PATH_MALLOC_FAILED,
+	UNDEFINED_ENTRIE,
+	ELEMENT_MISSING,
+	GET_MAP_MALLOC_FAILED,
+	EMPTY_MAP,
+	MAP_HAS_EMPTY_LINE,
+	MAP_SPLIT_MALLOC_FAILED,
+	WRONG_SHAPE,
+	RESIZE_MALLOC_FAILED,
+	TOO_MUCH_PLAYER,
+	MAP_UNDEF_CHAR,
+	HAS_NO_PLAYER,
+	NOT_BORDERED_BY_WALL,
+	INIT_MLX_FAILED,
+	MAP_TOO_HIGH,
+	MAP_TOO_WIDE,
+	INIT_WINDOW_FAILED,
+	FAILED_AT_INIT_WALL_IMG,
+	FAILED_AT_INIT_EMPTY_IMG,
+	FAILED_AT_INIT_PLAYER_IMG,
+	FAILED_AT_INIT_N_TEXT_IMG,
+	FAILED_AT_INIT_S_TEXT_IMG,
+	FAILED_AT_INIT_W_TEXT_IMG,
+	FAILED_AT_INIT_E_TEXT_IMG,
+	FAILED_AT_INIT_NONE_IMG,
+	FAILED_AT_INIT_SCREEN_IMG,
+	FAILED_AT_INIT_MINI_MAP_IMG,
+	NONE
+};
 
 struct s_size
 {
@@ -78,8 +125,6 @@ struct s_img
 	t_img_info	south_text;
 	t_img_info	west_text;
 	t_img_info	east_text;
-	t_img_info	floor_text;
-	t_img_info	ceiling_text;
 	t_img_info	screen;
 	t_img_info	mini_map;
 	t_img_info	none;
@@ -143,6 +188,7 @@ struct s_data
 	t_map	map;
 	t_ray	ray;
 	int		old_mouse_x;
+	int		w_colision_key;
 };
 
 /****************************************************************************/
@@ -174,7 +220,8 @@ void	get_map_content(t_data *data, size_t i);
 void	init_map(t_data *data, t_map *map);
 
 /*								init_ray.c									*/
-void	init_ray(double x, double w, t_ray *ray);
+void	init_r_angle(t_ray *ray, double x, double w);
+void	init_ray(t_ray *ray);
 
 /*								init_images.c								*/
 void	images_init(t_data *data);
@@ -197,23 +244,29 @@ void	set_rgb(t_data *data, char *content, size_t *i, t_rgb_info *color);
 
 /*								deal_keys.c									*/
 int		deal_keys(int key, void *ptr);
+bool	check_new_pos(t_pos new_pos, char **map);
 t_pos	move(t_pos pos, double angle, double distance);
+
+/*								wall_collison.c								*/
+void	check_wall_collison(t_data *data, double dist, double angle);
+
+/*								deviation.c									*/
+bool	deviation(t_ray *ray, t_pos pos, char **map, t_pos dist);
 
 /*								loop.c										*/
 void	put_in_loop(t_data *data);
 
+/*								mini_map.c									*/
+void	render_minimap(t_data *data);
+
 /*								raycast.c									*/
 void	do_raycasting(t_ray *ray, t_fpos *r_pos, t_fpos *r_side);
-
-/*								rays.c										*/
-void	draw_rays(t_data *data, t_ray *ray);
-
-/*								rays_utils.c								*/
-t_pos	get_side(t_pos pos, t_fpos delta);
-void	update_ray_pos(t_ray *ray);
-void	set_next_slide(t_ray *ray);
+void	ray_collision_detection(t_data *data, t_ray *ray);
+void	set_wall_size(t_data *data, t_ray *ray);
+double	calculate_dist_to_wall(t_ray *ray);
 
 /*								render_image.c								*/
+void	put_mini_map(t_data *data);
 int		render_map(t_data *data);
 
 /****************************************************************************/
@@ -221,8 +274,10 @@ int		render_map(t_data *data);
 /****************************************************************************/
 
 /*								gradation.c									*/
+int		brightness(int c, double rt);
 int		add_brightness_to_texture(int color, t_data *data, t_ray *ray);
 int		add_brightness_to_rgb(int y, int color, t_data *data);
+int		transparency(int color1, int color2, double rt);
 
 /*								images_tools.c								*/
 int		get_pixel(t_img_info *img, t_pos img_pos);

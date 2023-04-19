@@ -6,13 +6,13 @@
 #    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/04/18 23:02:50 by pfrances         ###   ########.fr        #
+#    Updated: 2023/04/19 17:27:36 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 SRCS_DIR = srcs
 OBJS_DIR = objs
 
@@ -51,9 +51,11 @@ OBJS += $(INIT_OBJS)
 LOOP_SRCS_DIR = $(SRCS_DIR)/loop
 LOOP_OBJS_DIR = $(OBJS_DIR)/loop
 LOOP_SRCS = $(addprefix $(LOOP_SRCS_DIR)/,	deal_keys.c					\
+											deviation.c					\
+											wall_collision.c			\
 											loop.c						\
+											mini_map.c					\
 											raycast.c					\
-											rays.c						\
 											render_image.c)
 LOOP_OBJS = $(subst $(LOOP_SRCS_DIR), $(LOOP_OBJS_DIR), $(LOOP_SRCS:.c=.o))
 SRCS += $(LOOP_SRCS)
@@ -110,10 +112,6 @@ INCLUDES += -I/usr/X11/include
 MLX_LIBS = -L $(MLX_DIR) -L /usr/X11/include/../lib -lmlx_Darwin -lXext -lX11 -framework OpenGL -framework AppKit
 endif
 
-ifdef WITH_BONUS
-	DEFINE_VARS += -D BONUS=true
-endif
-
 #--------------------------------------------------------------------------#
 
 all: $(NAME)
@@ -164,6 +162,6 @@ fclean: clean
 re: fclean all
 
 bonus:
-	make all WITH_BONUS=TRUE
+	make all
 
 .PHONY: all clean fclean re bonus

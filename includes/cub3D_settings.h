@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 22:41:19 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/19 18:39:54 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,26 @@
 # define CUB3D_SETTINGS_H
 
 # ifndef BONUS
-#  define BONUS 0
+#  define BONUS 1
 # endif
 
 # define EPSILON 1e-10
 # define NO_COLOR 0x123456
-# define RAY 0x000000
-# define CENTER_RAY_COLOR 0xFF0000
+# define RAY 0xFF0000
+# define CENTER_RAY_COLOR 0xFFFF00
 # define BUFFER_SIZE 1024
 # define FOV 66.0
 # define DICT_CHANGE 5.0
 # define HEIGHT_MIN 3
-# define WITDH_MIN 3
-# define WITDH_MAX 256
+# define WIDTH_MIN 3
+# define WIDTH_MAX 256
 # define HEIGHT_MAX 128
-# define MAP_SCALE 512
-# define P_MOVE 32
+# define MAP_SCALE 524288
+# define MINIMAP_TRANSPARENCY 30
+# define P_MOVE 65536
 # define C_SIZE 32
-# define P_SIZE 8
+# define P_SIZE 10
+# define P_SIZE_HALF 5
 
 # define WIN_WIDTH 1024
 # define WIN_HEIGHT 720
@@ -80,51 +82,5 @@
 # define FAILED_AT_INIT_WINDOW_MSG "Failed at init window."
 # define FAILED_AT_INIT_IMGS_MSG "Failed at init images."
 # define MLX_LOOP_ISSUE_MSG "Issue occured on MLX loop."
-
-typedef enum e_error
-{
-	WRONG_NB_OF_ARGS,
-	WRONG_MAP_NAME,
-	OPENING_FILE_FAILED,
-	READING_FILE_FAILED,
-	CLOSING_FILE_FAILED,
-	HAS_DOUBLE_ENTRIE,
-	INVALID_COLOR,
-	IMG_PATH_MALLOC_FAILED,
-	UNDEFINED_ENTRIE,
-	ELEMENT_MISSING,
-	GET_MAP_MALLOC_FAILED,
-	EMPTY_MAP,
-	MAP_HAS_EMPTY_LINE,
-	MAP_SPLIT_MALLOC_FAILED,
-	WRONG_SHAPE,
-	RESIZE_MALLOC_FAILED,
-	TOO_MUCH_PLAYER,
-	MAP_UNDEF_CHAR,
-	HAS_NO_PLAYER,
-	NOT_BORDERED_BY_WALL,
-	INIT_MLX_FAILED,
-	MAP_TOO_HIGH,
-	MAP_TOO_WIDE,
-	INIT_WINDOW_FAILED,
-	FAILED_AT_INIT_WALL_IMG,
-	FAILED_AT_INIT_EMPTY_IMG,
-	FAILED_AT_INIT_PLAYER_IMG,
-	FAILED_AT_INIT_N_TEXT_IMG,
-	FAILED_AT_INIT_S_TEXT_IMG,
-	FAILED_AT_INIT_W_TEXT_IMG,
-	FAILED_AT_INIT_E_TEXT_IMG,
-	FAILED_AT_INIT_NONE_IMG,
-	FAILED_AT_INIT_SCREEN_IMG,
-	FAILED_AT_INIT_MINI_MAP_IMG,
-	NONE
-}	t_error;
-
-typedef enum e_slide
-{
-	X_SLIDE,
-	Y_SLIDE,
-	XY_SLIDE
-}	t_slide;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 17:22:53 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 23:43:57 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/19 13:02:32 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	put_img_to_img(t_img_info *img1, t_img_info *img2, t_pos start)
 {
 	t_pos	img1_pos;
 	t_pos	img2_pos;
+	int		color;
 
 	img2_pos.y = 0;
 	while (img2_pos.y < img2->size.h)
@@ -45,7 +46,9 @@ void	put_img_to_img(t_img_info *img1, t_img_info *img2, t_pos start)
 		{
 			img1_pos.x = img2_pos.x + start.x;
 			img1_pos.y = img2_pos.y + start.y;
-			put_pixel_to_img(img1, img1_pos, get_pixel(img2, img2_pos));
+			color =  get_pixel(img2, img2_pos);
+			if (get_pixel(img1, img1_pos) == 0x0 || color != NO_COLOR)
+				put_pixel_to_img(img1, img1_pos, color);
 			img2_pos.x++;
 		}
 		img2_pos.y++;
@@ -55,22 +58,22 @@ void	put_img_to_img(t_img_info *img1, t_img_info *img2, t_pos start)
 void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos)
 {
 	t_pos		img_pos;
-	t_img_info	*img;
+	t_img_info	img;
 
 	if (ray->slide == X_SLIDE && ray->r_dir.x > 0)
-		img = &data->img.east_text;
+		img = data->img.east_text;
 	else if (ray->slide == X_SLIDE && ray->r_dir.x < 0)
-		img = &data->img.west_text;
+		img = data->img.west_text;
 	else if (ray->slide != X_SLIDE && ray->r_dir.y > 0)
-		img = &data->img.south_text;
+		img = data->img.south_text;
 	else if (ray->slide != X_SLIDE && ray->r_dir.y < 0)
-		img = &data->img.north_text;
+		img = data->img.north_text;
 	img_pos.y = lround((double)((screen_pos.y - ray->w_start
-					+ (ray->w_height - ray->line_height) / 2) * img->size.h)
+					+ (ray->w_height - ray->line_height) / 2) * img.size.h)
 			/ ray->w_height);
-	img_pos.x = lround(ray->wall_hit_x * img->size.w / MAP_SCALE);
+	img_pos.x = lround(ray->wall_hit_x * img.size.w / MAP_SCALE);
 	put_pixel_to_img(&data->img.screen, screen_pos,
-		add_brightness_to_texture(get_pixel(img, img_pos), data, ray));
+		add_brightness_to_texture(get_pixel(&img, img_pos), data, ray));
 }
 
 void	draw_ray_lines(t_data *data, t_ray *ray, int color)
@@ -88,7 +91,8 @@ void	draw_ray_lines(t_data *data, t_ray *ray, int color)
 		pos.x = ray->p_pos.x * C_SIZE / MAP_SCALE;
 		pos.y = ray->p_pos.y * C_SIZE / MAP_SCALE;
 		pos = move(pos, ray->r_angle, i);
-		put_pixel_to_img(&data->img.mini_map, pos, color);
+		if (i % 2 & i % 3)
+			put_pixel_to_img(&data->img.mini_map, pos, color);
 		i++;
 	}
 }

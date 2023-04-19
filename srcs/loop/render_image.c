@@ -6,102 +6,50 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 22:38:51 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/19 16:54:15 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	put_images(t_data *data, t_pos cur)
-{
-	char	**map;
-	t_pos	img_pos;
-
-	map = data->map.array;
-	img_pos.x = cur.x * C_SIZE;
-	img_pos.y = cur.y * C_SIZE;
-	if (map[cur.y][cur.x] == WALL)
-		put_img_to_img(&data->img.mini_map, &data->img.wall, img_pos);
-	else if (map[cur.y][cur.x] == EMPTY)
-		put_img_to_img(&data->img.mini_map, &data->img.empty, img_pos);
-	else
-		put_img_to_img(&data->img.mini_map, &data->img.none, img_pos);
-}
-
-void	set_start_end_pos(t_map *map, t_pos p_pos, t_pos *start, t_pos *end)
-{
-	start->x = ((p_pos.x * C_SIZE) / MAP_SCALE - MINI_MAP_WIDTH_MAX / 2);
-	start->y = ((p_pos.y * C_SIZE) / MAP_SCALE - MINI_MAP_HEIGHT_MAX / 2);
-	end->x = ((p_pos.x * C_SIZE) / MAP_SCALE + MINI_MAP_WIDTH_MAX / 2);
-	end->y = ((p_pos.y * C_SIZE) / MAP_SCALE + MINI_MAP_HEIGHT_MAX / 2);
-	if (start->x < 0)
-	{
-		start->x = 0;
-		end->x = start->x + MINI_MAP_WIDTH_MAX;
-	}
-	if (start->y < 0)
-	{
-		start->y = 0;
-		end->y = start->y + MINI_MAP_HEIGHT_MAX;
-	}
-	if (end->x >= map->mini_map_size.w)
-	{
-		end->x = map->mini_map_size.w;
-		start->x = (end->x - MINI_MAP_WIDTH_MAX) * (start->x > 0);
-	}
-	if (end->y >= map->mini_map_size.h)
-	{
-		end->y = map->mini_map_size.h;
-		start->y = (end->y - MINI_MAP_HEIGHT_MAX) * (start->y > 0);
-	}
-}
-
-void	put_mini_map(t_data *data)
-{
-	t_pos	map_pos;
-	t_pos	screen_pos;
-	t_pos	start;
-	t_pos	end;
-	int		color;
-
-	set_start_end_pos(&data->map, data->ray.p_pos, &start, &end);
-	map_pos.y = start.y;
-	screen_pos.y = MINI_MAP_BORDER;
-	while (map_pos.y < end.y)
-	{
-		map_pos.x = start.x;
-		screen_pos.x = MINI_MAP_BORDER;
-		while (map_pos.x < end.x)
-		{
-			color = get_pixel(&data->img.mini_map, map_pos);
-			if (color != NO_COLOR)
-				put_pixel_to_img(&data->img.screen, screen_pos, color);
-			map_pos.x++;
-			screen_pos.x++;
-		}
-		map_pos.y++;
-		screen_pos.y++;
-	}
-}
-
-void	render_minimap(t_data *data)
+static void	render_ray(t_data *data, t_ray *ray, int x)
 {
 	t_pos	pos;
 
 	pos.y = 0;
-	while (pos.y < data->map.size.h)
+	pos.x = x;
+	while (pos.y < data->win_size.h)
 	{
-		pos.x = 0;
-		while (pos.x < data->map.size.w)
-		{
-			put_images(data, pos);
-			pos.x++;
-		}
+		if (pos.y > 0 && pos.y >= ray->w_start && pos.y <= ray->w_end)
+			put_text_to_screen(data, ray, pos);
+		else if (pos.y < ray->w_start)
+			put_pixel_to_img(&data->img.screen, pos,
+				add_brightness_to_rgb(pos.y, data->color.ceiling.rgb, data));
+		else
+			put_pixel_to_img(&data->img.screen, pos,
+				add_brightness_to_rgb(pos.y, data->color.floor.rgb, data));
 		pos.y++;
 	}
-	pos.x = data->ray.p_pos.x * C_SIZE / MAP_SCALE - P_SIZE / 2;
-	pos.y = data->ray.p_pos.y * C_SIZE / MAP_SCALE - P_SIZE / 2;
-	put_img_to_img(&data->img.mini_map, &data->img.player, pos);
+}
+
+void	draw_rays(t_data *data, t_ray *ray)
+{
+	int	x;
+	int	w;
+
+	x = 0;
+	w = data->win_size.w;
+	while (x < w)
+	{
+		init_r_angle(ray, (double)x, (double)w);
+		init_ray(ray);
+		ray_collision_detection(data, ray);
+		set_wall_size(data, ray);
+		render_ray(data, ray, x);
+		if (BONUS)
+			draw_ray_lines(data, ray, RAY);
+		x++;
+	}
 }
 
 int	render_map(t_data *data)

@@ -52,7 +52,7 @@ void	init_map(t_data *data, t_map *map)
 	int	y;
 
 	set_map_height_width(map);
-	if (map->size.h < HEIGHT_MIN || map->size.w < WITDH_MIN)
+	if (map->size.h < HEIGHT_MIN || map->size.w < WIDTH_MIN)
 		end_program(data, WRONG_SHAPE, WRONG_SHAPE_MSG);
 	y = 0;
 	while (map->array[y] != NULL)
