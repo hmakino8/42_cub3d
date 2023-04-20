@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_images.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 08:43:14 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/05 11:15:31 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/20 22:15:33 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ bool	new_img(void *mlx_ptr, t_img_info *img, t_size size)
 
 void	images_init(t_data *data)
 {
-	data->img.wall.path = WALL_XPM_PATH;
-	data->img.empty.path = EMPTY_XPM_PATH;
+	data->img.wall.path = NONE_XPM_PATH;
+	data->img.road.path = ROAD_XPM_PATH;
 	data->img.player.path = PLAYER_XPM_PATH;
 	data->img.none.path = NONE_XPM_PATH;
 	if (!set_xpm_img(data->mlx_ptr, &data->img.wall))
 		end_program(data, FAILED_AT_INIT_WALL_IMG, FAILED_AT_INIT_IMGS_MSG);
-	if (!set_xpm_img(data->mlx_ptr, &data->img.empty))
+	if (!set_xpm_img(data->mlx_ptr, &data->img.road))
 		end_program(data, FAILED_AT_INIT_EMPTY_IMG, FAILED_AT_INIT_IMGS_MSG);
 	if (!set_xpm_img(data->mlx_ptr, &data->img.player))
 		end_program(data, FAILED_AT_INIT_PLAYER_IMG, FAILED_AT_INIT_IMGS_MSG);

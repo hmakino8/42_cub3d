@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   images_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 17:22:53 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 23:43:57 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 03:07:06 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	put_img_to_img(t_img_info *img1, t_img_info *img2, t_pos start)
 
 void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos)
 {
+	t_rgb_info	rgb;
 	t_pos		img_pos;
 	t_img_info	*img;
 
@@ -69,8 +70,9 @@ void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos)
 					+ (ray->w_height - ray->line_height) / 2) * img->size.h)
 			/ ray->w_height);
 	img_pos.x = lround(ray->wall_hit_x * img->size.w / MAP_SCALE);
-	put_pixel_to_img(&data->img.screen, screen_pos,
-		add_brightness_to_texture(get_pixel(img, img_pos), data, ray));
+	rgb.ratio = ray->line_height / (double)data->win_size.h;
+	brightness_control(get_pixel(img, img_pos), &rgb);
+	put_pixel_to_img(&data->img.screen, screen_pos, rgb.rgb);
 }
 
 void	draw_ray_lines(t_data *data, t_ray *ray, int color)
@@ -88,7 +90,8 @@ void	draw_ray_lines(t_data *data, t_ray *ray, int color)
 		pos.x = ray->p_pos.x * C_SIZE / MAP_SCALE;
 		pos.y = ray->p_pos.y * C_SIZE / MAP_SCALE;
 		pos = move(pos, ray->r_angle, i);
-		put_pixel_to_img(&data->img.mini_map, pos, color);
+		if (i % 2 & i % 3)
+			put_pixel_to_img(&data->img.mini_map, pos, color);
 		i++;
 	}
 }

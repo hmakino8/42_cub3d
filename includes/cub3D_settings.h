@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D_settings.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 22:41:19 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 03:01:47 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # define EPSILON 1e-10
 # define NO_COLOR 0x123456
 # define RAY 0x000000
-# define CENTER_RAY_COLOR 0xFF0000
 # define BUFFER_SIZE 1024
 # define FOV 66.0
 # define DICT_CHANGE 5.0
@@ -29,6 +28,8 @@
 # define WITDH_MAX 256
 # define HEIGHT_MAX 128
 # define MAP_SCALE 512
+# define BRIGHTNESS 1.5
+# define MINIMAP_TRANSPARENCY 0.65
 # define P_MOVE 32
 # define C_SIZE 32
 # define P_SIZE 8
@@ -46,13 +47,12 @@
 # define P_S 'S'
 # define P_E 'E'
 # define P_W 'W'
-# define DOOR 'D'
 # define CHECK 'X'
 
 # define MAP_FILE_EXTENSION ".cub"
 
 # define WALL_XPM_PATH "./xpm_files/wall.xpm"
-# define EMPTY_XPM_PATH "./xpm_files/empty.xpm"
+# define ROAD_XPM_PATH "./xpm_files/road.xpm"
 # define PLAYER_XPM_PATH "./xpm_files/player.xpm"
 # define NONE_XPM_PATH "./xpm_files/none.xpm"
 
@@ -124,7 +124,6 @@ typedef enum e_slide
 {
 	X_SLIDE,
 	Y_SLIDE,
-	XY_SLIDE
 }	t_slide;
 
 #endif

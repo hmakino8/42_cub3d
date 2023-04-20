@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 23:43:26 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 03:07:49 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static double	calculate_dist_to_wall(t_ray *ray)
 	return (x_dist / cos(deg_to_rad(ray->r_angle)) * error);
 }
 
-static void	set_wall_size(t_data *data, t_ray *ray)
+void	set_wall_size(t_data *data, t_ray *ray)
 {
 	ray->perp_w_dist = calculate_dist_to_wall(ray);
 	ray->line_height = (double)data->win_size.h
@@ -38,7 +38,7 @@ static void	set_wall_size(t_data *data, t_ray *ray)
 		ray->wall_hit_x = (int)ray->r_pos.f_x % MAP_SCALE;
 }
 
-static void	ray_collision_detection(t_data *data, t_ray *ray)
+static void	ray_collision_detection(int x, t_data *data, t_ray *ray)
 {
 	while (data->map.array[ray->map.y][ray->map.x] != WALL)
 	{
@@ -50,9 +50,10 @@ static void	ray_collision_detection(t_data *data, t_ray *ray)
 	}
 }
 
-static void	render_ray(t_data *data, t_ray *ray, int x)
+void	render_ray(t_data *data, t_ray *ray, int x)
 {
-	t_pos	pos;
+	t_pos		pos;
+	t_rgb_info	rgb;
 
 	pos.y = 0;
 	pos.x = x;
@@ -60,12 +61,20 @@ static void	render_ray(t_data *data, t_ray *ray, int x)
 	{
 		if (pos.y > 0 && pos.y >= ray->w_start && pos.y <= ray->w_end)
 			put_text_to_screen(data, ray, pos);
-		else if (pos.y < ray->w_start)
-			put_pixel_to_img(&data->img.screen, pos,
-				add_brightness_to_rgb(pos.y, data->color.ceiling.rgb, data));
 		else
-			put_pixel_to_img(&data->img.screen, pos,
-				add_brightness_to_rgb(pos.y, data->color.floor.rgb, data));
+		{
+			if (pos.y < ray->w_start)
+			{
+				rgb.ratio = ray->line_height / (double)data->win_size.h;
+				brightness_control(data->color.ceiling.rgb, &rgb);
+			}
+			else
+			{
+				rgb.ratio = (double)pos.y / (double)data->win_size.h * 0.3;
+				brightness_control(data->color.floor.rgb, &rgb);
+			}
+			put_pixel_to_img(&data->img.screen, pos, rgb.rgb);
+		}
 		pos.y++;
 	}
 }
@@ -80,7 +89,7 @@ void	draw_rays(t_data *data, t_ray *ray)
 	while (x < w)
 	{
 		init_ray((double)x, (double)w, ray);
-		ray_collision_detection(data, ray);
+		ray_collision_detection(x, data, ray);
 		set_wall_size(data, ray);
 		render_ray(data, ray, x);
 		if (BONUS)
