@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_image.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 22:38:51 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/20 22:18:10 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	put_images(t_data *data, t_pos cur)
 	if (map[cur.y][cur.x] == WALL)
 		put_img_to_img(&data->img.mini_map, &data->img.wall, img_pos);
 	else if (map[cur.y][cur.x] == EMPTY)
-		put_img_to_img(&data->img.mini_map, &data->img.empty, img_pos);
+		put_img_to_img(&data->img.mini_map, &data->img.road, img_pos);
 	else
 		put_img_to_img(&data->img.mini_map, &data->img.none, img_pos);
 }
@@ -73,9 +73,8 @@ void	put_mini_map(t_data *data)
 		screen_pos.x = MINI_MAP_BORDER;
 		while (map_pos.x < end.x)
 		{
-			color = get_pixel(&data->img.mini_map, map_pos);
-			if (color != NO_COLOR)
-				put_pixel_to_img(&data->img.screen, screen_pos, color);
+			transparency_control(&color, data, map_pos, screen_pos);
+			put_pixel_to_img(&data->img.screen, screen_pos, color);
 			map_pos.x++;
 			screen_pos.x++;
 		}

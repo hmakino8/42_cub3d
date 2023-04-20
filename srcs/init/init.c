@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:41:05 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/29 18:34:53 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/20 22:07:25 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@ void	pgrm_init(t_data *data, char *filename)
 {
 	parse_file_content(data, filename);
 	init_map(data, &data->map);
+	data->save_door_pos = malloc(10000000 * sizeof(t_pos));
+	data->save_door_color = malloc(10000000 * sizeof(int));
+	data->ray.perp_w_dist_min = DBL_MAX;
 	check_map(data, &data->map);
 	init_window(data);
 	images_init(data);

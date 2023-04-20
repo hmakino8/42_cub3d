@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 14:45:46 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 17:17:50 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/20 15:45:49 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	check_objects_on_map(t_data *data, t_map *map)
 				set_player_data(data, c, cur);
 				map->array[cur.y][cur.x] = EMPTY;
 			}
-			else if (c != WALL && c != EMPTY && c != ' ')
+			else if (c != WALL && c != EMPTY && c != ' ' && c != DOOR)
 				end_program(data, MAP_UNDEF_CHAR, MAP_UNDEF_CHAR_MSG);
 			cur.x++;
 		}
