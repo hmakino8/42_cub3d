@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 16:15:54 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:28:51 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define EPSILON 1e-10
 # define NO_COLOR 0x123456
-# define RAY 0x000000
+# define RAY 0x0000FF
 # define BUFFER_SIZE 1024
 # define FOV 66.0
 # define DICT_CHANGE 5.0
