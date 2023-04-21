@@ -6,7 +6,7 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:48:22 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/20 22:15:20 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 13:33:51 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_error_messages(char *error_msg)
 	ft_putendl_fd(error_msg, STDERR_FILENO);
 }
 
-void	free_map(char **map_array)
+static void	free_map(char **map_array)
 {
 	size_t	i;
 
@@ -31,7 +31,7 @@ void	free_map(char **map_array)
 	free(map_array);
 }
 
-void	destroy_images(t_data *data, t_error error)
+static void	destroy_images(t_data *data, t_error error)
 {
 	if (error > FAILED_AT_INIT_WALL_IMG)
 		mlx_destroy_image(data->mlx_ptr, data->img.wall.img_ptr);

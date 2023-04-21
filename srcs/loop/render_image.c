@@ -6,13 +6,13 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/20 22:18:10 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 13:39:35 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	put_images(t_data *data, t_pos cur)
+static void	put_images(t_data *data, t_pos cur)
 {
 	char	**map;
 	t_pos	img_pos;
@@ -28,7 +28,7 @@ void	put_images(t_data *data, t_pos cur)
 		put_img_to_img(&data->img.mini_map, &data->img.none, img_pos);
 }
 
-void	set_start_end_pos(t_map *map, t_pos p_pos, t_pos *start, t_pos *end)
+static void	set_start_end_pos(t_map *map, t_pos p_pos, t_pos *start, t_pos *end)
 {
 	start->x = ((p_pos.x * C_SIZE) / MAP_SCALE - MINI_MAP_WIDTH_MAX / 2);
 	start->y = ((p_pos.y * C_SIZE) / MAP_SCALE - MINI_MAP_HEIGHT_MAX / 2);
@@ -56,7 +56,7 @@ void	set_start_end_pos(t_map *map, t_pos p_pos, t_pos *start, t_pos *end)
 	}
 }
 
-void	put_mini_map(t_data *data)
+static void	put_mini_map(t_data *data)
 {
 	t_pos	map_pos;
 	t_pos	screen_pos;
@@ -83,7 +83,7 @@ void	put_mini_map(t_data *data)
 	}
 }
 
-void	render_minimap(t_data *data)
+static void	render_minimap(t_data *data)
 {
 	t_pos	pos;
 

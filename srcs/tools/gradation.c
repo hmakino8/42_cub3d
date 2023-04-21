@@ -6,7 +6,7 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 05:36:19 by hiroaki           #+#    #+#             */
-/*   Updated: 2023/04/20 15:17:37 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 13:45:57 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	brightness_control(int color, t_rgb_info *rgb)
 	rgb->rgb = rgb->red << 16 | rgb->green << 8 | rgb->blue;
 }
 
-void	transparency_control(\
-			int *color, t_data *data, t_pos map_pos, t_pos screen_pos)
+void	transparency_control( \
+	int *color, t_data *data, t_pos map_pos, t_pos screen_pos)
 {
 	int			c1;
 	int			c2;

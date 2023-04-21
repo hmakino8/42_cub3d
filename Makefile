@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
+#    By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/04/21 11:16:48 by pfrances         ###   ########.fr        #
+#    Updated: 2023/04/21 14:43:07 by hiroaki          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,8 +75,6 @@ OBJS += $(TOOLS_OBJS)
 LIBS_DIR = ./libraries
 LIBFT_DIR = $(LIBS_DIR)/libft
 LIBFT = $(LIBFT_DIR)/libft.a
-FT_PRINTF_DIR = $(LIBS_DIR)/ft_printf
-FT_PRINTF = $(FT_PRINTF_DIR)/ft_printf.a
 MLX_DIR = $(LIBS_DIR)/minilibx
 MLX_REPO = https://github.com/42Paris/minilibx-linux.git
 MATH_LIB = -lm
@@ -118,8 +116,8 @@ endif
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX)
-	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(FT_PRINTF) $(MLX_LIBS) $(MATH_LIB) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) $(INCLUDES) $(OBJS) $(LIBFT) $(MLX_LIBS) $(MATH_LIB) -o $(NAME)
 
 $(INIT_OBJS_DIR)/%.o: $(INIT_SRCS_DIR)/%.c $(MLX)
 	@mkdir -p $(INIT_OBJS_DIR)
@@ -140,9 +138,6 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c $(MLX)
 $(LIBFT):
 	make -C $(LIBFT_DIR) bonus
 
-$(FT_PRINTF):
-	make -C $(FT_PRINTF_DIR)
-
 $(MLX): $(MLX_DIR)/Makefile
 	make -C $(MLX_DIR)
 
@@ -152,13 +147,11 @@ $(MLX_DIR)/Makefile:
 clean:
 	rm -rf $(OBJS_DIR)
 	make -C $(LIBFT_DIR) clean
-	make -C $(FT_PRINTF_DIR) clean
 	if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
 
 fclean: clean
 	rm -f $(NAME)
 	rm -f $(LIBFT)
-	rm -f $(FT_PRINTF)
 	rm -rf $(MLX_DIR)
 
 re: fclean all

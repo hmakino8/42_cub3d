@@ -12,7 +12,7 @@
 
 #include "cub3D.h"
 
-bool	check_rgb_format(char *digit, bool is_last)
+static bool	check_rgb_format(char *digit, bool is_last)
 {
 	size_t	i;
 
@@ -32,7 +32,7 @@ bool	check_rgb_format(char *digit, bool is_last)
 	return (true);
 }
 
-int	get_and_check_rgb_value(char *content, size_t *i, bool is_last)
+static int	get_and_check_rgb_value(char *content, size_t *i, bool is_last)
 {
 	int	value;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   read_all.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 13:24:53 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/19 17:21:59 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 13:40:21 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static char	*free_and_return_null(char *str1, char *str2)
 	return (NULL);
 }
 
-char	*ft_strjoin_with_free(char *s1, char const *s2)
+static char	*ft_strjoin_with_free(char *s1, char const *s2)
 {
 	char	*result;
 	size_t	s1_len;

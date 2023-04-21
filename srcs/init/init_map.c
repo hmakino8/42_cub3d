@@ -12,7 +12,7 @@
 
 #include "cub3D.h"
 
-void	set_map_height_width(t_map *map)
+static void	set_map_height_width(t_map *map)
 {
 	int	line_len;
 
@@ -27,7 +27,7 @@ void	set_map_height_width(t_map *map)
 	}
 }
 
-void	resize_line(t_data *data, char **line_adress, size_t witdh)
+static void	resize_line(t_data *data, char **line_adress, size_t witdh)
 {
 	char	*resized_line;
 	size_t	i;

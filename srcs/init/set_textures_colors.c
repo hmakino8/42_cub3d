@@ -6,13 +6,14 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 18:42:14 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/20 22:15:47 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 13:45:12 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	set_img_path(t_data *data, char *content, size_t *i, char **path_to_set)
+static void	\
+	set_img_path(t_data *data, char *content, size_t *i, char **path_to_set)
 {
 	size_t	path_len;
 
@@ -31,7 +32,7 @@ void	set_img_path(t_data *data, char *content, size_t *i, char **path_to_set)
 		end_program(data, IMG_PATH_MALLOC_FAILED, FAILED_ON_MALLOC_MSG);
 }
 
-void	set_default_texture_color(t_data *data)
+static void	set_default_texture_color(t_data *data)
 {
 	data->img.north_text.path = NULL;
 	data->img.south_text.path = NULL;
@@ -47,7 +48,7 @@ void	set_default_texture_color(t_data *data)
 	data->color.ceiling.is_set = false;
 }
 
-bool	check_texture_and_color(t_data *data)
+static bool	check_texture_and_color(t_data *data)
 {
 	if (data->img.north_text.path == NULL
 		|| data->img.south_text.path == NULL
@@ -59,7 +60,7 @@ bool	check_texture_and_color(t_data *data)
 	return (true);
 }
 
-void	set_right_element(t_data *data, char *content, size_t *i)
+static void	set_right_element(t_data *data, char *content, size_t *i)
 {
 	if (ft_strncmp(&content[*i], "NO", 2) == 0)
 		set_img_path(data, content, i, &data->img.north_text.path);

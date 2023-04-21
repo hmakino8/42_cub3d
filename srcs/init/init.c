@@ -6,13 +6,13 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:41:05 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 03:04:34 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 13:36:58 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	parse_file_content(t_data *data, char *filename)
+static void	parse_file_content(t_data *data, char *filename)
 {
 	size_t	map_start_index;
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_window.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 08:45:04 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 11:14:09 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 13:36:51 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	check_window_size(t_data *data)
+static void	check_window_size(t_data *data)
 {
 	if (data->map.size.w > WITDH_MAX)
 		end_program(data, MAP_TOO_HIGH, MAP_TOO_HIGH_MSG);

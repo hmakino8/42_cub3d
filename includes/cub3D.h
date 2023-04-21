@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 11:14:20 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 14:36:24 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "ft_printf.h"
 # include "libft.h"
 # include "mlx.h"
 # include "cub3D_settings.h"
@@ -22,12 +21,10 @@
 # include <float.h>
 # include <X11/X.h>
 # include <X11/keysym.h>
-# include <sys/types.h>
-# include <sys/stat.h>
 # include <fcntl.h>
 # include <stdbool.h>
 # include <stdlib.h>
-# include <stdio.h>
+# include <unistd.h>
 
 typedef struct s_size		t_size;
 typedef struct s_map		t_map;
@@ -106,17 +103,17 @@ struct s_ray
 	t_pos	map;
 	t_pos	p_pos;
 	t_fpos	r_pos;
-	t_pos	p_side;
+	//t_pos	p_side;
 	t_fpos	r_side;
 	t_pos	r_dir;
 	t_fpos	r_delta;
 	double	r_angle;
 	double	p_angle;
-	t_pos	slide_cnt;
+	//t_pos	slide_cnt;
 	t_slide	slide;
 	bool	hit_wall;
 	double	perp_w_dist;
-	double	perp_w_dist_min;
+	//double	perp_w_dist_min;
 	int		line_height;
 	int		w_start;
 	int		w_end;
@@ -204,14 +201,12 @@ t_pos	move(t_pos pos, double angle, double distance);
 void	put_in_loop(t_data *data);
 
 /*								raycast.c									*/
-void	do_raycasting(t_ray *ray, t_fpos *r_pos, t_fpos *r_side);
+void	do_raycasting(t_ray *ray, t_fpos *r_pos, t_fpos *side);
 
 /*								rays.c										*/
 void	draw_rays(t_data *data, t_ray *ray);
 void	set_wall_size(t_data *data, t_ray *ray);
 void	render_ray(t_data *data, t_ray *ray, int x);
-
-void	render_door(t_data *data, t_ray *ray, int x);
 
 /*								render_image.c								*/
 int		render_map(t_data *data);
@@ -222,8 +217,8 @@ int		render_map(t_data *data);
 
 /*								gradation.c									*/
 void	brightness_control(int color, t_rgb_info *rgb);
-void	transparency_control(int *color, t_data *data,
-			t_pos map_pos, t_pos screen_pos);
+void	transparency_control( \
+			int *color, t_data *data, t_pos map_pos, t_pos screen_pos);
 
 /*								images_tools.c								*/
 int		get_pixel(t_img_info *img, t_pos img_pos);
@@ -231,8 +226,6 @@ void	put_pixel_to_img(t_img_info *img, t_pos pos, int color);
 void	put_img_to_img(t_img_info *img1, t_img_info *img2, t_pos start);
 void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos);
 void	draw_ray_lines(t_data *data, t_ray *ray, int color);
-
-void	put_door_to_screen(t_data *data, t_ray *ray, t_pos screen_pos);
 
 /*								maths_utils.c								*/
 double	deg_to_rad(double a);

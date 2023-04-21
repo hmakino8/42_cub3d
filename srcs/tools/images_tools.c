@@ -6,7 +6,7 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 17:22:53 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 03:07:06 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 14:39:53 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos)
 	t_pos		img_pos;
 	t_img_info	*img;
 
+	img = NULL;
 	if (ray->slide == X_SLIDE && ray->r_dir.x > 0)
 		img = &data->img.east_text;
 	else if (ray->slide == X_SLIDE && ray->r_dir.x < 0)

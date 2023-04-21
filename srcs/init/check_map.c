@@ -6,13 +6,13 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 14:45:46 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 03:04:17 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 13:35:01 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	set_player_data(t_data *data, char c, t_pos cur)
+static void	set_player_data(t_data *data, char c, t_pos cur)
 {
 	data->ray.p_pos.x = cur.x * MAP_SCALE + MAP_SCALE / 2;
 	data->ray.p_pos.y = cur.y * MAP_SCALE + MAP_SCALE / 2;
@@ -27,7 +27,7 @@ void	set_player_data(t_data *data, char c, t_pos cur)
 		data->ray.p_angle = 270;
 }
 
-void	check_objects_on_map(t_data *data, t_map *map)
+static void	check_objects_on_map(t_data *data, t_map *map)
 {
 	t_pos	cur;
 	char	c;
@@ -54,7 +54,7 @@ void	check_objects_on_map(t_data *data, t_map *map)
 	}
 }
 
-void	check_invalid_spaces(t_data *data, t_map *map)
+static void	check_invalid_spaces(t_data *data, t_map *map)
 {
 	t_pos	cur;
 

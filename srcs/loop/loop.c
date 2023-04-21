@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:40:20 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 10:07:13 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 13:38:31 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	cross_button_event(t_data *data)
+static int	cross_button_event(t_data *data)
 {
 	end_program(data, NONE, NULL);
 	return (0);
 }
 
-int	mouse_hook(int mouse_x, int mouse_y, void *ptr)
+static int	mouse_hook(int mouse_x, int mouse_y, void *ptr)
 {
 	t_data	*data;
 

@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   check_wall.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:18:03 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 11:13:17 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 14:33:40 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-void	check_invalid_border_cell(t_data *data, char c)
+static void	check_invalid_border_cell(t_data *data, char c)
 {
 	if (c != ' ' && c != CHECK && c != WALL)
 		end_program(data, NOT_BORDERED_BY_WALL, NOT_BORDERED_BY_WALL_MSG);
 }
 
-void	check_adjacent(t_data *data, t_map *map, int x, int y)
+static void	check_adjacent(t_data *data, t_map *map, int x, int y)
 {
 	if (x > 0)
 		check_invalid_border_cell(data, map->array[y][x - 1]);
@@ -43,12 +43,13 @@ void	check_map_wall(t_data *data, t_map *map)
 		{
 			if (map->array[pos.y][pos.x] == ' ')
 				check_adjacent(data, map, pos.x, pos.y);
-			else if (pos.y == 0 || pos.y == map->size.h - 1)
+			else if (pos.y == 0 || pos.y == map->size.h - 1
+				|| pos.x == 0 || pos.x == map->size.w - 1)
 			{
 				if (map->array[pos.y][pos.x] != WALL
 					&& map->array[pos.y][pos.x] != CHECK)
-						end_program(data, NOT_BORDERED_BY_WALL,
-							NOT_BORDERED_BY_WALL_MSG);
+					end_program(data, NOT_BORDERED_BY_WALL,
+						NOT_BORDERED_BY_WALL_MSG);
 			}
 			pos.x++;
 		}

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_map_content.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 08:47:12 by pfrances          #+#    #+#             */
-/*   Updated: 2023/03/22 13:22:49 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 13:35:59 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-char	*skip_head_tail_empty_lines(char *content)
+static char	*skip_head_tail_empty_lines(char *content)
 {
 	char	*result;
 	size_t	head;
@@ -39,7 +39,7 @@ char	*skip_head_tail_empty_lines(char *content)
 	return (result);
 }
 
-bool	check_empty_line(char *map)
+static bool	check_empty_line(char *map)
 {
 	size_t	i;
 
