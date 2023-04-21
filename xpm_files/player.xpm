@@ -1,16 +1,18 @@
 /* XPM */
-static char *freeimage[] = {
-/* width height num_colors chars_per_pixel */
-"8 8 1 1",
-/* colors */
-"  c #FF0000",
+static char *_6737b8c034d48e4bb23a45ec7ffae00dTXojfmVz1HV9dGJ[] = {
+/* columns rows colors chars-per-pixel */
+"10 10 2 1 ",
+"  c #123456",
+"X c #FF0000",
 /* pixels */
-"        ",
-"        ",
-"        ",
-"        ",
-"        ",
-"        ",
-"        ",
-"        "
+"    XX    ",
+"  XXXXXX  ",
+" XX XX XX ",
+" X      X ",
+"XXX XX XXX",
+"XXX XX XXX",
+" X      X ",
+" XX XX XX ",
+"  XXXXXX  ",
+"    XX    ",
 };

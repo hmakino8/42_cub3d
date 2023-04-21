@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end_program.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
+/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:48:22 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/09 10:57:45 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/20 22:15:20 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	destroy_images(t_data *data, t_error error)
 	if (error > FAILED_AT_INIT_WALL_IMG)
 		mlx_destroy_image(data->mlx_ptr, data->img.wall.img_ptr);
 	if (error > FAILED_AT_INIT_EMPTY_IMG)
-		mlx_destroy_image(data->mlx_ptr, data->img.empty.img_ptr);
+		mlx_destroy_image(data->mlx_ptr, data->img.road.img_ptr);
 	if (error > FAILED_AT_INIT_PLAYER_IMG)
 		mlx_destroy_image(data->mlx_ptr, data->img.player.img_ptr);
 	if (error > FAILED_AT_INIT_N_TEXT_IMG)
