@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rays.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 03:07:49 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 10:03:48 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	set_wall_size(t_data *data, t_ray *ray)
 		ray->wall_hit_x = (int)ray->r_pos.f_x % MAP_SCALE;
 }
 
-static void	ray_collision_detection(int x, t_data *data, t_ray *ray)
+static void	ray_collision_detection(t_data *data, t_ray *ray)
 {
 	while (data->map.array[ray->map.y][ray->map.x] != WALL)
 	{
@@ -89,7 +89,7 @@ void	draw_rays(t_data *data, t_ray *ray)
 	while (x < w)
 	{
 		init_ray((double)x, (double)w, ray);
-		ray_collision_detection(x, data, ray);
+		ray_collision_detection(data, ray);
 		set_wall_size(data, ray);
 		render_ray(data, ray, x);
 		if (BONUS)

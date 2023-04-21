@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 03:03:37 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 11:14:20 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ struct s_data
 	t_rgb	color;
 	t_map	map;
 	t_ray	ray;
-	int		old_mouse_x;
+	int		last_mouse_x;
 };
 
 /****************************************************************************/
@@ -222,7 +222,8 @@ int		render_map(t_data *data);
 
 /*								gradation.c									*/
 void	brightness_control(int color, t_rgb_info *rgb);
-void	transparency_control(int *color, t_data *data, t_pos map_pos, t_pos screen_pos);
+void	transparency_control(int *color, t_data *data,
+			t_pos map_pos, t_pos screen_pos);
 
 /*								images_tools.c								*/
 int		get_pixel(t_img_info *img, t_pos img_pos);

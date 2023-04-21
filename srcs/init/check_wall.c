@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/21 15:18:03 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/03 11:04:21 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 11:13:17 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,13 @@ void	check_map_wall(t_data *data, t_map *map)
 		{
 			if (map->array[pos.y][pos.x] == ' ')
 				check_adjacent(data, map, pos.x, pos.y);
+			else if (pos.y == 0 || pos.y == map->size.h - 1)
+			{
+				if (map->array[pos.y][pos.x] != WALL
+					&& map->array[pos.y][pos.x] != CHECK)
+						end_program(data, NOT_BORDERED_BY_WALL,
+							NOT_BORDERED_BY_WALL_MSG);
+			}
 			pos.x++;
 		}
 		pos.y++;

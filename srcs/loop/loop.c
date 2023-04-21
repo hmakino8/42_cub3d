@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:40:20 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 22:40:36 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 10:07:13 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ int	mouse_hook(int mouse_x, int mouse_y, void *ptr)
 
 	(void)mouse_y;
 	data = (t_data *)ptr;
-	if (mouse_x == data->old_mouse_x)
+	if (mouse_x == data->last_mouse_x)
 		return (0);
-	if (mouse_x > data->old_mouse_x)
+	if (mouse_x > data->last_mouse_x)
 		data->ray.p_angle -= 0.5;
 	else
 		data->ray.p_angle += 0.5;
 	data->ray.p_angle = fix_ang(data->ray.p_angle);
-	data->old_mouse_x = mouse_x;
+	data->last_mouse_x = mouse_x;
 	return (0);
 }
 

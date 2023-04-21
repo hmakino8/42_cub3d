@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:53:32 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/18 23:18:09 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 10:31:18 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_pos	move_dist(int key, t_ray *ray)
 	return (dist);
 }
 
-static t_pos	wall_collision(t_pos *dist, char **map_array, t_ray *ray)
+static t_pos	wall_collision(t_data *data, t_pos *dist, t_ray *ray)
 {
 	int		offset;
 	t_pos	top;
@@ -40,8 +40,8 @@ static t_pos	wall_collision(t_pos *dist, char **map_array, t_ray *ray)
 	top.y = (ray->p_pos.y + dist->y - offset) / MAP_SCALE;
 	down.x = (ray->p_pos.x + dist->x + offset) / MAP_SCALE;
 	down.y = (ray->p_pos.y + dist->y + offset) / MAP_SCALE;
-	if (map_array[top.y][top.x] == WALL || \
-		map_array[down.y][down.x] == WALL)
+	if (data->map.array[top.y][top.x] == WALL
+		|| data->map.array[down.y][down.x] == WALL)
 	{
 		if (BONUS)
 		{
@@ -99,7 +99,7 @@ int	deal_keys(int key, void *ptr)
 	if (key == XK_w || key == XK_a || key == XK_s || key == XK_d)
 	{
 		dist = move_dist(key, ray);
-		dist = wall_collision(&dist, data->map.array, ray);
+		dist = wall_collision(data, &dist, ray);
 		ray->p_pos.x += dist.x;
 		ray->p_pos.y += dist.y;
 	}
