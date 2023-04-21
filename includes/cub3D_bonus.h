@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D.h                                            :+:      :+:    :+:   */
+/*   cub3D_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 17:09:56 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:16:59 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3D_BONUS_H
+# define CUB3D_BONUS_H
 
 # include "libft.h"
 # include "mlx.h"
-# include "cub3D_settings.h"
+# include "cub3D_settings_bonus.h"
 
 # include <math.h>
 # include <float.h>
@@ -68,6 +68,9 @@ struct s_img_info
 
 struct s_img
 {
+	t_img_info	wall;
+	t_img_info	road;
+	t_img_info	player;
 	t_img_info	north_text;
 	t_img_info	south_text;
 	t_img_info	west_text;
@@ -75,6 +78,8 @@ struct s_img
 	t_img_info	floor_text;
 	t_img_info	ceiling_text;
 	t_img_info	screen;
+	t_img_info	mini_map;
+	t_img_info	none;
 };
 
 struct s_rgb_info
@@ -83,6 +88,7 @@ struct s_rgb_info
 	int		green;
 	int		blue;
 	int		rgb;
+	double	ratio;
 	bool	is_set;
 };
 
@@ -117,6 +123,7 @@ struct s_map
 	char	**array;
 	bool	has_player;
 	t_size	size;
+	t_size	mini_map_size;
 };
 
 struct s_data
@@ -130,6 +137,7 @@ struct s_data
 	t_rgb	color;
 	t_map	map;
 	t_ray	ray;
+	int		last_mouse_x;
 };
 
 /****************************************************************************/
@@ -187,7 +195,6 @@ int		deal_keys(int key, void *ptr);
 t_pos	move(t_pos pos, double angle, double distance);
 
 /*								loop.c										*/
-int		render_map(t_data *data);
 void	put_in_loop(t_data *data);
 
 /*								raycast.c									*/
@@ -198,15 +205,24 @@ void	draw_rays(t_data *data, t_ray *ray);
 void	set_wall_size(t_data *data, t_ray *ray);
 void	render_ray(t_data *data, t_ray *ray, int x);
 
+/*								render_image.c								*/
+int		render_map(t_data *data);
+
 /****************************************************************************/
 /************************************TOOLS***********************************/
 /****************************************************************************/
+
+/*								gradation.c									*/
+void	brightness_control(int color, t_rgb_info *rgb);
+void	transparency_control( \
+			int *color, t_data *data, t_pos map_pos, t_pos screen_pos);
 
 /*								images_tools.c								*/
 int		get_pixel(t_img_info *img, t_pos img_pos);
 void	put_pixel_to_img(t_img_info *img, t_pos pos, int color);
 void	put_img_to_img(t_img_info *img1, t_img_info *img2, t_pos start);
 void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos);
+void	draw_ray_lines(t_data *data, t_ray *ray, int color);
 
 /*								maths_utils.c								*/
 double	deg_to_rad(double a);

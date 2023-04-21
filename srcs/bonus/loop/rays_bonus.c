@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rays.c                                             :+:      :+:    :+:   */
+/*   rays_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 15:03:09 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 16:44:41 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 static double	calculate_dist_to_wall(t_ray *ray)
 {
@@ -50,7 +50,6 @@ static void	ray_collision_detection(t_data *data, t_ray *ray)
 	}
 }
 
-#include <printf.h>
 void	render_ray(t_data *data, t_ray *ray, int x)
 {
 	t_pos		pos;
@@ -66,13 +65,11 @@ void	render_ray(t_data *data, t_ray *ray, int x)
 		{
 			if (pos.y < ray->w_start)
 			{
-				//rgb.ratio = (1.0 - ((double)pos.y / (double)data->win_size.h)) * 0.4;
 				rgb.ratio = (1.0 - ((double)pos.y / (double)data->win_size.h));
 				brightness_control(data->color.ceiling.rgb, &rgb);
 			}
 			else
 			{
-				//rgb.ratio = (double)pos.y / (double)data->win_size.h * 0.3;
 				rgb.ratio = (double)pos.y / (double)data->win_size.h;
 				brightness_control(data->color.floor.rgb, &rgb);
 			}
@@ -95,8 +92,7 @@ void	draw_rays(t_data *data, t_ray *ray)
 		ray_collision_detection(data, ray);
 		set_wall_size(data, ray);
 		render_ray(data, ray, x);
-		if (BONUS)
-			draw_ray_lines(data, ray, RAY);
+		draw_ray_lines(data, ray, RAY);
 		x++;
 	}
 }

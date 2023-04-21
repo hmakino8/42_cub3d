@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_image.c                                     :+:      :+:    :+:   */
+/*   render_image_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:49:52 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 13:39:35 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 16:44:57 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 static void	put_images(t_data *data, t_pos cur)
 {
@@ -107,11 +107,9 @@ int	render_map(t_data *data)
 {
 	if (data->win_ptr == NULL)
 		return (1);
-	if (BONUS)
-		render_minimap(data);
+	render_minimap(data);
 	draw_rays(data, &data->ray);
-	if (BONUS)
-		put_mini_map(data);
+	put_mini_map(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
 		data->img.screen.img_ptr, 0, 0);
 	return (0);

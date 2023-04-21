@@ -3,24 +3,24 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+         #
+#    By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/22 12:06:24 by pfrances          #+#    #+#              #
-#    Updated: 2023/04/21 14:43:07 by hiroaki          ###   ########.fr        #
+#    Updated: 2023/04/21 17:23:21 by pfrances         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS_DIR = srcs
-OBJS_DIR = objs
 
+#################################MANDATORY#####################################
+MANDATORY = mandatory
 ###############################################################################
 ###################################MAIN########################################
 ###############################################################################
-SRCS_DIR = ./srcs
-OBJS_DIR = ./objs
+SRCS_DIR = ./srcs/$(MANDATORY)
+OBJS_DIR = ./objs/$(MANDATORY)
 MAIN_SRCS = $(addprefix $(SRCS_DIR)/,			cub3D.c					\
 												end_program.c)
 MAIN_OBJS = $(subst $(SRCS_DIR), $(OBJS_DIR), $(MAIN_SRCS:.c=.o))
@@ -53,8 +53,7 @@ LOOP_OBJS_DIR = $(OBJS_DIR)/loop
 LOOP_SRCS = $(addprefix $(LOOP_SRCS_DIR)/,	deal_keys.c					\
 											loop.c						\
 											raycast.c					\
-											rays.c						\
-											render_image.c)
+											rays.c)
 LOOP_OBJS = $(subst $(LOOP_SRCS_DIR), $(LOOP_OBJS_DIR), $(LOOP_SRCS:.c=.o))
 SRCS += $(LOOP_SRCS)
 OBJS += $(LOOP_OBJS)
@@ -63,13 +62,71 @@ OBJS += $(LOOP_OBJS)
 ###############################################################################
 TOOLS_SRCS_DIR = $(SRCS_DIR)/tools
 TOOLS_OBJS_DIR = $(OBJS_DIR)/tools
-TOOLS_SRCS = $(addprefix $(TOOLS_SRCS_DIR)/,	gradation.c				\
-												images_tools.c			\
+TOOLS_SRCS = $(addprefix $(TOOLS_SRCS_DIR)/,	images_tools.c			\
 												maths_utils.c			\
 												read_all.c)
 TOOLS_OBJS = $(subst $(TOOLS_SRCS_DIR), $(TOOLS_OBJS_DIR), $(TOOLS_SRCS:.c=.o))
 SRCS += $(TOOLS_SRCS)
 OBJS += $(TOOLS_OBJS)
+###############################################################################
+
+
+###################################BONUS#######################################
+BONUS = bonus
+###############################################################################
+###################################MAIN########################################
+###############################################################################
+B_SRCS_DIR = ./srcs/$(BONUS)
+B_OBJS_DIR = ./objs/$(BONUS)
+B_MAIN_SRCS = $(addprefix $(B_SRCS_DIR)/,		cub3D_bonus.c					\
+												end_program_bonus.c)
+B_MAIN_OBJS = $(subst $(B_SRCS_DIR), $(B_OBJS_DIR), $(B_MAIN_SRCS:.c=.o))
+B_SRCS = $(B_MAIN_SRCS)
+B_OBJS = $(B_MAIN_OBJS)
+###############################################################################
+###################################INIT########################################
+###############################################################################
+B_INIT_SRCS_DIR = $(B_SRCS_DIR)/init
+B_INIT_OBJS_DIR = $(B_OBJS_DIR)/init
+B_INIT_SRCS = $(addprefix $(B_INIT_SRCS_DIR)/,	check_wall_bonus.c				\
+												check_map_bonus.c				\
+												get_file_content_bonus.c		\
+												get_map_content_bonus.c			\
+												init_images_bonus.c				\
+												init_map_bonus.c				\
+												init_ray_bonus.c				\
+												init_window_bonus.c				\
+												init_bonus.c					\
+												set_textures_colors_bonus.c		\
+												set_rgb_bonus.c)
+B_INIT_OBJS = $(subst $(B_INIT_SRCS_DIR), $(B_INIT_OBJS_DIR), $(B_INIT_SRCS:.c=.o))
+B_SRCS += $(B_INIT_SRCS)
+B_OBJS += $(B_INIT_OBJS)
+###############################################################################
+###################################LOOP########################################
+###############################################################################
+B_LOOP_SRCS_DIR = $(B_SRCS_DIR)/loop
+B_LOOP_OBJS_DIR = $(B_OBJS_DIR)/loop
+B_LOOP_SRCS = $(addprefix $(B_LOOP_SRCS_DIR)/,	deal_keys_bonus.c				\
+												loop_bonus.c					\
+												raycast_bonus.c					\
+												rays_bonus.c					\
+												render_image_bonus.c)
+B_LOOP_OBJS = $(subst $(B_LOOP_SRCS_DIR), $(B_LOOP_OBJS_DIR), $(B_LOOP_SRCS:.c=.o))
+B_SRCS += $(B_LOOP_SRCS)
+B_OBJS += $(B_LOOP_OBJS)
+###############################################################################
+###################################TOOLS#######################################
+###############################################################################
+B_TOOLS_SRCS_DIR = $(B_SRCS_DIR)/tools
+B_TOOLS_OBJS_DIR = $(B_OBJS_DIR)/tools
+B_TOOLS_SRCS = $(addprefix $(B_TOOLS_SRCS_DIR)/,	gradation_bonus.c			\
+													images_tools_bonus.c		\
+													maths_utils_bonus.c			\
+													read_all_bonus.c)
+B_TOOLS_OBJS = $(subst $(B_TOOLS_SRCS_DIR), $(B_TOOLS_OBJS_DIR), $(B_TOOLS_SRCS:.c=.o))
+B_SRCS += $(B_TOOLS_SRCS)
+B_OBJS += $(B_TOOLS_OBJS)
 ###############################################################################
 
 LIBS_DIR = ./libraries
@@ -107,11 +164,6 @@ MLX = $(MLX_DIR)/libmlx_Darwin.a
 INCLUDES += -I/usr/X11/include
 MLX_LIBS = -L $(MLX_DIR) -L /usr/X11/include/../lib -lmlx_Darwin -lXext -lX11 -framework OpenGL -framework AppKit
 endif
-
-ifdef WITH_BONUS
-	DEFINE_VARS += -D BONUS=true
-endif
-
 #--------------------------------------------------------------------------#
 
 all: $(NAME)
@@ -156,7 +208,23 @@ fclean: clean
 
 re: fclean all
 
-bonus:
-	make all WITH_BONUS=TRUE
+bonus: $(B_OBJS) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) $(INCLUDES) $(B_OBJS) $(LIBFT) $(MLX_LIBS) $(MATH_LIB) -o $(NAME)
+
+$(B_INIT_OBJS_DIR)/%.o: $(B_INIT_SRCS_DIR)/%.c $(MLX)
+	@mkdir -p $(B_INIT_OBJS_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINE_VARS) -c $< -o $@
+
+$(B_LOOP_OBJS_DIR)/%.o: $(B_LOOP_SRCS_DIR)/%.c $(MLX)
+	@mkdir -p $(B_LOOP_OBJS_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINE_VARS) -c $< -o $@
+
+$(B_TOOLS_OBJS_DIR)/%.o: $(B_TOOLS_SRCS_DIR)/%.c $(MLX)
+	@mkdir -p $(B_TOOLS_OBJS_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINE_VARS) -c $< -o $@
+
+$(B_OBJS_DIR)/%.o: $(B_SRCS_DIR)/%.c $(MLX)
+	@mkdir -p $(B_OBJS_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) $(DEFINE_VARS) -c $< -o $@
 
 .PHONY: all clean fclean re bonus

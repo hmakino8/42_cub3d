@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_window.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 08:45:04 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 13:36:51 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 17:10:20 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	check_window_size(t_data *data)
 		end_program(data, MAP_TOO_WIDE, MAP_TOO_WIDE_MSG);
 	data->win_size.w = WIN_WIDTH;
 	data->win_size.h = WIN_HEIGHT;
-	data->last_mouse_x = data->win_size.w / 2;
 }
 
 void	init_window(t_data *data)

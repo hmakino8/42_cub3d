@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_images.c                                      :+:      :+:    :+:   */
+/*   init_images_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 08:43:14 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 13:36:46 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 16:40:01 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 static bool	set_xpm_img(void *mlx_ptr, t_img_info *img)
 {
@@ -33,7 +33,7 @@ static bool	new_img(void *mlx_ptr, t_img_info *img, t_size size)
 
 void	images_init(t_data *data)
 {
-	data->img.wall.path = NONE_XPM_PATH;
+	data->img.wall.path = WALL_XPM_PATH;
 	data->img.road.path = ROAD_XPM_PATH;
 	data->img.player.path = PLAYER_XPM_PATH;
 	data->img.none.path = NONE_XPM_PATH;

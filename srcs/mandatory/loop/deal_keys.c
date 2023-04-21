@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   deal_keys.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:53:32 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 13:52:35 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 17:19:49 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_pos	move_dist(int key, t_ray *ray)
 	return (dist);
 }
 
-static t_pos	wall_collision(t_data *data, t_pos *dist, t_ray *ray)
+static t_pos	wall_check(t_data *data, t_pos *dist, t_ray *ray)
 {
 	int		offset;
 	t_pos	top;
@@ -43,16 +43,8 @@ static t_pos	wall_collision(t_data *data, t_pos *dist, t_ray *ray)
 	if (data->map.array[top.y][top.x] == WALL
 		|| data->map.array[down.y][down.x] == WALL)
 	{
-		if (BONUS)
-		{
-			dist->x *= - ((dist->x < 0) + (dist->x > 0)) * 8;
-			dist->y *= - ((dist->y < 0) + (dist->y > 0)) * 8;
-		}
-		else
-		{
-			dist->x = 0;
-			dist->y = 0;
-		}
+		dist->x = 0;
+		dist->y = 0;
 	}
 	return (*dist);
 }
@@ -99,7 +91,7 @@ int	deal_keys(int key, void *ptr)
 	if (key == XK_w || key == XK_a || key == XK_s || key == XK_d)
 	{
 		dist = move_dist(key, ray);
-		dist = wall_collision(data, &dist, ray);
+		dist = wall_check(data, &dist, ray);
 		ray->p_pos.x += dist.x;
 		ray->p_pos.y += dist.y;
 	}

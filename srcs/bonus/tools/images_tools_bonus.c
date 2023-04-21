@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   images_tools.c                                     :+:      :+:    :+:   */
+/*   images_tools_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 17:22:53 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 15:03:50 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 16:40:51 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 int	get_pixel(t_img_info *img, t_pos img_pos)
 {
@@ -36,6 +36,7 @@ void	put_img_to_img(t_img_info *img1, t_img_info *img2, t_pos start)
 {
 	t_pos	img1_pos;
 	t_pos	img2_pos;
+	int		color;
 
 	img2_pos.y = 0;
 	while (img2_pos.y < img2->size.h)
@@ -45,7 +46,9 @@ void	put_img_to_img(t_img_info *img1, t_img_info *img2, t_pos start)
 		{
 			img1_pos.x = img2_pos.x + start.x;
 			img1_pos.y = img2_pos.y + start.y;
-			put_pixel_to_img(img1, img1_pos, get_pixel(img2, img2_pos));
+			color = get_pixel(img2, img2_pos);
+			if (color != NO_COLOR || get_pixel(img1, img1_pos) == 0x0)
+				put_pixel_to_img(img1, img1_pos, color);
 			img2_pos.x++;
 		}
 		img2_pos.y++;

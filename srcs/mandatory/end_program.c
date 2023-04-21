@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   end_program.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:48:22 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 13:33:51 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 17:08:17 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,6 @@ static void	free_map(char **map_array)
 
 static void	destroy_images(t_data *data, t_error error)
 {
-	if (error > FAILED_AT_INIT_WALL_IMG)
-		mlx_destroy_image(data->mlx_ptr, data->img.wall.img_ptr);
-	if (error > FAILED_AT_INIT_EMPTY_IMG)
-		mlx_destroy_image(data->mlx_ptr, data->img.road.img_ptr);
-	if (error > FAILED_AT_INIT_PLAYER_IMG)
-		mlx_destroy_image(data->mlx_ptr, data->img.player.img_ptr);
 	if (error > FAILED_AT_INIT_N_TEXT_IMG)
 		mlx_destroy_image(data->mlx_ptr, data->img.north_text.img_ptr);
 	if (error > FAILED_AT_INIT_S_TEXT_IMG)
@@ -47,12 +41,8 @@ static void	destroy_images(t_data *data, t_error error)
 		mlx_destroy_image(data->mlx_ptr, data->img.west_text.img_ptr);
 	if (error > FAILED_AT_INIT_E_TEXT_IMG)
 		mlx_destroy_image(data->mlx_ptr, data->img.east_text.img_ptr);
-	if (error > FAILED_AT_INIT_NONE_IMG)
-		mlx_destroy_image(data->mlx_ptr, data->img.none.img_ptr);
 	if (error > FAILED_AT_INIT_SCREEN_IMG)
 		mlx_destroy_image(data->mlx_ptr, data->img.screen.img_ptr);
-	if (error > FAILED_AT_INIT_MINI_MAP_IMG)
-		mlx_destroy_image(data->mlx_ptr, data->img.mini_map.img_ptr);
 }
 
 void	end_program(t_data *data, t_error error, char *error_msg)
@@ -69,7 +59,7 @@ void	end_program(t_data *data, t_error error, char *error_msg)
 	}
 	if (error >= WRONG_SHAPE)
 		free_map(data->map.array);
-	if (error >= FAILED_AT_INIT_WALL_IMG)
+	if (error >= FAILED_AT_INIT_N_TEXT_IMG)
 	{
 		destroy_images(data, error);
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);

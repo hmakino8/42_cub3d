@@ -61,6 +61,4 @@ void	init_map(t_data *data, t_map *map)
 			resize_line(data, &map->array[y], map->size.w);
 		y++;
 	}
-	map->mini_map_size.h = map->size.h * C_SIZE;
-	map->mini_map_size.w = map->size.w * C_SIZE;
 }

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gradation.c                                        :+:      :+:    :+:   */
+/*   gradation_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 05:36:19 by hiroaki           #+#    #+#             */
-/*   Updated: 2023/04/21 13:45:57 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 16:40:48 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3D_bonus.h"
 
 void	brightness_control(int color, t_rgb_info *rgb)
 {
@@ -41,10 +41,7 @@ void	transparency_control( \
 		*color = c2;
 	else
 	{
-		if (c1 == 0xFF0000)
-			rt = 0.1;
-		else
-			rt = MINIMAP_TRANSPARENCY;
+		rt = MINIMAP_TRANSPARENCY;
 		rgb.red = (c1 >> 16 & 0xFF) * (1 - rt) + (c2 >> 16 & 0xFF) * rt;
 		rgb.green = (c1 >> 8 & 0xFF) * (1 - rt) + (c2 >> 8 & 0xFF) * rt;
 		rgb.blue = (c1 & 0xFF) * (1 - rt) + (c2 & 0xFF) * rt;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
+/*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:40:20 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 13:38:31 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 16:47:45 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,13 @@ static int	cross_button_event(t_data *data)
 	return (0);
 }
 
-static int	mouse_hook(int mouse_x, int mouse_y, void *ptr)
+int	render_map(t_data *data)
 {
-	t_data	*data;
-
-	(void)mouse_y;
-	data = (t_data *)ptr;
-	if (mouse_x == data->last_mouse_x)
-		return (0);
-	if (mouse_x > data->last_mouse_x)
-		data->ray.p_angle -= 0.5;
-	else
-		data->ray.p_angle += 0.5;
-	data->ray.p_angle = fix_ang(data->ray.p_angle);
-	data->last_mouse_x = mouse_x;
+	if (data->win_ptr == NULL)
+		return (1);
+	draw_rays(data, &data->ray);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr,
+		data->img.screen.img_ptr, 0, 0);
 	return (0);
 }
 
@@ -40,9 +33,6 @@ void	put_in_loop(t_data *data)
 	mlx_loop_hook(data->mlx_ptr, &render_map, data);
 	mlx_hook(data->win_ptr, ClientMessage, StructureNotifyMask,
 		&cross_button_event, data);
-	if (BONUS)
-		mlx_hook(data->win_ptr, MotionNotify, PointerMotionMask,
-			&mouse_hook, data);
 	mlx_hook(data->win_ptr, KeyPress, KeyPressMask, &deal_keys, data);
 	mlx_loop(data->mlx_ptr);
 }

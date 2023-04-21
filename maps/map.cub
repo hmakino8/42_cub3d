@@ -1,7 +1,7 @@
 
-NO ./xpm_files/eagle.xpm
+WE ./xpm_files/eagle.xpm
 SO ./xpm_files/redbrick.xpm
-WE ./xpm_files/wood.xpm
+NO ./xpm_files/wood.xpm
 EA ./xpm_files/bluestone.xpm
 
         F 50,100,180
