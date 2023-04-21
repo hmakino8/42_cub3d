@@ -6,7 +6,7 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 03:01:47 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 14:59:23 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define WITDH_MAX 256
 # define HEIGHT_MAX 128
 # define MAP_SCALE 512
-# define BRIGHTNESS 1.5
+# define BRIGHTNESS 1.55
 # define MINIMAP_TRANSPARENCY 0.65
 # define P_MOVE 32
 # define C_SIZE 32

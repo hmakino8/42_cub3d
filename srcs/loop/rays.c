@@ -6,7 +6,7 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 14:10:40 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 15:03:09 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	ray_collision_detection(t_data *data, t_ray *ray)
 	}
 }
 
+#include <printf.h>
 void	render_ray(t_data *data, t_ray *ray, int x)
 {
 	t_pos		pos;
@@ -65,12 +66,14 @@ void	render_ray(t_data *data, t_ray *ray, int x)
 		{
 			if (pos.y < ray->w_start)
 			{
-				rgb.ratio = ray->line_height / (double)data->win_size.h;
+				//rgb.ratio = (1.0 - ((double)pos.y / (double)data->win_size.h)) * 0.4;
+				rgb.ratio = (1.0 - ((double)pos.y / (double)data->win_size.h));
 				brightness_control(data->color.ceiling.rgb, &rgb);
 			}
 			else
 			{
-				rgb.ratio = (double)pos.y / (double)data->win_size.h * 0.3;
+				//rgb.ratio = (double)pos.y / (double)data->win_size.h * 0.3;
+				rgb.ratio = (double)pos.y / (double)data->win_size.h;
 				brightness_control(data->color.floor.rgb, &rgb);
 			}
 			put_pixel_to_img(&data->img.screen, pos, rgb.rgb);

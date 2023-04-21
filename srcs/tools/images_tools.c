@@ -6,7 +6,7 @@
 /*   By: hiroaki <hiroaki@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 17:22:53 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 14:39:53 by hiroaki          ###   ########.fr       */
+/*   Updated: 2023/04/21 15:03:50 by hiroaki          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos)
 					+ (ray->w_height - ray->line_height) / 2) * img->size.h)
 			/ ray->w_height);
 	img_pos.x = lround(ray->wall_hit_x * img->size.w / MAP_SCALE);
-	rgb.ratio = ray->line_height / (double)data->win_size.h;
+	rgb.ratio = ray->line_height / (double)data->win_size.h * 2.0;
 	brightness_control(get_pixel(img, img_pos), &rgb);
 	put_pixel_to_img(&data->img.screen, screen_pos, rgb.rgb);
 }
