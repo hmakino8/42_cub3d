@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/22 15:53:32 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 17:19:49 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 23:01:48 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,35 +47,6 @@ static t_pos	wall_check(t_data *data, t_pos *dist, t_ray *ray)
 		dist->y = 0;
 	}
 	return (*dist);
-}
-
-bool	check_new_pos(t_pos new_pos, char **map)
-{
-	int	offset;
-
-	offset = P_SIZE / 2;
-	if (map[(new_pos.y - offset) / MAP_SCALE]
-		[(new_pos.x - offset) / MAP_SCALE] == WALL)
-		return (false);
-	else if (map[(new_pos.y - offset) / MAP_SCALE]
-		[(new_pos.x + offset) / MAP_SCALE] == WALL)
-		return (false);
-	else if (map[(new_pos.y + offset) / MAP_SCALE]
-		[(new_pos.x - offset) / MAP_SCALE] == WALL)
-		return (false);
-	else if (map[(new_pos.y + offset) / MAP_SCALE]
-		[(new_pos.x + offset) / MAP_SCALE] == WALL)
-		return (false);
-	return (true);
-}
-
-t_pos	move(t_pos pos, double angle, double distance)
-{
-	t_pos	new_pos;
-
-	new_pos.x = pos.x + distance * cos(deg_to_rad(angle));
-	new_pos.y = pos.y + distance * -sin(deg_to_rad(angle));
-	return (new_pos);
 }
 
 int	deal_keys(int key, void *ptr)

@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/19 15:40:20 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 16:47:45 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 17:59:44 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	cross_button_event(t_data *data)
 	return (0);
 }
 
-int	render_map(t_data *data)
+static int	render_map(t_data *data)
 {
 	if (data->win_ptr == NULL)
 		return (1);

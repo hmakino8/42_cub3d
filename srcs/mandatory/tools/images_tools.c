@@ -6,13 +6,13 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/31 17:22:53 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 17:04:35 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 23:05:46 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-int	get_pixel(t_img_info *img, t_pos img_pos)
+static int	get_pixel(t_img_info *img, t_pos img_pos)
 {
 	char	*src;
 	int		offset;

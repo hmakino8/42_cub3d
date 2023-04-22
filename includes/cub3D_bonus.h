@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 17:16:59 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/22 12:45:10 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,10 @@ struct s_ray
 	bool	hit_wall;
 	double	perp_w_dist;
 	int		line_height;
+	int		w_height;
 	int		w_start;
 	int		w_end;
 	int		wall_hit_x;
-	int		w_height;
 };
 
 struct s_map
@@ -202,8 +202,6 @@ void	do_raycasting(t_ray *ray, t_fpos *r_pos, t_fpos *side);
 
 /*								rays.c										*/
 void	draw_rays(t_data *data, t_ray *ray);
-void	set_wall_size(t_data *data, t_ray *ray);
-void	render_ray(t_data *data, t_ray *ray, int x);
 
 /*								render_image.c								*/
 int		render_map(t_data *data);
@@ -227,7 +225,6 @@ void	draw_ray_lines(t_data *data, t_ray *ray, int color);
 /*								maths_utils.c								*/
 double	deg_to_rad(double a);
 double	fix_ang(double a);
-double	do_div(double num, double denum);
 
 /*								read_all.c									*/
 char	*read_all(int fd);

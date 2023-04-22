@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 12:32:00 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 17:09:56 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 23:07:39 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,6 @@ int		deal_keys(int key, void *ptr);
 t_pos	move(t_pos pos, double angle, double distance);
 
 /*								loop.c										*/
-int		render_map(t_data *data);
 void	put_in_loop(t_data *data);
 
 /*								raycast.c									*/
@@ -195,15 +194,12 @@ void	do_raycasting(t_ray *ray, t_fpos *r_pos, t_fpos *side);
 
 /*								rays.c										*/
 void	draw_rays(t_data *data, t_ray *ray);
-void	set_wall_size(t_data *data, t_ray *ray);
-void	render_ray(t_data *data, t_ray *ray, int x);
 
 /****************************************************************************/
 /************************************TOOLS***********************************/
 /****************************************************************************/
 
 /*								images_tools.c								*/
-int		get_pixel(t_img_info *img, t_pos img_pos);
 void	put_pixel_to_img(t_img_info *img, t_pos pos, int color);
 void	put_img_to_img(t_img_info *img1, t_img_info *img2, t_pos start);
 void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos);
@@ -211,7 +207,6 @@ void	put_text_to_screen(t_data *data, t_ray *ray, t_pos screen_pos);
 /*								maths_utils.c								*/
 double	deg_to_rad(double a);
 double	fix_ang(double a);
-double	do_div(double num, double denum);
 
 /*								read_all.c									*/
 char	*read_all(int fd);

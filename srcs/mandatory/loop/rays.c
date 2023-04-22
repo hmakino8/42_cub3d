@@ -6,7 +6,7 @@
 /*   By: pfrances <pfrances@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/27 10:50:38 by pfrances          #+#    #+#             */
-/*   Updated: 2023/04/21 17:00:45 by pfrances         ###   ########.fr       */
+/*   Updated: 2023/04/21 18:00:15 by pfrances         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static double	calculate_dist_to_wall(t_ray *ray)
 	return (x_dist / cos(deg_to_rad(ray->r_angle)) * error);
 }
 
-void	set_wall_size(t_data *data, t_ray *ray)
+static void	set_wall_size(t_data *data, t_ray *ray)
 {
 	ray->perp_w_dist = calculate_dist_to_wall(ray);
 	ray->line_height = (double)data->win_size.h
@@ -50,7 +50,7 @@ static void	ray_collision_detection(t_data *data, t_ray *ray)
 	}
 }
 
-void	render_ray(t_data *data, t_ray *ray, int x)
+static void	render_ray(t_data *data, t_ray *ray, int x)
 {
 	t_pos		pos;
 
